@@ -1,0 +1,88 @@
+# Flutter app
+name: balance_app
+description: Flutter application to measure you posture!
+version: 0.0.1+1
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  # Flutter main dependencies
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.3
+  path_provider: ^1.6.9
+
+  # Bloc dependencies
+  flutter_bloc: ^4.0.0
+
+  # Floor dependencies
+  floor: ^0.12.0
+
+  # Http requests dependencies
+  http: ^0.12.0+1
+
+  # Frequency Analysis dependencies
+  iirjdart: ^0.0.1
+  powerdart: ^0.0.2
+
+  # Miscellaneous dependencies
+  quiver: ^2.1.3
+  shared_preferences: ^0.5.7+3
+  package_info: ^0.4.0+18
+  circular_check_box:
+    git:
+      url: git://github.com/Supercaly/circular_check_box
+      ref: development
+  custom_dropdown: ^0.0.2
+  vibration: ^1.2.4
+  audioplayers: ^0.15.1
+  charts_flutter: ^0.9.0
+  easy_localization: ^2.3.2
+
+dev_dependencies:
+  # Test dependencies
+  flutter_test:
+    sdk: flutter
+  mockito: ^4.1.1
+
+  # Floor dev dependencies
+  floor_generator: ^0.12.0
+  sqflite_ffi_test:
+    git:
+      url: git://github.com/tekartik/sqflite_more
+      ref: dart2
+      path: sqflite_ffi_test
+
+  # Build Runner dev dependencies
+  build_runner: ^1.7.4
+
+  # About Dependencies dev dependencies
+  about_dependencies: ^0.0.1
+
+flutter:
+  uses-material-design: true
+
+  # Assets paths
+  assets:
+    # App Logo
+    - assets/app_logo_circle.png
+    - assets/app_logo.png
+    # Images
+    - assets/images/empty.png
+    - assets/images/error.png
+    - assets/images/eta.png
+    - assets/images/height.png
+    - assets/images/phone.png
+    - assets/images/tutorial.png
+    # Sounds
+    - assets/sounds/light_pop.mp3
+    # Translations
+    - assets/translations/en.json
+    - assets/translations/it.json
+
+  # Fonts
+  fonts:
+    - family:  BIcons
+      fonts:
+      - asset: assets/fonts/BIcons.ttf

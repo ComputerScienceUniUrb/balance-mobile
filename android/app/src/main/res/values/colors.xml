@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Theme colors -->
+    <color name="colorPrimary">@color/malibu</color>
+    <color name="colorPrimaryVariant">@color/scampi</color>
+    <color name="colorSecondary">@color/dodger_blue</color>
+
+    <!-- Purple-Light Blue Palette -->
+    <color name="malibu">#8C88FF</color>
+    <color name="scampi">#6865AC</color>
+    <color name="dodger_blue">#34C6F9</color>
+    <color name="venice_blue">#0A698D</color>
+    <color name="lily_white">#E4F5FF</color>
+
+</resources>

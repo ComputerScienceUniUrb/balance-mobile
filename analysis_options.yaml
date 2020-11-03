@@ -1,0 +1,10 @@
+
+# This file contains the analysis options used by Flutter tools,
+# such as IntelliJ, Android Studio, and the `flutter analyze` command.
+analyzer:
+  errors:
+    missing_required_param: warning
+    missing_return: warning
+    todo: ignore
+  exclude:
+    - lib/*.g.dart
