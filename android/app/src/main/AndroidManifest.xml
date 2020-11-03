@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     package="it.uniurb.balance_app">
+=======
+    package="srl.digit.balance">
+>>>>>>> dev
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
@@ -8,7 +12,11 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:name="io.flutter.app.FlutterApplication"
+<<<<<<< HEAD
         android:label="balance_app"
+=======
+        android:label="Balance"
+>>>>>>> dev
         android:icon="@mipmap/ic_launcher_full_b"
         android:roundIcon="@mipmap/ic_launcher_full_b_round"
         android:allowBackup="false">

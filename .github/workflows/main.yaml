@@ -8,6 +8,10 @@ on:
     branches:
       - master
       - dev/*
+<<<<<<< HEAD
+=======
+      - digit
+>>>>>>> dev
   pull_request:
     branches:
       - master

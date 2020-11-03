@@ -6,6 +6,10 @@ import 'package:balance_app/floor/measurement_database.dart';
 import 'package:balance_app/model/measurement.dart';
 import 'package:balance_app/model/statokinesigram.dart';
 import 'package:balance_app/posture_processor/posture_processor.dart';
+<<<<<<< HEAD
+=======
+import 'package:http/http.dart';
+>>>>>>> dev
 import 'package:path_provider/path_provider.dart';
 
 /// Repository of the result screen
@@ -36,6 +40,10 @@ class ResultRepository {
 
       // Update the measurement with the computed features
       database.measurementDao.updateMeasurement(Measurement.from(measurement, computed));
+<<<<<<< HEAD
+=======
+      _makePostRequest(Measurement.from(measurement, computed));
+>>>>>>> dev
       // Store the computed CogvData
       database.cogvDataDao.insertCogvData(computed.cogv);
       return computed;
@@ -44,6 +52,25 @@ class ResultRepository {
     return Statokinesigram.from(measurement, cogv);
   }
 
+<<<<<<< HEAD
+=======
+  _makePostRequest(var data) async {
+    // TODO: This stuff here is hardcode. Need changes
+    // set up POST request arguments
+    String url = 'http://80.211.137.75:8000/api/v1/db/measurement';
+    Map<String, String> headers = {"Content-type": "application/json"};
+    String json = jsonEncode(data.toJson());
+
+    // make POST request
+    Response response = await post(url, headers: headers, body: json);
+
+    // response
+    int statusCode = response.statusCode;
+    String body = response.body;
+    print("Measurement Sent to the Backend");
+  }
+
+>>>>>>> dev
   /// Save all the measurement in a .json file
   ///
   /// This method will export all the data related to

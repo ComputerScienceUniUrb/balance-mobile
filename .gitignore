@@ -28,7 +28,16 @@
 .packages
 .pub-cache/
 .pub/
+<<<<<<< HEAD
 /build/
+=======
+/build/*
+!/build/app
+/build/app/*
+!/build/app/outputs
+/build/app/outputs/*
+!/build/app/outputs/apk
+>>>>>>> dev
 **/*.g.dart
 /test/test_results/*
 

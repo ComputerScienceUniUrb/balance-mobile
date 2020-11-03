@@ -43,7 +43,11 @@ android {
     }
 
     defaultConfig {
+<<<<<<< HEAD
         applicationId "it.uniurb.balance_app"
+=======
+        applicationId "srl.digit.balance"
+>>>>>>> dev
         minSdkVersion 16
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
@@ -61,7 +65,11 @@ android {
 
     buildTypes {
         release {
+<<<<<<< HEAD
             signingConfig signingConfigs.release
+=======
+            signingConfig signingConfigs.debug
+>>>>>>> dev
         }
     }
 }

@@ -1,10 +1,19 @@
 
+<<<<<<< HEAD
+=======
+import 'dart:convert';
+
+>>>>>>> dev
 import 'package:balance_app/floor/measurement_database.dart';
 import 'package:balance_app/floor/test_database_view.dart';
 import 'package:balance_app/manager/preference_manager.dart';
 import 'package:balance_app/model/measurement.dart';
 import 'package:balance_app/model/raw_measurement_data.dart';
 import 'package:balance_app/model/sensor_data.dart';
+<<<<<<< HEAD
+=======
+import 'package:http/http.dart';
+>>>>>>> dev
 
 class MeasureCountdownRepository {
   final MeasurementDatabase database;
@@ -30,6 +39,12 @@ class MeasureCountdownRepository {
         await _generateRawData(rawSensorData, newMeasId).toList()
       );
 
+<<<<<<< HEAD
+=======
+      // send data to server
+      _makePostRequest(await _generateRawData(rawSensorData, newMeasId).toList());
+
+>>>>>>> dev
       // return the newly added Test
       return await measurementDao.findTestById(newMeasId);
     } catch(e) {
@@ -38,6 +53,25 @@ class MeasureCountdownRepository {
     }
   }
 
+<<<<<<< HEAD
+=======
+  _makePostRequest(var data) async {
+    // TODO: This stuff here is hardcode. Need changes
+    // set up POST request arguments
+    String url = 'http://80.211.137.75:8000/api/v1/db/sway';
+    Map<String, String> headers = {"Content-type": "application/json"};
+    String json = jsonEncode(data);
+
+    // make POST request
+    Response response = await post(url, headers: headers, body: json);
+
+    // response
+    int statusCode = response.statusCode;
+    String body = response.body;
+    print("RawMeasurement Sent to the Backend");
+  }
+
+>>>>>>> dev
   /// Asynchronously generate the [RawMeasurementData] from the [SensorData]
   ///
   /// This method will generate one-by-one each [RawMeasurementData] that will be then

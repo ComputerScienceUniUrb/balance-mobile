@@ -143,6 +143,7 @@ class Measurement {
     );
 
   /// Maps this object to json
+<<<<<<< HEAD
   Map toJson() => {
       "id": this.id,
       "creationDate": this.creationDate,
@@ -168,6 +169,37 @@ class Measurement {
       "gmX": this.gmX, "gmY": this.gmY, "gmZ": this.gmZ,
       "gvX": this.gvX, "gvY": this.gvY, "gvZ": this.gvZ,
       "grX": this.grX, "grY": this.grY, "grZ": this.grZ,
+=======
+  Map<String, dynamic> toJson() => {
+      'id': this.id,
+      'creationDate': this.creationDate,
+      'eyesOpen': this.eyesOpen,
+      'hasFeatures': this.hasFeatures,
+      'swayPath': this.swayPath,
+      'meanDisplacement': this.meanDisplacement,
+      'stdDisplacement': this.stdDisplacement,
+      'minDist': this.minDist,
+      'maxDist': this.maxDist,
+      'frequencyPeakAP': this.frequencyPeakAP,
+      'frequencyPeakML': this.frequencyPeakML,
+      'meanFrequencyML': (this.meanFrequencyML.isNaN) ? 0.0 : this.meanFrequencyML,
+      'meanFrequencyAP': (this.meanFrequencyAP.isNaN) ? 0.0 : this.meanFrequencyAP,
+      'f80ML': this.f80ML,
+      'f80AP': this.f80AP,
+      'np': this.numMax, 'meanTime': this.meanTime,
+      'stdTime': this.stdTime, 'meanDistance': this.meanDistance,
+      'stdDistance': this.stdDistance, 'meanPeaks': this.meanPeaks,
+      'stdPeaks': this.stdPeaks,
+      'gsX': (this.gsX.isNaN) ? 0.0 : this.gsX,
+      'gsY': (this.gsY.isNaN) ? 0.0 : this.gsY,
+      'gsZ': (this.gsZ.isNaN) ? 0.0 : this.gsZ,
+      'gkX': (this.gkX.isNaN) ? 0.0 : this.gkX,
+      'gkY': (this.gkY.isNaN) ? 0.0 : this.gkY,
+      'gkZ': (this.gkZ.isNaN) ? 0.0 : this.gkZ,
+      'gmX': this.gmX, 'gmY': this.gmY, 'gmZ': this.gmZ,
+      'gvX': this.gvX, 'gvY': this.gvY, 'gvZ': this.gvZ,
+      'grX': this.grX, 'grY': this.grY, 'grZ': this.grZ,
+>>>>>>> dev
     };
 
 
