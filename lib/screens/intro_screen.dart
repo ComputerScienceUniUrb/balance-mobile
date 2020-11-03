@@ -144,8 +144,8 @@ class _IntroScreenState extends State<IntroScreen> {
 _makePostRequest(var data) async {
   // TODO: This stuff here is hardcode. Need changes
   // set up POST request arguments
-  //String url = 'http://80.211.137.75:8000/api/v1/db/measurement';
-  String url = 'http://192.168.1.206:8000/api/v1/user/signup';
+  String url = 'http://80.211.137.75:8000/api/v1/user/signup';
+  //String url = 'http://192.168.1.206:8000/api/v1/user/signup';
   Map<String, String> headers = {"Content-type": "application/json"};
   String json = data;
   print(data);
