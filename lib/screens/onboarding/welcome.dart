@@ -22,40 +22,46 @@ class WelcomeScreen extends StatelessWidget {
       condition: (_, current) => current is NeedToValidateState && current.index == screenIndex,
       // This page is always valid
       listener: (context, _) => context.bloc<OnBoardingBloc>().add(ValidationSuccessEvent()),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Center(
-            child: Image.asset(
-              "assets/app_logo_circle.png",
-              width: 200,
-            ),
-          ),
-          SizedBox(height: 100),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              'welcome_to_balance_title'.tr(),
-              style: Theme.of(context).textTheme.headline4.copyWith(
-                fontSize: 36,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
+      child: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          reverse: false,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Center(
+                child: Image.asset(
+                  "assets/app_logo_circle.png",
+                  width: 200,
+                ),
               ),
-            ),
-          ),
-          SizedBox(height: 18),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              'welcome_to_balance_msg'.tr(),
-              style: Theme.of(context).textTheme.subtitle2.copyWith(
-                fontSize: 18,
-                color: Colors.white,
+              SizedBox(height: 50),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  'welcome_to_balance_title'.tr(),
+                  style: Theme.of(context).textTheme.headline4.copyWith(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-            ),
+              SizedBox(height: 18),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  'welcome_to_balance_msg'.tr(),
+                  style: Theme.of(context).textTheme.subtitle2.copyWith(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

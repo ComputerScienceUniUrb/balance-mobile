@@ -19,6 +19,7 @@ class PreferenceManager {
   static const _gyroscopeBiasY = "GyroscopeBiasY";
   static const _gyroscopeBiasZ = "GyroscopeBiasZ";
   // User Info
+  static const _token = "userToken";
   static const _height = "userHeight";
   static const _age = "userAge";
   static const _weight = "userWeight";
@@ -26,6 +27,7 @@ class PreferenceManager {
   static const _posturalProblems = "posturalProblems";
   static const _problemsInFamily = "problemsInFamily";
   static const _useOfDrugs = "useOfDrugs";
+  static const _alcoholIntake = "alcoholIntake";
   static const _otherTrauma = "otherTrauma";
   static const _sightProblems = "sightProblems";
   static const _hearingProblems = "hearingProblems";
@@ -120,6 +122,7 @@ class PreferenceManager {
     if (height == null) return null;
     try {
       return UserInfo(
+        token: pref.getString(_token),
         height: height,
         age: pref.getInt(_age), // Defaults to null
         weight: pref.getDouble(_weight), // Defaults to null
@@ -130,6 +133,7 @@ class PreferenceManager {
           ?.toList(), // Defaults to null
         problemsInFamily: pref.getBool(_problemsInFamily) ?? false, // Defaults to false
         useOfDrugs: pref.getBool(_useOfDrugs) ?? false, // Defaults to false
+        alcoholIntake: pref.getBool(_alcoholIntake) ?? false, // Defaults to false
         otherTrauma: pref.getString(_otherTrauma)
           ?.split(",")
           ?.map((e) => e == 'true')
@@ -155,6 +159,7 @@ class PreferenceManager {
   /// updated so this method can be with optional
   /// parameters to update only some of the data.
   static Future<void> updateUserInfo({
+    String token,
     double height,
     double weight,
     int age,
@@ -162,6 +167,7 @@ class PreferenceManager {
     List<bool> posturalProblems,
     bool problemsInFamily,
     bool useOfDrugs,
+    bool alcoholIntake,
     List<bool> otherTrauma,
     List<bool> sightProblems,
     int hearingProblems,
@@ -169,6 +175,8 @@ class PreferenceManager {
     var pref = await SharedPreferences.getInstance();
 
     // Update the value of all the non-null given elements
+    if (token != null)
+      pref.setString(_token, token);
     if (height != null)
       pref.setDouble(_height, height);
     if (age != null)
@@ -183,6 +191,8 @@ class PreferenceManager {
       pref.setBool(_problemsInFamily, problemsInFamily);
     if (useOfDrugs != null)
       pref.setBool(_useOfDrugs, useOfDrugs);
+    if (_alcoholIntake != null)
+      pref.setBool(_alcoholIntake, alcoholIntake);
     if (otherTrauma != null)
       pref.setString(_otherTrauma, otherTrauma.join(","));
     if (sightProblems != null)

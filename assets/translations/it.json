@@ -18,8 +18,9 @@
   "open_source_txt": "Open Source",
   "about_balance_txt": "Riguardo a Balance",
   "version_txt": "Versione",
+  "build_txt": "alpha.",
   "made_with_heart_txt": "Made with ❤ from Italy",
-  "easter_egg_txt": "Questo non è un Easter Egg!!!",
+  "easter_egg_txt": "Continua a cliccare! La nuova release uscirà più velocemente!",
   "empty_txt": "Non c'è nulla da vedere qui!",
   "error_txt": "Ops! Qualcosa è andato storto",
   "test_txt": "Test",
@@ -123,6 +124,6 @@
   "intro_hearing_defects_title": "Difetti Uditivi",
   "hearing_loss_hint": "perdita d'udito",
   "about_balance_title": "Riguardo a Balance",
-  "about_balance_msg": "Balance è un'applicazione sviluppata da Lorenzo Calisti assieme all'università di Urbino \"Carlo Bo\" come tesi di laurea del corso di Informatica Applicata.\nLo scopo primario di Balance è consentire a chiunque di misurare la propria postura in pochi secondi utilizzando il proprio smartphone.",
+  "about_balance_msg": "Balance nasce dallo sforzo dei ricercatori di Computer Science dell'Università di Urbino con l'obbiettivo di fornire uno strumento per misurare la propria postura in pochi secondi, con il proprio smartphone.",
   "cool_btn": "Figo!"
 }

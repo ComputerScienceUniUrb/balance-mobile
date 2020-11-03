@@ -18,8 +18,9 @@
   "open_source_txt": "Open Source",
   "about_balance_txt": "About Balance",
   "version_txt": "Version",
+  "build_txt": "alpha.",
   "made_with_heart_txt": "Made with ❤ from Italy",
-  "easter_egg_txt": "This is not an Easter Egg!!!",
+  "easter_egg_txt": "Keep clicking! The new release will come out faster!",
   "empty_txt": "Nothing to show here!",
   "error_txt": "Ops! Something went wrong",
   "test_txt": "Test",
@@ -123,6 +124,6 @@
   "intro_hearing_defects_title": "Hearing Defects",
   "hearing_loss_hint": "hearing loss",
   "about_balance_title": "About Balance",
-  "about_balance_msg": "Balance is an application developed by Lorenzo Calisti together with the University of Urbino \"Carlo Bo\" as a degree thesis for the Applied Computer Science course.\nThe primary purpose of Balance is to allow anyone to measure their posture in seconds using their smartphone.",
+  "about_balance_msg": "Balance is an effort of Computer Science researchers at the University of Urbino with the aim of providing a tool to measure your posture in a few seconds, with your smartphone.",
   "cool_btn": "Cool!"
 }
