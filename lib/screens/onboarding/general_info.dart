@@ -58,12 +58,13 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
       child: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          reverse: true,
+          reverse: false,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              SizedBox(height: 64),
               Center(
                 child: Image.asset(
                   "assets/images/eta.png",
@@ -73,7 +74,7 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
               Text(
                 'intro_general_title'.tr(),
                 style: Theme.of(context).textTheme.headline4.copyWith(
-                  fontSize: 36,
+                  fontSize: 32,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                 ),

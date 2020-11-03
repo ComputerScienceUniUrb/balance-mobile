@@ -56,7 +56,7 @@ class _TraumaScreenState extends State<TraumaScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 40),
+            SizedBox(height: 64),
             Text(
               'other_trauma_title'.tr(),
               style: Theme.of(context).textTheme.headline4.copyWith(

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-flutter pub run easy_localization:generate -s assets/translations
+flutter pub run easy_localization:generate --source-dir ./assets/translations

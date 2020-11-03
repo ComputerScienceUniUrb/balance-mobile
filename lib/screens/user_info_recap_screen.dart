@@ -103,6 +103,20 @@ class UserInfoRecapScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
+                            'Token',
+                            style: headlineTextStyle,
+                          ),
+                          Text(
+                            userInfo?.token?.toString() ?? "-",
+                            style: valueTextStyle,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
                             'age_txt'.tr(),
                             style: headlineTextStyle,
                           ),

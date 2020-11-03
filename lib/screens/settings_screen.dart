@@ -65,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () => showAboutBalanceDialog(context),
             ),
             SettingsElement(
-              text: "${'version_txt'.tr()} ${packageInfo?.version} (${packageInfo?.buildNumber})",
+              text: "${'version_txt'.tr()} ${packageInfo?.version} (${'build_txt'.tr()}${packageInfo?.buildNumber})",
               onLongPress: () {
                   Scaffold.of(context)
                     .showSnackBar(

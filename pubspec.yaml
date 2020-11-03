@@ -1,7 +1,7 @@
 # Flutter app
 name: balance_app
 description: Flutter application to measure you posture!
-version: 0.0.1+1
+version: 1.0.0+2
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -10,8 +10,14 @@ dependencies:
   # Flutter main dependencies
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.3
   path_provider: ^1.6.9
+
+  # Sensors dependencies
+  sensors:
+    git:
+      url: https://github.com/giandifra/plugins.git
+      ref: Sensors-feature
+      path: packages/sensors
 
   # Bloc dependencies
   flutter_bloc: ^4.0.0
@@ -41,6 +47,7 @@ dependencies:
   easy_localization: ^2.3.2
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.8.1"
   # Test dependencies
   flutter_test:
     sdk: flutter
@@ -59,6 +66,11 @@ dev_dependencies:
 
   # About Dependencies dev dependencies
   about_dependencies: ^0.0.1
+
+flutter_icons:
+  image_path: "assets/app_logo.png"
+  android: true
+  ios: true
 
 flutter:
   uses-material-design: true

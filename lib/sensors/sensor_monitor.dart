@@ -4,20 +4,20 @@ import 'package:balance_app/model/sensor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quiver/async.dart';
+import 'package:quiver/iterables.dart';
+import 'package:sensors/sensors.dart';
 
 /// Class for monitor device's sensors
 ///
 /// This class is able to listen to the sensors present in the device
 /// through specific methods.
 class SensorMonitor {
-  static const EventChannel _defaultSensorsEventChannel = const EventChannel("uniurb.it/sensors/stream");
   static const MethodChannel _defaultSensorsMethodChannel = const MethodChannel("uniurb.it/sensors/presence");
+  List<StreamSubscription<dynamic>> _streamSubscriptions = <StreamSubscription<dynamic>>[];
 
   final Duration duration;
-  final EventChannel _sensorsEventChannel;
   final MethodChannel _sensorsMethodChannel;
   final List<SensorData> _sensorsData;
-  StreamSubscription<SensorData> _sensorsStreamSubscription;
   StreamController<Duration> _streamController;
   CountdownTimer _countdownTimer;
 
@@ -26,14 +26,13 @@ class SensorMonitor {
 
   /// Default constructor
   SensorMonitor([this.duration = const Duration(milliseconds: 5000)]):
-    _sensorsEventChannel = _defaultSensorsEventChannel,
     _sensorsMethodChannel = _defaultSensorsMethodChannel,
     _sensorsData = [];
 
   /// This constructor is only used for testing and
   /// shouldn't be accessed from outside this class
   @visibleForTesting
-  SensorMonitor.private(this._sensorsMethodChannel, this._sensorsEventChannel):
+  SensorMonitor.private(this._sensorsMethodChannel):
     duration = const Duration(milliseconds: 5000),
     _sensorsData = [];
 
@@ -59,6 +58,8 @@ class SensorMonitor {
   /// the current active must be cancelled by unregister all the
   /// listeners or waiting the timer completion.
   Stream<Duration> get sensorStream {
+    List<AccelerometerEvent> accelerometerList = new List<AccelerometerEvent>();
+    List<GyroscopeEvent> gyroscopeList = new List<GyroscopeEvent>();
     // Create a new Broadcast StreamController if not already present
     _streamController ??= StreamController.broadcast(
       onListen: () {
@@ -70,16 +71,18 @@ class SensorMonitor {
          */
         print("SensorMonitor.sensorStream: Start listening to sensor data!");
         _sensorsData.clear();
-        _sensorsStreamSubscription = _sensorsEventChannel
-          .receiveBroadcastStream()
-          .map((event) => eventToSensorData(event))
-          .listen((event) {
-          if (event != null)
-            _sensorsData.add(event);
-        });
-        _countdownTimer = CountdownTimer(duration, Duration(milliseconds: 1000))
+        _streamSubscriptions.add(
+            accelerometerEvents(delay: 10000).listen((AccelerometerEvent event) {
+                accelerometerList.add(event);
+            }));
+        _streamSubscriptions.add(
+            gyroscopeEvents(delay: 10000).listen((GyroscopeEvent event) {
+              gyroscopeList.add(event);
+            }));
+        _countdownTimer = CountdownTimer(duration, Duration(milliseconds: 10000))
           ..listen((event) => _streamController.add(event.elapsed),
             onDone: () {
+              _sensorsData.addAll(eventToSensorData(accelerometerList, gyroscopeList));
               // If the StreamController is not null close it
               _streamController?.close();
             }
@@ -95,7 +98,9 @@ class SensorMonitor {
         print("SensorMonitor.sensorStream: Stop listening to sensor data!");
         if (_countdownTimer.isRunning)
           _countdownTimer.cancel();
-        _sensorsStreamSubscription.cancel();
+        for (StreamSubscription<dynamic> subscription in _streamSubscriptions) {
+          subscription.cancel();
+        }
         _streamController = null;
       },
     );
@@ -107,29 +112,26 @@ class SensorMonitor {
   /// This method maps any event received from [EventChannel]
   /// to a [SensorData] or null if the data is incorrect.
   @visibleForTesting
-  static SensorData eventToSensorData(List event) {
-    try {
-      int timestamp = event[0] as int;
-      int accuracy = event[1] as int;
-      double accX = event[2] as double;
-      double accY = event[3] as double;
-      double accZ = event[4] as double;
-      double gyroX = event[5] as double;
-      double gyroY = event[6] as double;
-      double gyroZ = event[7] as double;
-      return SensorData(
-        timestamp,
-        accuracy,
-        accX,
-        accY,
-        accZ,
-        gyroX,
-        gyroY,
-        gyroZ
-      );
-    } catch (_) {
-      return null;
+  static List<SensorData> eventToSensorData(List<AccelerometerEvent> accEvents, List<GyroscopeEvent> gyrEvents) {
+    List<SensorData> l = new List();
+
+    for (var pair in zip([accEvents, gyrEvents]).toList()) {
+      AccelerometerEvent accEvent = pair[0];
+      GyroscopeEvent gyrEvent = pair[1];
+
+      int timestamp = accEvent.timestamp;
+      int accuracy = (accEvent.accuracy > gyrEvent.accuracy) ? accEvent.accuracy : gyrEvent.accuracy;
+      double accX = accEvent.x;
+      double accY = accEvent.y;
+      double accZ = accEvent.z;
+      double gyroX = gyrEvent.x;
+      double gyroY = gyrEvent.y;
+      double gyroZ = gyrEvent.z;
+
+      l.add(SensorData(timestamp,accuracy,accX,accY,accZ,gyroX,gyroY,gyroZ));
     }
+
+    return l;
   }
 }
 

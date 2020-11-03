@@ -45,35 +45,35 @@ class _HeightScreenState extends State<HeightScreen> {
       child: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          reverse: true,
+          reverse: false,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              //SizedBox(height: 50),
+              SizedBox(height: 64),
               Center(
                 child: Image.asset("assets/images/height.png"),
               ),
-              SizedBox(height: 100),
+              SizedBox(height: 50),
               Text(
                 'intro_height_title'.tr(),
                 style: Theme.of(context).textTheme.headline4.copyWith(
-                  fontSize: 36,
+                  fontSize:28,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 18),
+              SizedBox(height: 15),
               Text(
                 'intro_height_msg'.tr(),
                 style: Theme.of(context).textTheme.subtitle2.copyWith(
-                  fontSize: 18,
+                  fontSize: 16,
                   color: Colors.white,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Form(
                   key: _formKey,
                   child: CustomNumberFormField(
@@ -113,7 +113,7 @@ class _HeightScreenState extends State<HeightScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 64)
+              SizedBox(height: 100)
             ],
           ),
         ),

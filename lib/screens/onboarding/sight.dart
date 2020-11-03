@@ -65,7 +65,7 @@ class _SightScreenState extends State<SightScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: 40),
+                SizedBox(height: 64),
                 Text(
                   'sight_defects_title'.tr(),
                   style: Theme.of(context).textTheme.headline4.copyWith(

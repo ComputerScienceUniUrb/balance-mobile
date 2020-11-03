@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:balance_app/manager/preference_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:balance_app/routes.dart';
@@ -10,8 +12,10 @@ import 'package:balance_app/widgets/dots_indicator.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:balance_app/bloc/onboarding_bloc.dart';
+import 'package:http/http.dart';
 
 import 'onboarding/welcome.dart';
+import 'onboarding/consent.dart';
 import 'onboarding/height.dart';
 import 'onboarding/general_info.dart';
 import 'onboarding/posture.dart';
@@ -35,6 +39,7 @@ class _IntroScreenState extends State<IntroScreen> {
     Color(0xFFC95E4B),
     Color(0xFF36836C),
     Color(0xFF398AA7),
+    Color(0xFB939AA7),
   ];
 
   @override
@@ -57,16 +62,17 @@ class _IntroScreenState extends State<IntroScreen> {
                     child: BlocListener<OnBoardingBloc, OnBoardingState>(
                       condition: (_, current) => current is ValidationSuccessState,
                       listener: (context, _) async {
+                        FocusScope.of(context).unfocus();
                         // If we are in the last page go to home
-                        if (_currentPage == 5) {
+                        if (_currentPage == 6) {
+                          PreferenceManager.firstLaunchDone();
+                          _makePostRequest(jsonEncode(await PreferenceManager.userInfo));
                           Navigator.pushReplacementNamed(context, Routes.main);
                         } else {
                           /*
                             * All the required data are stored... mark the
                             * first launch as done so we don't ask this data anymore
                             */
-                          if (_currentPage == 1)
-                            PreferenceManager.firstLaunchDone();
                           // Move to next page
                           _pageController.nextPage(
                             duration: Duration(milliseconds: 800),
@@ -80,17 +86,18 @@ class _IntroScreenState extends State<IntroScreen> {
                         onPageChanged: (newPage) =>
                           setState(() {
                             _currentPage = newPage;
-                            if (newPage == 1)
+                            if (newPage == 2)
                               _isNextBtnEnable = false;
                           }),
                         children: [
                           WelcomeScreen(0),
-                          HeightScreen(1, (isEnable) =>
+                          ConsentScreen(1),
+                          HeightScreen(2, (isEnable) =>
                             setState(() => _isNextBtnEnable = isEnable)),
-                          GeneralInfoScreen(2),
-                          PostureScreen(3),
-                          TraumaScreen(4),
-                          SightScreen(5),
+                          GeneralInfoScreen(3),
+                          PostureScreen(4),
+                          TraumaScreen(5),
+                          SightScreen(6),
                         ],
                       ),
                     ),
@@ -104,25 +111,19 @@ class _IntroScreenState extends State<IntroScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         DotsIndicator(
-                          size: 6,
+                          size: 7,
                           selected: _currentPage,
                         ),
                         AnimatedContainer(
                           duration: Duration(milliseconds: 270),
                           height: 64,
                           child: Row(children: <Widget>[
-                            (_currentPage != 0 && _currentPage != 1) ? FlatButton(
-                              textColor: Colors.white,
-                              // It's safe to skip because the button is displayed after the required data
-                              onPressed: () => Navigator.pushReplacementNamed(context, Routes.main),
-                              child: Text('skip_btn'.tr()),
-                            ) : SizedBox(),
                             NextButton(
                               onTap: () =>
                                 BlocProvider.of<OnBoardingBloc>(context).add(
                                   NeedToValidateEvent(_currentPage)),
                               isEnable: _isNextBtnEnable,
-                              isDone: _currentPage == 5,
+                              isDone: _currentPage == 6,
                               backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors
                                 .colorPrimary,
                             ),
@@ -138,4 +139,21 @@ class _IntroScreenState extends State<IntroScreen> {
       ),
     );
   }
+}
+
+_makePostRequest(var data) async {
+  // TODO: This stuff here is hardcode. Need changes
+  // set up POST request arguments
+  //String url = 'http://80.211.137.75:8000/api/v1/db/measurement';
+  String url = 'http://192.168.1.206:8000/api/v1/user/signup';
+  Map<String, String> headers = {"Content-type": "application/json"};
+  String json = data;
+  print(data);
+  // make POST request
+  Response response = await post(url, headers: headers, body: json);
+
+  // response
+  int statusCode = response.statusCode;
+  String body = response.body;
+  PreferenceManager.updateUserInfo(token: jsonDecode(body)["response"].toString());
 }

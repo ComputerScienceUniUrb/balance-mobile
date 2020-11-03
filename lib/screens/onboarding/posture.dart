@@ -21,11 +21,13 @@ class PostureScreen extends StatefulWidget {
   final List<bool> posture;
   final bool problemsInFamily;
   final bool useOfDrugs;
+  final bool alcoholIntake;
 
   PostureScreen(this.screenIndex, {
     this.posture,
     this.problemsInFamily,
     this.useOfDrugs,
+    this.alcoholIntake,
   });
 
   @override
@@ -38,6 +40,7 @@ class _PostureScreenState extends State<PostureScreen> {
   List<bool> _selectedPosture;
   bool _problemsInFamily = false;
   bool _useOfDrugs = false;
+  bool _alcoholIntake = false;
 
   @override
   void initState() {
@@ -45,6 +48,7 @@ class _PostureScreenState extends State<PostureScreen> {
     _selectedPosture = widget.posture;
     _problemsInFamily = widget.problemsInFamily ?? false;
     _useOfDrugs = widget.useOfDrugs ?? false;
+    _alcoholIntake = widget.alcoholIntake ?? false;
   }
 
   @override
@@ -67,6 +71,7 @@ class _PostureScreenState extends State<PostureScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                SizedBox(height: 64),
                 Text(
                   'postural_problem_title'.tr(),
                   style: Theme.of(context).textTheme.headline4.copyWith(
@@ -114,6 +119,20 @@ class _PostureScreenState extends State<PostureScreen> {
                   onChanged: (value) => setState(() => _useOfDrugs = value),
                   validator: (value) => null,
                   onSaved: (newValue) => PreferenceManager.updateUserInfo(useOfDrugs: newValue),
+                ),
+                SizedBox(height: 20),
+                PlainCheckboxFormField(
+                  child: Text(
+                    'Assumi abitualmente sostanze alcoliche?',
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  value: _alcoholIntake,
+                  onChanged: (value) => setState(() => _alcoholIntake = value),
+                  validator: (value) => null,
+                  onSaved: (newValue) => PreferenceManager.updateUserInfo(alcoholIntake: newValue),
                 ),
                 SizedBox(height: 105)
               ],

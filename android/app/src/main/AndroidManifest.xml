@@ -9,7 +9,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="Balance"
-        android:icon="@mipmap/ic_launcher_full_b"
+        android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_full_b_round"
         android:allowBackup="false">
         <activity
