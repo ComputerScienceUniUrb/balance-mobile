@@ -3,13 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:balance_app/floor/measurement_database.dart';
+import 'package:balance_app/manager/preference_manager.dart';
 import 'package:balance_app/model/measurement.dart';
 import 'package:balance_app/model/statokinesigram.dart';
 import 'package:balance_app/posture_processor/posture_processor.dart';
-<<<<<<< HEAD
-=======
 import 'package:http/http.dart';
->>>>>>> dev
 import 'package:path_provider/path_provider.dart';
 
 /// Repository of the result screen
@@ -29,6 +27,7 @@ class ResultRepository {
     // 1. Get the Measurement with the given id
     final measurement = await database.measurementDao.findMeasurementById(measurementId);
     final cogv = await database.cogvDataDao.findAllCogvDataForId(measurementId);
+    final token = (await PreferenceManager.userInfo).token;
     // 2. Check if the features and the cogv data are present and compute them if not
     if (!measurement.hasFeatures && cogv.isEmpty) {
       print("ResultRepository.getResult: Computing Features...");
@@ -39,11 +38,8 @@ class ResultRepository {
       final computed = await PostureProcessor.computeFromData(measurementId, rawMeasurementData);
 
       // Update the measurement with the computed features
-      database.measurementDao.updateMeasurement(Measurement.from(measurement, computed));
-<<<<<<< HEAD
-=======
-      _makePostRequest(Measurement.from(measurement, computed));
->>>>>>> dev
+      database.measurementDao.updateMeasurement(Measurement.from(measurement, token, computed));
+      _makePostRequest(Measurement.from(measurement, token, computed));
       // Store the computed CogvData
       database.cogvDataDao.insertCogvData(computed.cogv);
       return computed;
@@ -52,13 +48,11 @@ class ResultRepository {
     return Statokinesigram.from(measurement, cogv);
   }
 
-<<<<<<< HEAD
-=======
   _makePostRequest(var data) async {
     // TODO: This stuff here is hardcode. Need changes
     // set up POST request arguments
-    String url = 'http://80.211.137.75:8000/api/v1/db/measurement';
-    //String url = 'http://192.168.1.206:8000/api/v1/db/measurement';
+    String url = 'http://80.211.137.75/api/v1/db/measurement';
+    //String url = 'http://192.168.1.206/api/v1/db/measurement';
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = jsonEncode(data.toJson());
 
@@ -71,7 +65,6 @@ class ResultRepository {
     print("Measurement Sent to the Backend");
   }
 
->>>>>>> dev
   /// Save all the measurement in a .json file
   ///
   /// This method will export all the data related to

@@ -20,6 +20,8 @@
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Authors](#authors)
+  - [Android](#android)
+  - [iOS](#ios)
 - [License](#license)
   - [Third-party component licenses](#third-party-component-licenses)
 

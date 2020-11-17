@@ -58,8 +58,8 @@ class MeasureCountdownRepository {
   _makePostRequest(var data) async {
     // TODO: This stuff here is hardcode. Need changes
     // set up POST request arguments
-    String url = 'http://80.211.137.75:8000/api/v1/db/sway';
-    //String url = 'http://192.168.1.206:8000/api/v1/db/sway';
+    String url = 'http://80.211.137.75/api/v1/db/sway';
+    //String url = 'http://192.168.1.206/api/v1/db/sway';
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = jsonEncode(data);
 
@@ -83,6 +83,7 @@ class MeasureCountdownRepository {
   Stream<RawMeasurementData> _generateRawData(List<SensorData> data, int measId) async*{
     final accBias = await PreferenceManager.accelerometerBias;
     final gyroBias = await PreferenceManager.gyroscopeBias;
+    final token = (await PreferenceManager.userInfo).token;
 
     for(var sd in data) {
       double aX, aY, aZ, gX, gY, gZ;
@@ -99,6 +100,7 @@ class MeasureCountdownRepository {
       }
       yield RawMeasurementData(
         measurementId: measId,
+        token: token,
         timestamp: sd.timestamp,
         accuracy: sd.accuracy,
         accelerometerX: aX,

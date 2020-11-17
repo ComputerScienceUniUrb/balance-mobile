@@ -8,6 +8,8 @@ class Measurement {
   @PrimaryKey(autoGenerate: true)
   final int id;
 
+  @ColumnInfo()
+  final String token;
   // General info about the measurement
   @ColumnInfo(name: "creation_date", nullable: false)
   final int creationDate;
@@ -74,6 +76,7 @@ class Measurement {
 
   Measurement({
     this.id,
+    this.token,
     this.creationDate,
     this.eyesOpen,
     this.hasFeatures = false,
@@ -101,9 +104,10 @@ class Measurement {
   /// This method will create a new [Measurement] form an existing one and
   /// a [Statokinesigram].
   /// The new [Measurement] will retain the id of the given one.
-  factory Measurement.from(Measurement m, Statokinesigram s) =>
+  factory Measurement.from(Measurement m, String token, Statokinesigram s) =>
     Measurement(
       id: m.id,
+      token: token,
       creationDate: m.creationDate,
       eyesOpen: m.eyesOpen,
       hasFeatures: true,
@@ -172,6 +176,7 @@ class Measurement {
 =======
   Map<String, dynamic> toJson() => {
       'id': this.id,
+      'token': this.token,
       'creationDate': this.creationDate,
       'eyesOpen': this.eyesOpen,
       'hasFeatures': this.hasFeatures,
