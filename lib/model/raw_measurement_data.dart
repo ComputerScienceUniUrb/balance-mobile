@@ -2,6 +2,7 @@
 import 'package:floor/floor.dart';
 import 'package:balance_app/model/measurement.dart';
 import 'package:balance_app/model/sensor_data.dart';
+import 'package:balance_app/manager/preference_manager.dart';
 
 @Entity(
   tableName: "raw_measurements_data",
@@ -17,6 +18,7 @@ import 'package:balance_app/model/sensor_data.dart';
 )
 class RawMeasurementData {
   @PrimaryKey(autoGenerate: true) final int id;
+  @ColumnInfo() final String token;
   @ColumnInfo(name: "measurement_id", nullable: false) final int measurementId;
   @ColumnInfo() final int timestamp;
   @ColumnInfo() final int accuracy;
@@ -29,6 +31,7 @@ class RawMeasurementData {
 
   RawMeasurementData({
     this.id,
+    this.token,
     this.measurementId,
     this.timestamp,
     this.accuracy,
@@ -40,10 +43,11 @@ class RawMeasurementData {
     this.gyroscopeZ,
   });
 
-  factory RawMeasurementData.fromSensorData(int measurementId, SensorData sensorData) {
+  factory RawMeasurementData.fromSensorData(int measurementId, String token, SensorData sensorData) {
     return RawMeasurementData(
       measurementId: measurementId,
-      timestamp:sensorData.timestamp,
+      token: token,
+      timestamp: sensorData.timestamp,
       accuracy: sensorData.accuracy,
       accelerometerX: sensorData.accelerometerX,
       accelerometerY: sensorData.accelerometerY,
@@ -57,6 +61,7 @@ class RawMeasurementData {
   /// Maps this object to json
   Map toJson() => {
       "id": this.id,
+      "token": this.token,
       "measurementId": this.measurementId,
       "timestamp": this.timestamp,
       "accuracy": this.accuracy,

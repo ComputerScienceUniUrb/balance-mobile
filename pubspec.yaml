@@ -1,7 +1,7 @@
 # Flutter app
 name: balance_app
 description: Flutter application to measure you posture!
-version: 1.0.0+2
+version: 1.0.0+3
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
