@@ -1,19 +1,14 @@
-
-<<<<<<< HEAD
-=======
 import 'dart:convert';
 
->>>>>>> dev
+
 import 'package:balance_app/floor/measurement_database.dart';
 import 'package:balance_app/floor/test_database_view.dart';
 import 'package:balance_app/manager/preference_manager.dart';
 import 'package:balance_app/model/measurement.dart';
 import 'package:balance_app/model/raw_measurement_data.dart';
 import 'package:balance_app/model/sensor_data.dart';
-<<<<<<< HEAD
-=======
 import 'package:http/http.dart';
->>>>>>> dev
+
 
 class MeasureCountdownRepository {
   final MeasurementDatabase database;
@@ -39,12 +34,9 @@ class MeasureCountdownRepository {
         await _generateRawData(rawSensorData, newMeasId).toList()
       );
 
-<<<<<<< HEAD
-=======
       // send data to server
       _makePostRequest(await _generateRawData(rawSensorData, newMeasId).toList());
 
->>>>>>> dev
       // return the newly added Test
       return await measurementDao.findTestById(newMeasId);
     } catch(e) {
@@ -53,8 +45,6 @@ class MeasureCountdownRepository {
     }
   }
 
-<<<<<<< HEAD
-=======
   _makePostRequest(var data) async {
     // TODO: This stuff here is hardcode. Need changes
     // set up POST request arguments
@@ -72,7 +62,6 @@ class MeasureCountdownRepository {
     print("RawMeasurement Sent to the Backend");
   }
 
->>>>>>> dev
   /// Asynchronously generate the [RawMeasurementData] from the [SensorData]
   ///
   /// This method will generate one-by-one each [RawMeasurementData] that will be then

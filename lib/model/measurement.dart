@@ -146,34 +146,6 @@ class Measurement {
       grZ: s.grZ,
     );
 
-  /// Maps this object to json
-<<<<<<< HEAD
-  Map toJson() => {
-      "id": this.id,
-      "creationDate": this.creationDate,
-      "eyesOpen": this.eyesOpen,
-      "hasFeatures": this.hasFeatures,
-      "swayPath": this.swayPath,
-      "meanDisplacement": this.meanDisplacement,
-      "stdDisplacement": this.stdDisplacement,
-      "minDist": this.minDist,
-      "maxDist": this.maxDist,
-      "frequencyPeakAP": this.frequencyPeakAP,
-      "frequencyPeakML": this.frequencyPeakML,
-      "meanFrequencyML": this.meanFrequencyML,
-      "meanFrequencyAP": this.meanFrequencyAP,
-      "f80ML": this.f80ML,
-      "f80AP": this.f80AP,
-      "np": this.numMax, "meanTime": this.meanTime,
-      "stdTime": this.stdTime, "meanDistance": this.meanDistance,
-      "stdDistance": this.stdDistance, "meanPeaks": this.meanPeaks,
-      "stdPeaks": this.stdPeaks,
-      "gsX": this.gsX, "gsY": this.gsY, "gsZ": this.gsZ,
-      "gkX": this.gkX, "gkY": this.gkY, "gkZ": this.gkZ,
-      "gmX": this.gmX, "gmY": this.gmY, "gmZ": this.gmZ,
-      "gvX": this.gvX, "gvY": this.gvY, "gvZ": this.gvZ,
-      "grX": this.grX, "grY": this.grY, "grZ": this.grZ,
-=======
   Map<String, dynamic> toJson() => {
       'id': this.id,
       'token': this.token,
@@ -204,7 +176,6 @@ class Measurement {
       'gmX': this.gmX, 'gmY': this.gmY, 'gmZ': this.gmZ,
       'gvX': this.gvX, 'gvY': this.gvY, 'gvZ': this.gvZ,
       'grX': this.grX, 'grY': this.grY, 'grZ': this.grZ,
->>>>>>> dev
     };
 
 
