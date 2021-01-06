@@ -63,14 +63,14 @@ class _CircularCounterState extends State<CircularCounter> with SingleTickerProv
 
   Duration get _duration => Duration(
     milliseconds: widget.state is CountdownMeasureState
-      ? 31000
-      : 5000
+      ? 30000
+      : 6000
   );
 
   String get _timeString {
     Duration dT = _fillMode == FillMode.reverse
       ? (_controller.duration * (1-_controller.value))
-      : Duration(seconds: 1) + _controller.duration * _controller.value;
+      : Duration(seconds: 0) + _controller.duration * _controller.value;
     return "${(dT.inSeconds % 60).toString().padLeft(2, "0")}";
   }
 

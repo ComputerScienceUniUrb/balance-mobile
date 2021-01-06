@@ -79,7 +79,7 @@ class SensorMonitor {
             gyroscopeEvents(delay: 10000).listen((GyroscopeEvent event) {
               gyroscopeList.add(event);
             }));
-        _countdownTimer = CountdownTimer(duration, Duration(milliseconds: 10000))
+        _countdownTimer = CountdownTimer(duration, Duration(milliseconds: 1000))
           ..listen((event) => _streamController.add(event.elapsed),
             onDone: () {
               _sensorsData.addAll(eventToSensorData(accelerometerList, gyroscopeList));

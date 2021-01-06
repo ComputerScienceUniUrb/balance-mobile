@@ -86,6 +86,11 @@ class RawMeasurementData {
     "gyroscopeY=$gyroscopeY, "
     "gyroscopeZ=$gyroscopeZ)";
 
+  String toCSV() {
+      return '$id;$measurementId;$timestamp;$accuracy;$accelerometerX;$accelerometerY;'
+             '$accelerometerZ;$gyroscopeX;$gyroscopeY;$gyroscopeZ\n';
+  }
+
   @override
   int get hashCode {
     final int prime = 31;

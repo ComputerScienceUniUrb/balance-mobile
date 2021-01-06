@@ -276,5 +276,15 @@ class Measurement {
       'gvY: $gvY, gvZ: $gvZ, gkX: $gkX, gkY: $gkY, gkZ: $gkZ, gsX: $gsX, gsY: $gsY, gsZ: $gsZ}';
   }
 
-
+  String toCSV() {
+    return 'id;creationDate;eyesOpen;hasFeatures;swayPath;meanDisplacement;stdDisplacement;'
+           'minDist;maxDist;meanFrequencyAP;meanFrequencyML;frequencyPeakAP;frequencyPeakML;'
+           ';f80AP;f80ML;np;meanTime;stdTime;meanDistance;stdDistance;meanPeaks;stdPeaks;'
+           'grX;grY;grZ;gmX;gmY;gmZ;gvX;gvY;gvZ;gkX;gkY;gkZ;gsX;gsY;gsZ\n'
+           '$id;$creationDate;$eyesOpen;$hasFeatures;$swayPath;$meanDisplacement;'
+           '$stdDisplacement;$minDist;$maxDist;$meanFrequencyAP;$meanFrequencyML;'
+           '$frequencyPeakAP;$frequencyPeakML;$f80AP;$f80ML;$numMax;$meanTime;'
+           '$stdTime;$meanDistance;$stdDistance;$meanPeaks;$stdPeaks;$grX;$grY'
+           '$grZ;$gmX;$gmY;$gmZ;$gvX;$gvY;$gvZ;$gkX;$gkY;$gkZ;$gsX;$gsY;$gsZ\n';
+  }
 }

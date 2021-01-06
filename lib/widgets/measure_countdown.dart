@@ -73,6 +73,7 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
       child: BlocConsumer<CountdownBloc, CountdownState>(
         listener: (_, state) {
           state is CountdownMeasureState? _measuring = true: _measuring = false;
+          // TODO: This stuff here goes on error in iOS Debug
           // Start/Stop the vibration
           if (state is CountdownPreMeasureState)
             vibrationManager.playPattern();

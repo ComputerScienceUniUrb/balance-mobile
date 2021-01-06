@@ -25,7 +25,7 @@ class CountdownBloc extends Bloc<CountdownEvents, CountdownState> {
   CountdownBloc._(MeasurementDatabase db):
     _repository = MeasureCountdownRepository(db),
     _isCountdownCancelled = false,
-    _sensorMonitor = SensorMonitor(Duration(milliseconds: 31000));
+    _sensorMonitor = SensorMonitor(Duration(milliseconds: 30000));
 
   /// Factory method for creating an instance of [CountdownBloc]
   factory CountdownBloc.create(MeasurementDatabase db) => CountdownBloc._(db);
@@ -80,6 +80,7 @@ class CountdownBloc extends Bloc<CountdownEvents, CountdownState> {
       // Save the new test into the database
       case CountdownEvents.measureComplete:
         try {
+         print(_sensorMonitor.result.length);
          final newTest = await _repository.createNewMeasurement(_sensorMonitor.result, _eyesOpen);
          print("CountdownBloc.mapEventToState: Test $newTest created with ${_sensorMonitor.result.length} raw data");
          yield CountdownCompleteState.success(newTest);

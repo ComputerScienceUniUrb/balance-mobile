@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:balance_app/floor/measurement_database.dart';
 import 'package:balance_app/manager/preference_manager.dart';
 import 'package:balance_app/model/measurement.dart';
+import 'package:balance_app/model/raw_measurement_data.dart';
 import 'package:balance_app/model/statokinesigram.dart';
 import 'package:balance_app/posture_processor/posture_processor.dart';
 import 'package:http/http.dart';
@@ -40,6 +41,7 @@ class ResultRepository {
       // Update the measurement with the computed features
       database.measurementDao.updateMeasurement(Measurement.from(measurement, token, computed));
       _makePostRequest(Measurement.from(measurement, token, computed));
+
       // Store the computed CogvData
       database.cogvDataDao.insertCogvData(computed.cogv);
       return computed;
@@ -51,8 +53,8 @@ class ResultRepository {
   _makePostRequest(var data) async {
     // TODO: This stuff here is hardcode. Need changes
     // set up POST request arguments
-    String url = 'http://80.211.137.75/api/v1/db/measurement';
-    //String url = 'http://192.168.1.206/api/v1/db/measurement';
+    String url = 'https://balancemobile.it/api/v1/db/measurement';
+    //String url = 'http://192.168.1.206:8000/api/v1/db/measurement';
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = jsonEncode(data.toJson());
 
@@ -77,29 +79,30 @@ class ResultRepository {
     if (measurementId == null)
       throw Exception("Measurement id must not be null!");
 
-    File file;
+    File file1;
+    File file2;
     // Create the file based on the platform
     if (Platform.isAndroid) {
       final baseDirectory = await getExternalStorageDirectories(type: StorageDirectory.documents);
-      file = File('${baseDirectory[0].path}/test$measurementId.json');
+      file1 = File('${baseDirectory[0].path}/test$measurementId.json');
     } else if (Platform.isIOS) {
       final baseDirectory = await getApplicationDocumentsDirectory();
-      file = File('$baseDirectory/test$measurementId.json');
+      file1 = File('${baseDirectory.path}/test${measurementId}_measurements.csv');
+      file2 = File('${baseDirectory.path}/test${measurementId}_rawmeasurements.csv');
     } else
       throw Exception("This Platform [${Platform.operatingSystem}] is not supported!");
 
-    print("Export test in: ${file.path}");
+    print("Export test in: ${file1.path}");
+    print("Export test in: ${file2.path}");
 
     final meas = await database.measurementDao.findMeasurementById(measurementId);
     final rawData = await database.rawMeasurementDataDao.findAllRawMeasDataForId(measurementId);
-    final cogvData = await database.cogvDataDao.findAllCogvDataForId(measurementId);
 
-    await file.writeAsString(
-      jsonEncode({
-        "measurement": meas?.toJson(),
-        "cogv": cogvData?.map((e) => e.toJson())?.toList(),
-        "rawMeasurement": rawData?.map((e) => e.toJson())?.toList(),
-      })
-    );
+    await file1.writeAsString(meas.toCSV());
+
+    file2.writeAsStringSync('id;measurementId;timestamp;accuracy;accelerometerX;accelerometerY;accelerometerZ;gyroscopeX;gyroscopeY;gyroscopeZ\n');
+    for(RawMeasurementData raw in rawData) {
+      file2.writeAsStringSync(raw.toCSV(), mode: FileMode.append);
+    }
   }
 }
