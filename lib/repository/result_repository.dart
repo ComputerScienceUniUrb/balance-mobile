@@ -84,7 +84,8 @@ class ResultRepository {
     // Create the file based on the platform
     if (Platform.isAndroid) {
       final baseDirectory = await getExternalStorageDirectories(type: StorageDirectory.documents);
-      file1 = File('${baseDirectory[0].path}/test$measurementId.json');
+      file1 = File('${baseDirectory[0].path}/test${measurementId}_measurements.csv');
+      file2 = File('${baseDirectory[0].path}/test${measurementId}_rawmeasurements.csv');
     } else if (Platform.isIOS) {
       final baseDirectory = await getApplicationDocumentsDirectory();
       file1 = File('${baseDirectory.path}/test${measurementId}_measurements.csv');
