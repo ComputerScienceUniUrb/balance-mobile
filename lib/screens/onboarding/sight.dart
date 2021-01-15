@@ -8,6 +8,7 @@ import 'package:balance_app/widgets/custom_checkbox.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:balance_app/bloc/onboarding_bloc.dart';
+import 'package:group_button/group_button.dart';
 
 /// Sixth intro screen
 ///
@@ -19,11 +20,16 @@ class SightScreen extends StatefulWidget {
   /// Index of the screen
   final int screenIndex;
   final List<bool> sight;
-  final int hearing;
+  final bool wearGlasses;
+  final int hearingProblems;
+  final int hearingLoss;
+
 
   SightScreen(this.screenIndex, {
     this.sight,
-    this.hearing,
+    this.wearGlasses,
+    this.hearingProblems,
+    this.hearingLoss,
   });
 
   @override
@@ -32,16 +38,21 @@ class SightScreen extends StatefulWidget {
 
 class _SightScreenState extends State<SightScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _sightDefects = ['myopia_txt'.tr(), 'presbyopia_txt'.tr(), 'farsightedness_txt'.tr()];
-  final _hearDefects = ['none'.tr(), 'light_txt'.tr(), 'moderate_txt'.tr(), 'severe_txt'.tr(), 'deep_txt'.tr()];
+  final _sightDefects = ['myopia_txt'.tr(), 'presbyopia_txt'.tr(), 'farsightedness_txt'.tr(), 'astigmatism_txt'.tr()];
+  bool _wearGlasses = false;
   List<bool> _selectedSightProblem;
-  int _hearIndex;
+  final _whichHear = ['none'.tr(), "Destro", "Sinistro", "Entrambi"];
+  final _hearDefects = ['none'.tr(), 'light_txt'.tr(), 'moderate_txt'.tr(), 'severe_txt'.tr(), 'deep_txt'.tr()];
+  int _hearProblemsIndex;
+  int _hearLossIndex;
 
   @override
   void initState() {
     super.initState();
     _selectedSightProblem = widget.sight;
-    _hearIndex = widget.hearing ?? 0;
+    _wearGlasses = widget.wearGlasses ?? false;
+    _hearProblemsIndex = widget.hearingProblems ?? 0;
+    _hearLossIndex = widget.hearingLoss ?? 0;
   }
 
   @override
@@ -62,15 +73,22 @@ class _SightScreenState extends State<SightScreen> {
           child: Form(
             key: _formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(height: 64),
                 Text(
                   'sight_defects_title'.tr(),
                   style: Theme.of(context).textTheme.headline4.copyWith(
-                    fontSize: 36,
+                    fontSize: 32,
                     fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 24),
+                Text(
+                  "Indossi Occhiali?",
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                    fontSize: 18,
                     color: Colors.white,
                   ),
                 ),
@@ -81,33 +99,40 @@ class _SightScreenState extends State<SightScreen> {
                   onChanged: (value) => setState(() => _selectedSightProblem = value),
                   validator: (value) => null,
                   onSaved: (newValue) => PreferenceManager.updateUserInfo(
-                    sightProblems: newValue?? List.filled(3, false)
+                      sightProblems: newValue?? List.filled(3, false)
                   ),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 32),
                 Text(
                   'intro_hearing_defects_title'.tr(),
                   style: Theme.of(context).textTheme.headline4.copyWith(
-                    fontSize: 36,
+                    fontSize:32,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),
                 ),
                 SizedBox(height: 24),
-                CustomDropdownFormField(
-                  hint: 'hearing_loss_hint'.tr(),
-                  value: _hearIndex,
-                  onChanged: (newValue) {
-                    setState(() => _hearIndex = newValue);
-                  },
-                  items: _hearDefects.map((e) => CustomDropdownItem(text: e.toString())).toList(),
-                  openColor: Color(0xFFF4F6F9),
-                  enabledColor: Colors.white,
-                  enableTextColor: Color(0xFFBFBFBF),
-                  elementTextColor: Color(0xFF666666),
-                  enabledIconColor: BColors.colorPrimary,
-                  validator: (_) => null,
-                  onSaved: (newValue) => PreferenceManager.updateUserInfo(hearingProblems: newValue ?? 0),
+                Text(
+                  "Hai problemi d'udito?",
+                  style: Theme.of(context).textTheme.headline4.copyWith(
+                    fontSize:18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 24),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                    child: GroupButton(
+                      isRadio: false,
+                      spacing: 10,
+                      onSelected: (index, isSelected) => print('$index button is selected'),
+                      buttons: ["Orecchio Dx", "Orecchio Sx"],
+                      selectedColor: BColors.colorPrimary,
+                    ),
+                  ),
                 ),
                 SizedBox(height: 105),
               ],

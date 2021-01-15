@@ -9,9 +9,9 @@ import 'package:balance_app/widgets/custom_number_form_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:balance_app/bloc/onboarding_bloc.dart';
 
-/// Third intro screen
+/// Fourth intro screen
 ///
-/// This Widget represents the third of the intro
+/// This Widget represents the fourth of the intro
 /// screens, his purpose is to ask the user his age,
 /// his gender and is weight.
 /// The user can leave blank this info.
@@ -64,17 +64,17 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: 64),
-              Center(
+              SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.all(48.0),
                 child: Image.asset(
                   "assets/images/eta.png",
                 )
               ),
-              SizedBox(height: 40),
               Text(
                 'intro_general_title'.tr(),
                 style: Theme.of(context).textTheme.headline4.copyWith(
-                  fontSize: 32,
+                  fontSize: 28,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                 ),
@@ -130,12 +130,11 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
                       SizedBox(height: 8),
                       CustomNumberFormField(
                         labelText: 'weight_txt'.tr(),
-                        decimal: true,
                         initialValue: widget.weight,
                         validator: (value) {
                           if (value.isNotEmpty) {
                             try {
-                              double weight = double.parse(value);
+                              int weight = int.parse(value);
                               if (weight < 25.0)
                                 return 'too_light_error_txt'.tr();
                               else if (weight > 580.0)
@@ -149,7 +148,7 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
                         onSaved: (newValue) {
                           if (newValue.isNotEmpty)
                             try {
-                              PreferenceManager.updateUserInfo(weight: double.parse(newValue));
+                              PreferenceManager.updateUserInfo(weight: int.parse(newValue));
                             } on FormatException catch(e) {
                               print("Some error occurred saving weight data: ${e.message}");
                             }

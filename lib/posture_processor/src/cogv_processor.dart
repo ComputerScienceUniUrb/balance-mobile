@@ -11,8 +11,8 @@ import 'package:balance_app/posture_processor/src/list_extension.dart';
 
 /// Value of the g force
 const double _gForce = 9.807;
-/// Factor of conversion used to obtain d from the user height in cm
-const double _heightConversionFactor = 0.530;
+/// Factor of conversion used to obtain d from the user height in mm
+const double _heightConversionFactor = 5.30;
 
 /// Computes the COGv values form the [RawMeasurementData]
 ///

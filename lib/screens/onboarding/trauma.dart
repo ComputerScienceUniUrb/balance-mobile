@@ -7,7 +7,7 @@ import 'package:balance_app/widgets/custom_checkbox.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:balance_app/bloc/onboarding_bloc.dart';
 
-/// Fifth intro screen
+/// Sixth intro screen
 ///
 /// This Widget represents the fifth of the intro
 /// screens, his purpose is to ask the user if he
@@ -29,7 +29,7 @@ class TraumaScreen extends StatefulWidget {
 
 class _TraumaScreenState extends State<TraumaScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _otherTrauma = ['fractures_txt'.tr(), 'limb_operations_txt'.tr(), 'falls_txt'.tr(), 'distortions_txt'.tr(), 'head_trauma'.tr()];
+  final _physicalTrauma = ['fractures_txt'.tr(), 'limb_operations_txt'.tr(), 'falls_txt'.tr(), 'distortions_txt'.tr(), 'head_trauma'.tr()];
   List<bool> _selectedTrauma;
 
   @override
@@ -65,17 +65,18 @@ class _TraumaScreenState extends State<TraumaScreen> {
                 color: Colors.white,
               ),
             ),
+            SizedBox(height: 16),
             Form(
               key: _formKey,
               child: CheckboxGroupFormField(
-                items: _otherTrauma,
+                items: _physicalTrauma,
                 value: _selectedTrauma,
                 onChanged: (value) {
                   setState(() =>_selectedTrauma = value);
                 },
                 validator: (value) => null,
                 onSaved: (newValue) => PreferenceManager.updateUserInfo(
-                  otherTrauma: newValue?? List.filled(5, false)
+                  physicalTrauma: newValue?? List.filled(5, false)
                 ),
               ),
             ),

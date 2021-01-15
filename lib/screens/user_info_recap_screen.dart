@@ -52,7 +52,7 @@ class UserInfoRecapScreen extends StatelessWidget {
     if (list == null || list.where((element) => element).isEmpty)
       return 'none'.tr();
 
-    final problems = ['myopia_txt'.tr(), 'presbyopia_txt'.tr(), 'farsightedness_txt'.tr()];
+    final problems = ['myopia_txt'.tr(), 'presbyopia_txt'.tr(), 'farsightedness_txt'.tr(), 'astigmatism_txt'.tr()];
     return "[${list.whereIndexed().map((e) => problems[e]).join(", ")}]";
   }
   /// Get the String of hearing problems
@@ -264,7 +264,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                           SizedBox(width: 16),
                           Flexible(
                             child: Text(
-                              _getTraumaString(userInfo?.otherTrauma),
+                              _getTraumaString(userInfo?.physicalTrauma),
                               style: valueTextStyle,
                               textAlign: TextAlign.end,
                             )
@@ -313,7 +313,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                             style: headlineTextStyle,
                           ),
                           Text(
-                            _getHearingString(userInfo?.hearingProblems),
+                            _getHearingString(userInfo?.hearingLoss),
                             style: valueTextStyle,
                           ),
                         ],
@@ -322,22 +322,22 @@ class UserInfoRecapScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 76),
+              SizedBox(height: 8),
             ],
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // Open the onboarding route with UserInfo from memory
-          Navigator.pushNamed(
-            context,
-            Routes.onboarding,
-            arguments: await PreferenceManager.userInfo
-          );
-        },
-        child: Icon(Icons.edit),
-      ),
+      //floatingActionButton: FloatingActionButton(
+      //  onPressed: () async {
+      //    // Open the onboarding route with UserInfo from memory
+      //    Navigator.pushNamed(
+      //      context,
+      //      Routes.onboarding,
+      //      arguments: await PreferenceManager.userInfo
+      //    );
+      //  },
+      //  child: Icon(Icons.edit),
+      //),
     );
   }
 }

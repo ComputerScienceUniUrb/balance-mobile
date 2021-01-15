@@ -20,6 +20,10 @@ import 'package:balance_app/bloc/countdown_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:focus_detector/focus_detector.dart';
+import 'package:wakelock/wakelock.dart';
+import 'package:battery/battery.dart';
+
 /// Widget that manage the entire measuring process
 ///
 /// This widget has the purpose of managing the entirety of the
@@ -36,6 +40,7 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
   CountdownBloc _bloc;
   bool _measuring = false;
   VibrationManager vibrationManager;
+  var _battery = Battery();
 
   @override
   void initState() {
@@ -75,12 +80,18 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
           state is CountdownMeasureState? _measuring = true: _measuring = false;
           // TODO: This stuff here goes on error in iOS Debug
           // Start/Stop the vibration
-          if (state is CountdownPreMeasureState)
+          if (state is CountdownPreMeasureState) {
+            Wakelock.enable();
             vibrationManager.playPattern();
-          else if (state is CountdownMeasureState || state is CountdownCompleteState)
+          }
+          else if (state is CountdownMeasureState || state is CountdownCompleteState) {
+            Wakelock.enable();
             vibrationManager.playSingle();
-          else
+          }
+          else {
+            Wakelock.disable();
             vibrationManager.cancel();
+          }
         },
         builder: (context, state) {
           // Open the result page passing the measurement as argument

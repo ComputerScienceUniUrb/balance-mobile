@@ -2,6 +2,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:balance_app/model/sensor_bias.dart';
 import 'package:balance_app/model/user_info.dart';
+import 'package:balance_app/model/system_info.dart';
 
 class PreferenceManager {
   // First launch
@@ -18,6 +19,11 @@ class PreferenceManager {
   static const _gyroscopeBiasX = "GyroscopeBiasX";
   static const _gyroscopeBiasY = "GyroscopeBiasY";
   static const _gyroscopeBiasZ = "GyroscopeBiasZ";
+  // System Info
+  static const _producer = "Producer";
+  static const _model = "Model";
+  static const _appVersion = "AppVersion";
+  static const _osVersion = "OsVersion";
   // User Info
   static const _token = "userToken";
   static const _height = "userHeight";
@@ -28,9 +34,11 @@ class PreferenceManager {
   static const _problemsInFamily = "problemsInFamily";
   static const _useOfDrugs = "useOfDrugs";
   static const _alcoholIntake = "alcoholIntake";
+  static const _alcoholQuantity = "alcoholQuantity";
   static const _otherTrauma = "otherTrauma";
   static const _sightProblems = "sightProblems";
   static const _hearingProblems = "hearingProblems";
+  static const _hearingLoss = "hearingLoss";
 
   /// Is this the first time the app has been launched?
   static Future<bool> get isFirstTimeLaunch async {
@@ -81,6 +89,17 @@ class PreferenceManager {
     pref.setDouble(_gyroscopeBiasZ, gyroBias?.z);
   }
 
+  /// Update the system info
+  ///
+  /// Given a system update [SystemInfo] into the [SharedPreferences].
+  static Future<void> updateSystemInfo(String producer, String model, String appVersion, String osVersion) async {
+    var pref = await SharedPreferences.getInstance();
+    pref.setString(_producer, producer);
+    pref.setString(_model, model);
+    pref.setString(_appVersion, appVersion);
+    pref.setString(_osVersion, osVersion);
+  }
+
   /// Return a [Future] with accelerometer [SensorBias]
   ///
   /// This method will return the accelerometer
@@ -107,6 +126,23 @@ class PreferenceManager {
     return SensorBias(gyroX, gyroY, gyroZ);
   }
 
+  /// Return a [Future] with gyroscope [SystemInfo]
+  ///
+  /// This method will return the system data
+  /// [SystemInfo] stored in [SharedPreferences];
+  /// if the values are null [0.0] will be passed instead.
+  static Future<SystemInfo> get systemInfo async {
+    var pref = await SharedPreferences.getInstance();
+    String producer = pref.getString(_producer);
+    String model = pref.getString(_model);
+    String appVersion = pref.getString(_appVersion);
+    String osVersion = pref.getString(_osVersion);
+    return SystemInfo(producer: producer,
+                      model: model,
+                      app_version: appVersion,
+                      os_version: osVersion);
+  }
+
   /// Return the stored [UserInfo]
   ///
   /// This method parse the anamnesis data stored
@@ -118,14 +154,14 @@ class PreferenceManager {
   /// the data the object will be null.
   static Future<UserInfo> get userInfo async {
     var pref = await SharedPreferences.getInstance();
-    var height = pref.getDouble(_height);
+    var height = pref.getInt(_height);
     if (height == null) return null;
     try {
       return UserInfo(
         token: pref.getString(_token),
         height: height,
         age: pref.getInt(_age), // Defaults to null
-        weight: pref.getDouble(_weight), // Defaults to null
+        weight: pref.getInt(_weight), // Defaults to null
         gender: pref.getInt(_gender) ?? 0, // Defaults to unknown
         posturalProblems: pref.getString(_posturalProblems)
           ?.split(",")
@@ -134,7 +170,8 @@ class PreferenceManager {
         problemsInFamily: pref.getBool(_problemsInFamily) ?? false, // Defaults to false
         useOfDrugs: pref.getBool(_useOfDrugs) ?? false, // Defaults to false
         alcoholIntake: pref.getBool(_alcoholIntake) ?? false, // Defaults to false
-        otherTrauma: pref.getString(_otherTrauma)
+        alcoholQuantity: pref.getBool(_alcoholQuantity) ?? 0, // Defaults to false
+        physicalTrauma: pref.getString(_otherTrauma)
           ?.split(",")
           ?.map((e) => e == 'true')
           ?.toList(), // Defaults to null
@@ -142,7 +179,8 @@ class PreferenceManager {
           ?.split(",")
           ?.map((e) => e == 'true')
           ?.toList(), // Defaults to null
-        hearingProblems: pref.getInt(_hearingProblems) ?? 0, // Defaults to none
+        hearingProblems: pref.getInt(_hearingProblems) ?? 0,
+        hearingLoss: pref.getInt(_hearingLoss) ?? 0, // Defaults to none
       );
     } catch(_) {
       // Some error occurred... return a null object
@@ -160,17 +198,21 @@ class PreferenceManager {
   /// parameters to update only some of the data.
   static Future<void> updateUserInfo({
     String token,
-    double height,
-    double weight,
+    int height,
+    int weight,
     int age,
     int gender,
     List<bool> posturalProblems,
     bool problemsInFamily,
     bool useOfDrugs,
+    bool medicines,
     bool alcoholIntake,
-    List<bool> otherTrauma,
+    int alcoholQuantity,
+    List<bool> physicalTrauma,
+    bool wearGlasses,
     List<bool> sightProblems,
     int hearingProblems,
+    int hearingLoss,
   }) async {
     var pref = await SharedPreferences.getInstance();
 
@@ -178,11 +220,11 @@ class PreferenceManager {
     if (token != null)
       pref.setString(_token, token);
     if (height != null)
-      pref.setDouble(_height, height);
+      pref.setInt(_height, height);
     if (age != null)
       pref.setInt(_age, age);
     if (weight != null)
-      pref.setDouble(_weight, weight);
+      pref.setInt(_weight, weight);
     if (gender != null)
       pref.setInt(_gender, gender);
     if (posturalProblems != null)
@@ -193,11 +235,15 @@ class PreferenceManager {
       pref.setBool(_useOfDrugs, useOfDrugs);
     if (_alcoholIntake != null)
       pref.setBool(_alcoholIntake, alcoholIntake);
-    if (otherTrauma != null)
-      pref.setString(_otherTrauma, otherTrauma.join(","));
+    if (_alcoholQuantity != null)
+      pref.setInt(_alcoholQuantity, alcoholQuantity);
+    if (physicalTrauma != null)
+      pref.setString(_otherTrauma, physicalTrauma.join(","));
     if (sightProblems != null)
       pref.setString(_sightProblems, sightProblems.join(","));
-    if (hearingProblems != null)
+    if (_hearingProblems != null)
       pref.setInt(_hearingProblems, hearingProblems);
+    if (hearingLoss != null)
+      pref.setInt(_hearingLoss, hearingLoss);
   }
 }

@@ -50,7 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           title: 'legals_title'.tr(),
           children: [
             SettingsElement(
-              icon: Icon(Icons.adb),
+              icon: Image.asset("assets/images/open_source.png", width: 24, height: 24,),
               text: 'open_source_txt'.tr(),
               onTap: () => Navigator.of(context).pushNamed(Routes.open_source),
             ),
@@ -64,23 +64,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
               text: 'about_balance_txt'.tr(),
               onTap: () => showAboutBalanceDialog(context),
             ),
-            SettingsElement(
-              text: "${'version_txt'.tr()} ${packageInfo?.version} (${'build_txt'.tr()}${packageInfo?.buildNumber})",
-              onLongPress: () {
-                  Scaffold.of(context)
-                    .showSnackBar(
-                      SnackBar(
-                        behavior: SnackBarBehavior.floating,
-                        content: Text('easter_egg_txt'.tr()),
-                        duration: Duration(seconds: 2),
-                      )
-                  );
-              }
-            ),
-            SettingsElement(
-              text: 'made_with_heart_txt'.tr(),
-            ),
           ]
+        ),
+        SettingsGroup(
+            title: "Version",
+            children: [
+              SettingsElement(
+                  icon: Image.asset("assets/images/appstore_logo.png", width: 24, height: 24,),
+                  text: "${'version_txt'.tr()} ${packageInfo?.version} (${'build_txt'.tr()}${packageInfo?.buildNumber})",
+                  onLongPress: () {
+                    Scaffold.of(context)
+                        .showSnackBar(
+                        SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          content: Text('easter_egg_txt'.tr()),
+                          duration: Duration(seconds: 2),
+                        )
+                    );
+                  }
+              ),
+            ]
         ),
       ]
     );

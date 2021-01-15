@@ -45,6 +45,13 @@ dependencies:
   audioplayers: ^0.15.1
   charts_flutter: ^0.9.0
   easy_localization: ^2.3.2
+  focus_detector: ^1.1.0
+  wakelock: ^0.2.1+1
+  battery: ^1.0.11
+  device_info: ^1.0.0
+  group_button: ^1.1.0 #latest version
+  flutter_range_slider: ^1.5.0
+
 
 dev_dependencies:
   flutter_launcher_icons: "^0.8.1"
@@ -87,6 +94,8 @@ flutter:
     - assets/images/height.png
     - assets/images/phone.png
     - assets/images/tutorial.png
+    - assets/images/appstore_logo.png
+    - assets/images/open_source.png
     # Sounds
     - assets/sounds/light_pop.mp3
     # Translations

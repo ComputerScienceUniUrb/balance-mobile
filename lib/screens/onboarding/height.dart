@@ -7,9 +7,9 @@ import 'package:balance_app/widgets/custom_number_form_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:balance_app/bloc/onboarding_bloc.dart';
 
-/// Second intro screen
+/// Third intro screen
 ///
-/// This Widget represents the second of the intro
+/// This Widget represents the third of the intro
 /// screens, his purpose is to ask the user his
 /// height letting him know why ke need such
 /// information; the user cannot skip this step.
@@ -47,15 +47,16 @@ class _HeightScreenState extends State<HeightScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           reverse: false,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: 64),
-              Center(
-                child: Image.asset("assets/images/height.png"),
+              SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.all(48.0),
+                child: Center(
+                  child: Image.asset("assets/images/height.png"),
+                ),
               ),
-              SizedBox(height: 50),
               Text(
                 'intro_height_title'.tr(),
                 style: Theme.of(context).textTheme.headline4.copyWith(
@@ -105,7 +106,7 @@ class _HeightScreenState extends State<HeightScreen> {
                     },
                     onSaved: (newValue) {
                       try {
-                        PreferenceManager.updateUserInfo(height: double.parse(newValue));
+                        PreferenceManager.updateUserInfo(height: int.parse(newValue));
                       } on FormatException catch(e) {
                         print("Some error occurred saving height data: ${e.message}");
                       }

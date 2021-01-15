@@ -7,9 +7,9 @@ import 'package:balance_app/widgets/custom_checkbox.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:balance_app/bloc/onboarding_bloc.dart';
 
-/// Fourth intro screen
+/// Fifth intro screen
 ///
-/// This Widget represents the Fourth of the intro
+/// This Widget represents the Fifth of the intro
 /// screens, his purpose is to ask the user if he has
 /// some postural problems and if there are in his family
 /// or if he use some drugs that can interfere with the
@@ -20,14 +20,10 @@ class PostureScreen extends StatefulWidget {
   final int screenIndex;
   final List<bool> posture;
   final bool problemsInFamily;
-  final bool useOfDrugs;
-  final bool alcoholIntake;
 
   PostureScreen(this.screenIndex, {
     this.posture,
     this.problemsInFamily,
-    this.useOfDrugs,
-    this.alcoholIntake,
   });
 
   @override
@@ -39,16 +35,12 @@ class _PostureScreenState extends State<PostureScreen> {
   final _postureProblems = ['scoliosis_txt'.tr(), 'kyphosis_txt'.tr(), 'lordosis_txt'.tr()];
   List<bool> _selectedPosture;
   bool _problemsInFamily = false;
-  bool _useOfDrugs = false;
-  bool _alcoholIntake = false;
 
   @override
   void initState() {
     super.initState();
     _selectedPosture = widget.posture;
     _problemsInFamily = widget.problemsInFamily ?? false;
-    _useOfDrugs = widget.useOfDrugs ?? false;
-    _alcoholIntake = widget.alcoholIntake ?? false;
   }
 
   @override
@@ -105,34 +97,6 @@ class _PostureScreenState extends State<PostureScreen> {
                   onChanged: (value) => setState(() => _problemsInFamily = value),
                   validator: (value) => null,
                   onSaved: (newValue) => PreferenceManager.updateUserInfo(problemsInFamily: newValue),
-                ),
-                SizedBox(height: 20),
-                PlainCheckboxFormField(
-                  child: Text(
-                    'use_of_drugs_title'.tr(),
-                    style: Theme.of(context).textTheme.headline6.copyWith(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                  value: _useOfDrugs,
-                  onChanged: (value) => setState(() => _useOfDrugs = value),
-                  validator: (value) => null,
-                  onSaved: (newValue) => PreferenceManager.updateUserInfo(useOfDrugs: newValue),
-                ),
-                SizedBox(height: 20),
-                PlainCheckboxFormField(
-                  child: Text(
-                    'Assumi abitualmente sostanze alcoliche?',
-                    style: Theme.of(context).textTheme.headline6.copyWith(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                  value: _alcoholIntake,
-                  onChanged: (value) => setState(() => _alcoholIntake = value),
-                  validator: (value) => null,
-                  onSaved: (newValue) => PreferenceManager.updateUserInfo(alcoholIntake: newValue),
                 ),
                 SizedBox(height: 105)
               ],

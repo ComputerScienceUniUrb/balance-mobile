@@ -20,6 +20,7 @@ import 'onboarding/height.dart';
 import 'onboarding/general_info.dart';
 import 'onboarding/posture.dart';
 import 'onboarding/trauma.dart';
+import 'onboarding/habits.dart';
 import 'onboarding/sight.dart';
 
 /// This class show an introduction when the app is first open.
@@ -34,12 +35,13 @@ class _IntroScreenState extends State<IntroScreen> {
   bool _isNextBtnEnable = true;
   List<Color> _pageColors = [
     BColors.colorPrimary,
-    Color(0xffF2BB25),
-    Color(0xFF8ED547),
-    Color(0xFFC95E4B),
-    Color(0xFF36836C),
     Color(0xFF398AA7),
+    Color(0xFF36836C),
+    Color(0xFB93936C),
+    Color(0xffF2BB25),
+    Color(0xFFC95E4B),
     Color(0xFB939AA7),
+    Color(0xFF398AA7),
   ];
 
   @override
@@ -63,8 +65,9 @@ class _IntroScreenState extends State<IntroScreen> {
                       condition: (_, current) => current is ValidationSuccessState,
                       listener: (context, _) async {
                         FocusScope.of(context).unfocus();
+
                         // If we are in the last page go to home
-                        if (_currentPage == 6) {
+                        if (_currentPage == 7) {
                           PreferenceManager.firstLaunchDone();
                           _makePostRequest(jsonEncode(await PreferenceManager.userInfo));
                           Navigator.pushReplacementNamed(context, Routes.main);
@@ -86,18 +89,20 @@ class _IntroScreenState extends State<IntroScreen> {
                         onPageChanged: (newPage) =>
                           setState(() {
                             _currentPage = newPage;
-                            if (newPage == 2)
+                            if (newPage == 1 || newPage == 2)
                               _isNextBtnEnable = false;
                           }),
                         children: [
                           WelcomeScreen(0),
-                          ConsentScreen(1),
+                          ConsentScreen(1, (isEnable) =>
+                              setState(() => _isNextBtnEnable = isEnable)),
                           HeightScreen(2, (isEnable) =>
                             setState(() => _isNextBtnEnable = isEnable)),
                           GeneralInfoScreen(3),
                           PostureScreen(4),
                           TraumaScreen(5),
-                          SightScreen(6),
+                          HabitsScreen(6),
+                          SightScreen(7),
                         ],
                       ),
                     ),
@@ -111,7 +116,7 @@ class _IntroScreenState extends State<IntroScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         DotsIndicator(
-                          size: 7,
+                          size: 8,
                           selected: _currentPage,
                         ),
                         AnimatedContainer(
@@ -123,7 +128,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                 BlocProvider.of<OnBoardingBloc>(context).add(
                                   NeedToValidateEvent(_currentPage)),
                               isEnable: _isNextBtnEnable,
-                              isDone: _currentPage == 6,
+                              isDone: _currentPage == 7,
                               backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors
                                 .colorPrimary,
                             ),
@@ -145,7 +150,7 @@ _makePostRequest(var data) async {
   // TODO: This stuff here is hardcode. Need changes
   // set up POST request arguments
   String url = 'https://balancemobile.it/api/v1/user/signup';
-  //String url = 'http://192.168.1.206/api/v1/user/signup';
+  //String url = 'http://192.168.1.206:8000/api/v1/user/signup';
   Map<String, String> headers = {"Content-type": "application/json"};
   String json = data;
   print(data);

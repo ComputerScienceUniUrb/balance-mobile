@@ -10,11 +10,14 @@ import 'package:balance_app/widgets/dots_indicator.dart';
 import 'package:balance_app/widgets/next_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'onboarding/consent.dart';
 import 'onboarding/height.dart';
 import 'onboarding/general_info.dart';
 import 'onboarding/posture.dart';
 import 'onboarding/trauma.dart';
+import 'onboarding/habits.dart';
 import 'onboarding/sight.dart';
+import 'onboarding/welcome.dart';
 
 /// Show a a list of screens that lets edit user information
 ///
@@ -31,7 +34,7 @@ import 'onboarding/sight.dart';
 /// See also:
 /// * [UserInfoRecapScreen]
 /// * [IntroScreen]
-/// * [HeightScreen
+/// * [HeightScreen]
 /// * [GeneralInfoScreen]
 /// * [PostureScreen]
 /// * [TraumaScreen]
@@ -46,10 +49,13 @@ class _OnBoardingScreenSate extends State<OnBoardingScreen> {
   int _currentPage = 0;
   bool _isNextBtnEnable = false;
   List<Color> _pageColors = [
-    Color(0xffF2BB25),
-    Color(0xFF8ED547),
-    Color(0xFFC95E4B),
+    BColors.colorPrimary,
+    Color(0xFF398AA7),
     Color(0xFF36836C),
+    Color(0xFB93936C),
+    Color(0xffF2BB25),
+    Color(0xFFC95E4B),
+    Color(0xFB939AA7),
     Color(0xFF398AA7),
   ];
 
@@ -80,7 +86,7 @@ class _OnBoardingScreenSate extends State<OnBoardingScreen> {
                       condition: (_, current) => current is ValidationSuccessState,
                       listener: (context, _) async {
                         // If we are in the last page go to home
-                        if (_currentPage == 4) {
+                        if (_currentPage == 7) {
                           Navigator.pop(context);
                         } else {
                           // Move to next page
@@ -98,31 +104,44 @@ class _OnBoardingScreenSate extends State<OnBoardingScreen> {
                             _currentPage = newPage;
                           }),
                         children: [
-                          HeightScreen(
+                          WelcomeScreen(
                             0,
+                          ),
+                          ConsentScreen(
+                            1,
+                            (isEnable) => setState(() => _isNextBtnEnable = isEnable),
+                          ),
+                          HeightScreen(
+                            2,
                               (isEnable) => setState(() => _isNextBtnEnable = isEnable),
                             height: userInfo?.height?.toStringAsFixed(1),
                           ),
                           GeneralInfoScreen(
-                            1,
+                            3,
                             age: userInfo?.age?.toString(),
                             weight: userInfo?.weight?.toStringAsFixed(1),
                             gender: userInfo?.gender,
                           ),
                           PostureScreen(
-                            2,
+                            4,
+                            posture: userInfo?.posturalProblems,
+                            problemsInFamily: userInfo?.problemsInFamily,
+                          ),
+                          TraumaScreen(
+                            5,
+                            trauma: userInfo?.physicalTrauma,
+                          ),
+                          HabitsScreen(
+                            6,
                             posture: userInfo?.posturalProblems,
                             problemsInFamily: userInfo?.problemsInFamily,
                             useOfDrugs: userInfo?.useOfDrugs,
                           ),
-                          TraumaScreen(
-                            3,
-                            trauma: userInfo?.otherTrauma,
-                          ),
                           SightScreen(
-                            4,
+                            7,
                             sight: userInfo?.sightProblems,
-                            hearing: userInfo?.hearingProblems,
+                            hearingProblems: userInfo?.hearingProblems,
+                            hearingLoss: userInfo?.hearingLoss,
                           ),
                         ],
                       ),
@@ -137,7 +156,7 @@ class _OnBoardingScreenSate extends State<OnBoardingScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         DotsIndicator(
-                          size: 6,
+                          size: 8,
                           selected: _currentPage,
                         ),
                         AnimatedContainer(
@@ -148,7 +167,7 @@ class _OnBoardingScreenSate extends State<OnBoardingScreen> {
                               BlocProvider.of<OnBoardingBloc>(context).add(
                                 NeedToValidateEvent(_currentPage)),
                             isEnable: _isNextBtnEnable,
-                            isDone: _currentPage == 4,
+                            isDone: _currentPage == 7,
                             backgroundColor: BColors.colorPrimary,
                           ),
                         ),

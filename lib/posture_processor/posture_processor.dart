@@ -24,7 +24,7 @@ class PostureProcessor {
   /// * measurementId - id of the measurement to compute
   /// * data - list of [RawMeasurementData] to compute
   static Future<Statokinesigram> computeFromData(int measurementId, List<RawMeasurementData> data) async{
-    double userHeight = (await PreferenceManager.userInfo).height;
+    double userHeight = (await PreferenceManager.userInfo).height.toDouble();
     return compute(
       _computeFromDataImpl,
       {

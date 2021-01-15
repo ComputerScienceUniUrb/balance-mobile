@@ -75,7 +75,7 @@ class Statokinesigram {
       f80AP: measurement.f80AP,
       f80ML: measurement.f80ML,
       numMax: measurement.numMax,
-      meanTime: measurement.stdTime,
+      meanTime: measurement.meanTime,
       stdTime: measurement.stdTime,
       meanDistance: measurement.meanDistance,
       stdDistance: measurement.stdDistance,
