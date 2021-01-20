@@ -1,7 +1,8 @@
 
+import 'package:balance_app/screens/res/b_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_check_box/circular_check_box.dart';
-import 'package:balance_app/res/colors.dart';
+import 'package:balance_app/screens/res/colors.dart';
 
 /// Widget that contains and manage a group of [CheckboxElement]s
 /// 
@@ -90,7 +91,7 @@ class CheckboxElement extends StatelessWidget {
             onItemSelected?.call(!isSelected);
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
             child: Row(
               children: <Widget>[
                 CircularCheckBox(
@@ -107,7 +108,7 @@ class CheckboxElement extends StatelessWidget {
                   style: Theme.of(context).textTheme.subtitle2.copyWith(
                     color: isSelected? BColors.colorPrimary: Color(0xFFBFBFBF),
                   ),
-                )
+                ),
               ],
             ),
           ),

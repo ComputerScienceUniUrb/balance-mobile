@@ -2,7 +2,7 @@
 import 'package:balance_app/bloc/measurements_bloc.dart';
 import 'package:balance_app/floor/measurement_database.dart';
 import 'package:balance_app/floor/test_database_view.dart';
-import 'package:balance_app/res/b_icons.dart';
+import 'package:balance_app/screens/res/b_icons.dart';
 import 'package:balance_app/utils/boolean_quaternary_operator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

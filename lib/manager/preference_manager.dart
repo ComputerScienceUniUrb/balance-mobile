@@ -170,7 +170,7 @@ class PreferenceManager {
         problemsInFamily: pref.getBool(_problemsInFamily) ?? false, // Defaults to false
         useOfDrugs: pref.getBool(_useOfDrugs) ?? false, // Defaults to false
         alcoholIntake: pref.getBool(_alcoholIntake) ?? false, // Defaults to false
-        alcoholQuantity: pref.getBool(_alcoholQuantity) ?? 0, // Defaults to false
+        alcoholQuantity: pref.getInt(_alcoholQuantity) ?? 0, // Defaults to false
         physicalTrauma: pref.getString(_otherTrauma)
           ?.split(",")
           ?.map((e) => e == 'true')
@@ -233,15 +233,15 @@ class PreferenceManager {
       pref.setBool(_problemsInFamily, problemsInFamily);
     if (useOfDrugs != null)
       pref.setBool(_useOfDrugs, useOfDrugs);
-    if (_alcoholIntake != null)
+    if (alcoholIntake != null)
       pref.setBool(_alcoholIntake, alcoholIntake);
-    if (_alcoholQuantity != null)
+    if (alcoholQuantity != null)
       pref.setInt(_alcoholQuantity, alcoholQuantity);
     if (physicalTrauma != null)
       pref.setString(_otherTrauma, physicalTrauma.join(","));
     if (sightProblems != null)
       pref.setString(_sightProblems, sightProblems.join(","));
-    if (_hearingProblems != null)
+    if (hearingProblems != null)
       pref.setInt(_hearingProblems, hearingProblems);
     if (hearingLoss != null)
       pref.setInt(_hearingLoss, hearingLoss);

@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:balance_app/screens/onboarding/height.dart';
-import 'package:balance_app/widgets/custom_number_form_field.dart';
+import 'package:balance_app/screens/intro/slider/widgets/custom_number_form_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:balance_app/bloc/onboarding_bloc.dart';
 

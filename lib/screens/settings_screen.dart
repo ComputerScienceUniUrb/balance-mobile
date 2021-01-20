@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 
-import 'package:balance_app/res/b_icons.dart';
+import 'package:balance_app/screens/res/b_icons.dart';
 
 import 'package:balance_app/routes.dart';
 import 'package:balance_app/widgets/settings_widget.dart';
@@ -40,9 +40,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           title: 'your_information_title'.tr(),
           children: [
             SettingsElement(
-              icon: Icon(Icons.info_outline),
+              icon: Icon(BIcons.info_outline),
               text: 'what_we_know_about_you_txt'.tr(),
-              onTap: () => Navigator.pushNamed(context, Routes.personal_info_recap),
+              onTap: () => Navigator.pushNamed(context, Routes.info),
             )
           ]
         ),
@@ -50,7 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           title: 'legals_title'.tr(),
           children: [
             SettingsElement(
-              icon: Image.asset("assets/images/open_source.png", width: 24, height: 24,),
+              icon: Icon(BIcons.opensource),
               text: 'open_source_txt'.tr(),
               onTap: () => Navigator.of(context).pushNamed(Routes.open_source),
             ),
@@ -67,10 +67,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ]
         ),
         SettingsGroup(
-            title: "Version",
+            title: 'version_txt'.tr(),
             children: [
               SettingsElement(
-                  icon: Image.asset("assets/images/appstore_logo.png", width: 24, height: 24,),
+                  icon: Icon(BIcons.version),
                   text: "${'version_txt'.tr()} ${packageInfo?.version} (${'build_txt'.tr()}${packageInfo?.buildNumber})",
                   onLongPress: () {
                     Scaffold.of(context)

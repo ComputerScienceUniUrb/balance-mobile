@@ -1,28 +1,28 @@
 
-import 'package:balance_app/bloc/onboarding_bloc.dart';
+import 'package:balance_app/screens/intro/bloc/onboarding_bloc.dart';
 import 'package:balance_app/model/user_info.dart';
-import 'package:balance_app/screens/intro_screen.dart';
+import 'package:balance_app/screens/intro/intro_screen.dart';
 import 'package:balance_app/screens/user_info_recap_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:balance_app/res/colors.dart';
-import 'package:balance_app/widgets/dots_indicator.dart';
-import 'package:balance_app/widgets/next_button.dart';
+import 'package:balance_app/screens/res/colors.dart';
+import 'package:balance_app/screens/intro/widgets/dots_indicator.dart';
+import 'package:balance_app/screens/intro/widgets/next_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'onboarding/consent.dart';
-import 'onboarding/height.dart';
-import 'onboarding/general_info.dart';
-import 'onboarding/posture.dart';
-import 'onboarding/trauma.dart';
-import 'onboarding/habits.dart';
-import 'onboarding/sight.dart';
-import 'onboarding/welcome.dart';
+import 'intro/slider/consent.dart';
+import 'intro/slider/height.dart';
+import 'intro/slider/general_info.dart';
+import 'intro/slider/posture.dart';
+import 'intro/slider/trauma.dart';
+import 'intro/slider/habits.dart';
+import 'intro/slider/sight.dart';
+import 'intro/slider/welcome.dart';
 
 /// Show a a list of screens that lets edit user information
 ///
 /// This class builds a [PageView] where his children are
-/// screens from [balance_app/screens/onboarding] to let
+/// screens from [balance_app/screens/intro/slider] to let
 /// the user edit all his personal information that he gave
 /// during the first launch.
 /// Pushing this screen with a [Navigator] we can pass an instance
@@ -32,19 +32,20 @@ import 'onboarding/welcome.dart';
 /// Navigator.pushNamed(..., arguments: userInfo);
 /// ```
 /// See also:
-/// * [UserInfoRecapScreen]
 /// * [IntroScreen]
 /// * [HeightScreen]
 /// * [GeneralInfoScreen]
 /// * [PostureScreen]
 /// * [TraumaScreen]
 /// * [SightScreen]
-class OnBoardingScreen extends StatefulWidget {
+///
+/// * [UserInfoRecapScreen]
+class SliderScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _OnBoardingScreenSate();
+  State<StatefulWidget> createState() => _SliderScreenState();
 }
 
-class _OnBoardingScreenSate extends State<OnBoardingScreen> {
+class _SliderScreenState extends State<Slider> {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
   bool _isNextBtnEnable = false;
@@ -118,6 +119,7 @@ class _OnBoardingScreenSate extends State<OnBoardingScreen> {
                           ),
                           GeneralInfoScreen(
                             3,
+                            (isEnable) => setState(() => _isNextBtnEnable = isEnable),
                             age: userInfo?.age?.toString(),
                             weight: userInfo?.weight?.toStringAsFixed(1),
                             gender: userInfo?.gender,

@@ -2,10 +2,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/widgets/custom_checkbox.dart';
+import 'package:balance_app/screens/intro/slider/widgets/custom_checkbox.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/onboarding_bloc.dart';
+import 'package:balance_app/screens/intro/bloc/onboarding_bloc.dart';
 
 /// Fifth intro screen
 ///

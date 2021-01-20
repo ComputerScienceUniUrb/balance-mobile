@@ -64,6 +64,7 @@ class UserInfoRecapScreen extends StatelessWidget {
     return problems[value];
   }
 
+
   @override
   Widget build(BuildContext context) {
     // Text styles used by the widget
@@ -224,50 +225,17 @@ class UserInfoRecapScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Flexible(
-                            child: Text(
-                              'use_of_drugs_txt'.tr(),
-                              style: headlineTextStyle,
-                            )
-                          ),
-                          Text(
-                            userInfo != null && userInfo.useOfDrugs ? 'yes'.tr() : 'no'.tr(),
-                            style: valueTextStyle,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // Trauma Info Card
-              Card(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'trauma_title'.tr(),
-                        style: titleTextStyle,
-                      ),
-                      SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
                           Text(
                             'other_trauma_txt'.tr(),
                             style: headlineTextStyle,
                           ),
                           SizedBox(width: 16),
                           Flexible(
-                            child: Text(
-                              _getTraumaString(userInfo?.physicalTrauma),
-                              style: valueTextStyle,
-                              textAlign: TextAlign.end,
-                            )
+                              child: Text(
+                                _getTraumaString(userInfo?.physicalTrauma),
+                                style: valueTextStyle,
+                                textAlign: TextAlign.end,
+                              )
                           ),
                         ],
                       ),
@@ -314,6 +282,56 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                           Text(
                             _getHearingString(userInfo?.hearingLoss),
+                            style: valueTextStyle,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // Trauma Info Card
+              Card(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'ABITUDINI',
+                        style: titleTextStyle,
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Flexible(
+                              child: Text(
+                                'use_of_drugs_txt'.tr(),
+                                style: headlineTextStyle,
+                              )
+                          ),
+                          Text(
+                            userInfo != null && userInfo.useOfDrugs ? 'yes'.tr() : 'no'.tr(),
+                            style: valueTextStyle,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Flexible(
+                              child: Text(
+                                'use_of_alcohol'.tr(),
+                                style: headlineTextStyle,
+                              )
+                          ),
+                          Text(
+                            userInfo != null && userInfo.useOfDrugs ? 'yes'.tr() : 'no'.tr(),
                             style: valueTextStyle,
                           ),
                         ],

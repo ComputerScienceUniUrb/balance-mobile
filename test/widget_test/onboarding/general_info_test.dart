@@ -1,5 +1,5 @@
 
-import 'package:balance_app/widgets/custom_number_form_field.dart';
+import 'package:balance_app/screens/intro/slider/widgets/custom_number_form_field.dart';
 import 'package:custom_dropdown/custom_dropdown.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

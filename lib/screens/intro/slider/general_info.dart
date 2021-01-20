@@ -1,13 +1,13 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:balance_app/res/colors.dart';
+import 'package:balance_app/screens/res/colors.dart';
 import 'package:custom_dropdown/custom_dropdown.dart';
 import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/widgets/custom_number_form_field.dart';
+import 'package:balance_app/screens/intro/slider/widgets/custom_number_form_field.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/onboarding_bloc.dart';
+import 'package:balance_app/screens/intro/bloc/onboarding_bloc.dart';
 
 /// Fourth intro screen
 ///
@@ -18,11 +18,12 @@ import 'package:balance_app/bloc/onboarding_bloc.dart';
 class GeneralInfoScreen extends StatefulWidget {
   /// Index of the screen
   final int screenIndex;
+  final ValueChanged<bool> enableNextBtnCallback;
   final String age;
   final int gender;
   final String weight;
 
-  GeneralInfoScreen(this.screenIndex, {
+  GeneralInfoScreen(this.screenIndex, this.enableNextBtnCallback, {
     this.age,
     this.gender,
     this.weight
@@ -36,11 +37,16 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
   final _formKey = GlobalKey<FormState>();
   final _genders = ['unknown_txt'.tr(), 'male_txt'.tr(), 'female_txt'.tr()];
   int _genderIndex;
+  bool _age;
+  bool _weight;
+  bool _canGoNext = false;
 
   @override
   void initState() {
     super.initState();
     _genderIndex = widget.gender;
+    _age = false;
+    _weight = false;
   }
 
   @override
@@ -88,6 +94,20 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
                       CustomNumberFormField(
                         labelText: 'age_txt'.tr(),
                         initialValue: widget.age,
+                        onChanged: (isNotEmpty) {
+                          // Enable/Disable the next button if the text field is empty
+                          if (isNotEmpty) {
+                            _age = true;
+                          } else {
+                            _age = false;
+                          }
+
+                          if (_age && _weight) {
+                            widget.enableNextBtnCallback(true);
+                          } else {
+                            widget.enableNextBtnCallback(false);
+                          }
+                        },
                         validator: (value) {
                           if (value.isNotEmpty) {
                             try {
@@ -131,6 +151,20 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
                       CustomNumberFormField(
                         labelText: 'weight_txt'.tr(),
                         initialValue: widget.weight,
+                        onChanged: (isNotEmpty) {
+                          // Enable/Disable the next button if the text field is empty
+                          if (isNotEmpty) {
+                            _weight = true;
+                          } else {
+                            _weight = false;
+                          }
+
+                          if (_age && _weight) {
+                            widget.enableNextBtnCallback(true);
+                          } else {
+                            widget.enableNextBtnCallback(false);
+                          }
+                        },
                         validator: (value) {
                           if (value.isNotEmpty) {
                             try {

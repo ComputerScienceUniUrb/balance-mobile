@@ -12,7 +12,7 @@
   "calibration_title": "Calibration",
   "your_information_title": "My Data",
   "legals_title": "Legals",
-  "about_title": "About",
+  "about_title": "Credits",
   "calibrate_your_device_txt": "Calibrate your device",
   "what_we_know_about_you_txt": "Which are your data",
   "open_source_txt": "Open Source",
@@ -73,7 +73,7 @@
   "general_title": "GENERAL",
   "health_title": "HEALTH",
   "trauma_title": "TRAUMA",
-  "hearing_defects_title": "HEARING/SIGHT DEFECTS",
+  "hearing_defects_title": "HEARING AND VISION",
   "age_txt": "Age",
   "gender_txt": "Gender",
   "height_txt": "Height",
@@ -156,6 +156,6 @@
   "privacy_declaration_title": "Continuing, I declare",
   "privacy_declaration_first_txt": "that I have read and understood the Terms and Conditions and the Privacy Policy for using the Balance app. I have understood that the use of Balance is completely voluntary and that you can withdraw from the project at any time, without having to give explanations. To have understood the nature and activities of the application and that participation in this project will not entail the right to any recognition of any direct or indirect economic advantage.",
   "privacy_declaration_second_txt": "that I have read and understood the Terms and Conditions and the Privacy Policy and therefore to consent to the processing of personal and sensitive data that may be collected in the context of the use of Balance for medical, biomedical, psychological, pedagogical and social research purposes",
-  "privacy_declaration_third_txt": "that I agree to Balance's Terms, Conditions and Privacy Policy"
+  "privacy_declaration_third_txt": "that I have read and understood the unique identifier is issued on a strictly personal basis and that I agree to Balance's Terms, Conditions and Privacy Policy"
 
 }

@@ -1,13 +1,12 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:balance_app/res/colors.dart';
+import 'package:balance_app/screens/res/colors.dart';
 import 'package:balance_app/manager/preference_manager.dart';
-import 'package:custom_dropdown/custom_dropdown.dart';
-import 'package:balance_app/widgets/custom_checkbox.dart';
+import 'package:balance_app/screens/intro/slider/widgets/custom_checkbox.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/onboarding_bloc.dart';
+import 'package:balance_app/screens/intro/bloc/onboarding_bloc.dart';
 import 'package:group_button/group_button.dart';
 
 /// Sixth intro screen
@@ -128,9 +127,12 @@ class _SightScreenState extends State<SightScreen> {
                     child: GroupButton(
                       isRadio: false,
                       spacing: 10,
-                      onSelected: (index, isSelected) => print('$index button is selected'),
+                      onSelected: (index, isSelected) {
+                        print('$index button is selected');
+                      },
                       buttons: ["Orecchio Dx", "Orecchio Sx"],
                       selectedColor: BColors.colorPrimary,
+
                     ),
                   ),
                 ),

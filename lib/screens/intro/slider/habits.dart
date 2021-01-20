@@ -1,13 +1,12 @@
 
-import 'package:balance_app/res/colors.dart';
+import 'package:balance_app/screens/res/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/widgets/custom_checkbox.dart';
+import 'package:balance_app/screens/intro/slider/widgets/custom_checkbox.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/onboarding_bloc.dart';
-import 'package:group_button/group_button.dart';
+import 'package:balance_app/screens/intro/bloc/onboarding_bloc.dart';
 
 /// Seventh intro screen
 ///
@@ -99,10 +98,10 @@ class _HabitsScreenState extends State<HabitsScreen> {
                     color: Colors.white,
                   ),
                 ),
-                value: _alcoholIntake,
-                onChanged: (value) => setState(() => _alcoholIntake = value),
+                value: _useOfDrugs,
+                onChanged: (value) => setState(() => _useOfDrugs = value),
                 validator: (value) => null,
-                onSaved: (newValue) => PreferenceManager.updateUserInfo(alcoholIntake: newValue),
+                onSaved: (newValue) => PreferenceManager.updateUserInfo(useOfDrugs: newValue),
               ),
               SizedBox(height: 36),
               Text(
@@ -167,10 +166,12 @@ class _HabitsScreenState extends State<HabitsScreen> {
                     setState(() {
                       _currentSliderValue = value;
                       _alcoholSelected = _alcoholQuantity.elementAt(((value*3/100).round()));
-                      print(((value*3/100).round()).toInt());
-                      PreferenceManager.updateUserInfo(alcoholQuantity: ((value*3/100).round()).toInt() ?? 0);
                     });
                   },
+                  onChangeEnd: (newValue) {
+                    print(((newValue*3/100).round()).toInt());
+                    PreferenceManager.updateUserInfo(alcoholQuantity: ((newValue*3/100).round()).toInt());
+                  }
                 ),
               ),
               SizedBox(height: 105)

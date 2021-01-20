@@ -4,24 +4,25 @@ import 'dart:convert';
 import 'package:balance_app/manager/preference_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:balance_app/routes.dart';
-import 'package:balance_app/widgets/next_button.dart';
+import 'package:balance_app/screens/intro/widgets/next_button.dart';
+import 'package:balance_app/screens/intro/widgets/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:balance_app/res/colors.dart';
-import 'package:balance_app/widgets/dots_indicator.dart';
+import 'package:balance_app/screens/res/colors.dart';
+import 'package:balance_app/screens/intro/widgets/dots_indicator.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/onboarding_bloc.dart';
+import 'package:balance_app/screens/intro/bloc/onboarding_bloc.dart';
 import 'package:http/http.dart';
 
-import 'onboarding/welcome.dart';
-import 'onboarding/consent.dart';
-import 'onboarding/height.dart';
-import 'onboarding/general_info.dart';
-import 'onboarding/posture.dart';
-import 'onboarding/trauma.dart';
-import 'onboarding/habits.dart';
-import 'onboarding/sight.dart';
+import 'slider/welcome.dart';
+import 'slider/consent.dart';
+import 'slider/height.dart';
+import 'slider/general_info.dart';
+import 'slider/posture.dart';
+import 'slider/trauma.dart';
+import 'slider/habits.dart';
+import 'slider/sight.dart';
 
 /// This class show an introduction when the app is first open.
 class IntroScreen extends StatefulWidget {
@@ -65,7 +66,6 @@ class _IntroScreenState extends State<IntroScreen> {
                       condition: (_, current) => current is ValidationSuccessState,
                       listener: (context, _) async {
                         FocusScope.of(context).unfocus();
-
                         // If we are in the last page go to home
                         if (_currentPage == 7) {
                           PreferenceManager.firstLaunchDone();
@@ -97,8 +97,9 @@ class _IntroScreenState extends State<IntroScreen> {
                           ConsentScreen(1, (isEnable) =>
                               setState(() => _isNextBtnEnable = isEnable)),
                           HeightScreen(2, (isEnable) =>
-                            setState(() => _isNextBtnEnable = isEnable)),
-                          GeneralInfoScreen(3),
+                              setState(() => _isNextBtnEnable = isEnable)),
+                          GeneralInfoScreen(3, (isEnable) =>
+                              setState(() => _isNextBtnEnable = isEnable)),
                           PostureScreen(4),
                           TraumaScreen(5),
                           HabitsScreen(6),
@@ -115,13 +116,28 @@ class _IntroScreenState extends State<IntroScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
+                        AnimatedContainer(
+                          duration: Duration(milliseconds: 270),
+                          height: 48,
+                          child: Row(children: <Widget>[
+                            BackCustomButton(
+                              onTap: () => [_pageController.previousPage(
+                                  duration: Duration(milliseconds: 800),
+                                  curve: Curves.ease
+                              ),
+                              _isNextBtnEnable = true],
+                              isEnable: (_currentPage == 0) ? false : true,
+                              backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors.colorPrimary,
+                            ),
+                          ]),
+                        ),
                         DotsIndicator(
                           size: 8,
                           selected: _currentPage,
                         ),
                         AnimatedContainer(
                           duration: Duration(milliseconds: 270),
-                          height: 64,
+                          height: 48,
                           child: Row(children: <Widget>[
                             NextButton(
                               onTap: () =>

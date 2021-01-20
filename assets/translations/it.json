@@ -12,7 +12,7 @@
   "calibration_title": "Calibrazione",
   "your_information_title": "Le mie informazioni",
   "legals_title": "Legale",
-  "about_title": "About",
+  "about_title": "Crediti",
   "calibrate_your_device_txt": "Calibra il tuo dispositivo",
   "what_we_know_about_you_txt": "Quali sono i tuoi dati",
   "open_source_txt": "Open Source",
@@ -73,7 +73,7 @@
   "general_title": "GENERALE",
   "health_title": "SALUTE",
   "trauma_title": "TRAUMI",
-  "hearing_defects_title": "DIFETTI UDITIVI/VISIVI",
+  "hearing_defects_title": "UDITO E VISTA",
   "age_txt": "Età",
   "gender_txt": "Genere",
   "height_txt": "Altezza",
@@ -157,5 +157,5 @@
   "privacy_declaration_title": "Continuando, Dichiaro",
   "privacy_declaration_first_txt": "di aver letto e compreso i Termini e Condizioni e l'Informativa sulla Privacy per l'utilizzo dell'app Balance. Di aver compreso che l'utilizzo di Balance è del tutto volontario e che ci si potrà ritirare dal progetto in qualsiasi momento, senza dover dare spiegazioni. Di aver compreso la natura e le attività dell'applicazione e che la partecipazione a questo progetto non comporterà il diritto ad alcun riconoscimento di alcun vantaggio di natura economica diretto o indiretto.",
   "privacy_declaration_second_txt": "di aver letto e compreso i Termini e Condizioni e l'Informativa sulla Privacy e quindi di acconsentire al trattamento dei propri dati personali e sensibili eventualmente raccolti nell’ambito dell'utilizzo di Balance per finalità di ricerca medica, biomedica, psicologica, pedagogica e sociale",
-  "privacy_declaration_third_txt": "di essere d'accordo su Termini, Condizioni e Informativa sulla Privacy di Balance"
+  "privacy_declaration_third_txt": "di aver letto e compreso che l'identificativo univoco viene rilasciato a titolo strettamente personale e di essere d'accordo su Termini, Condizioni e Informativa sulla Privacy di Balance"
 }

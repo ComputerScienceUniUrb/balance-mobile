@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:balance_app/res/b_icons.dart';
+import 'package:balance_app/screens/res/b_icons.dart';
 import 'package:balance_app/widgets/google_bottom_navigation_bar.dart';
 
 import 'package:easy_localization/easy_localization.dart';

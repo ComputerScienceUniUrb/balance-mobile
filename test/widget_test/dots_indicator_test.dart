@@ -1,5 +1,5 @@
 
-import 'package:balance_app/widgets/dots_indicator.dart';
+import 'package:balance_app/screens/intro/widgets/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
