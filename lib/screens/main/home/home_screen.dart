@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:balance_app/widgets/measure_countdown.dart';
-import 'package:focus_detector/focus_detector.dart';
+import 'package:balance_app/screens/main/home/widgets/measure_countdown.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

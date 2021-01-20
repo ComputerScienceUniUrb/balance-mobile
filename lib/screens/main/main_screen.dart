@@ -1,13 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:balance_app/screens/res/b_icons.dart';
-import 'package:balance_app/widgets/google_bottom_navigation_bar.dart';
+import 'package:balance_app/screens/main/widgets/google_bottom_navigation_bar.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
-import 'home_screen.dart';
-import 'measurements_screen.dart';
-import 'settings_screen.dart';
+import 'home/home_screen.dart';
+import 'measurements/measurements_screen.dart';
+import 'settings/settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override

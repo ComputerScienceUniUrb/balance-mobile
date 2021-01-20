@@ -7,7 +7,7 @@ import 'package:balance_app/manager/preference_manager.dart';
 import 'package:balance_app/screens/intro/slider/widgets/custom_number_form_field.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/screens/intro/bloc/onboarding_bloc.dart';
+import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
 
 /// Fourth intro screen
 ///

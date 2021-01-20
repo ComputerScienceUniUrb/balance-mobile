@@ -5,18 +5,18 @@ import 'package:balance_app/manager/vibration_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:balance_app/routes.dart';
 import 'package:balance_app/screens/res/colors.dart';
-import 'package:balance_app/widgets/circular_countdown.dart';
-import 'package:balance_app/widgets/custom_toggle_button.dart';
+import 'package:balance_app/screens/main/home/widgets/circular_countdown.dart';
+import 'package:balance_app/screens/main/home/widgets/custom_toggle_button.dart';
 import 'package:balance_app/floor/measurement_database.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:balance_app/manager/preference_manager.dart';
 
-import 'package:balance_app/dialog/calibrate_device_dialog.dart';
-import 'package:balance_app/dialog/leave_confirmation_dialog.dart';
-import 'package:balance_app/dialog/measuring_tutorial_dialog.dart';
+import 'package:balance_app/screens/main/home/widgets/calibrate_device_dialog.dart';
+import 'package:balance_app/screens/main/home/widgets/leave_confirmation_dialog.dart';
+import 'package:balance_app/screens/main/home/widgets/measuring_tutorial_dialog.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/countdown_bloc.dart';
+import 'package:balance_app/bloc/main/home/countdown_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 

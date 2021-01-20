@@ -4,10 +4,10 @@ import 'package:balance_app/floor/test_database_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/result_bloc.dart';
+import 'package:balance_app/bloc/results/result_bloc.dart';
 
-import 'package:balance_app/widgets/result_features_items.dart';
-import 'package:balance_app/widgets/result_info_item.dart';
+import 'package:balance_app/screens/results/widgets/result_features_items.dart';
+import 'package:balance_app/screens/results/widgets/result_info_item.dart';
 import 'package:provider/provider.dart';
 
 import 'package:easy_localization/easy_localization.dart';

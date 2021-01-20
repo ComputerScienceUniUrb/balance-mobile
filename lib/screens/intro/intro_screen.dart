@@ -12,7 +12,7 @@ import 'package:balance_app/screens/res/colors.dart';
 import 'package:balance_app/screens/intro/widgets/dots_indicator.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/screens/intro/bloc/onboarding_bloc.dart';
+import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
 import 'package:http/http.dart';
 
 import 'slider/welcome.dart';

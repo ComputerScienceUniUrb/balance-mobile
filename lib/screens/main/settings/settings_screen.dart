@@ -5,8 +5,8 @@ import 'package:package_info/package_info.dart';
 import 'package:balance_app/screens/res/b_icons.dart';
 
 import 'package:balance_app/routes.dart';
-import 'package:balance_app/widgets/settings_widget.dart';
-import 'package:balance_app/dialog/about_balance_dialog.dart';
+import 'package:balance_app/screens/main/settings/widgets/settings_widget.dart';
+import 'package:balance_app/screens/main/settings/widgets/about_balance_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class SettingsScreen extends StatefulWidget {

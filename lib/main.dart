@@ -11,13 +11,13 @@ import 'package:balance_app/generated/codegen_loader.g.dart';
 import 'package:balance_app/floor/measurement_database.dart';
 import 'package:balance_app/manager/preference_manager.dart';
 import 'package:balance_app/routes.dart';
-import 'package:balance_app/screens/main_screen.dart';
+import 'package:balance_app/screens/main/main_screen.dart';
 
 import 'package:balance_app/screens/intro/intro_screen.dart';
-import 'package:balance_app/screens/result_screen.dart';
-import 'package:balance_app/screens/calibrate_device_screen.dart';
-import 'package:balance_app/screens/user_info_recap_screen.dart';
-import 'package:balance_app/screens/open_source_screen.dart';
+import 'package:balance_app/screens/results/result_screen.dart';
+import 'package:balance_app/screens/calibration/calibrate_device_screen.dart';
+import 'package:balance_app/screens/info/user_info_recap_screen.dart';
+import 'package:balance_app/screens/opensource/open_source_screen.dart';
 import 'package:balance_app/screens/slider_screen.dart';
 
 Future<void> main() async {

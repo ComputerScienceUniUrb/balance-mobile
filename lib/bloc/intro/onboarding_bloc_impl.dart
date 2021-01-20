@@ -1,6 +1,6 @@
 
-import 'package:balance_app/screens/intro/bloc/events/onboarding_events.dart';
-import 'package:balance_app/screens/intro/bloc/states/onboarding_states.dart';
+import 'package:balance_app/bloc/intro/events/onboarding_events.dart';
+import 'package:balance_app/bloc/intro/states/onboarding_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnBoardingBloc extends Bloc<OnBoardingEvents, OnBoardingState> {

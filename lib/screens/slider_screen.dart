@@ -1,8 +1,8 @@
 
-import 'package:balance_app/screens/intro/bloc/onboarding_bloc.dart';
+import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
 import 'package:balance_app/model/user_info.dart';
 import 'package:balance_app/screens/intro/intro_screen.dart';
-import 'package:balance_app/screens/user_info_recap_screen.dart';
+import 'package:balance_app/screens/info/user_info_recap_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:balance_app/screens/res/colors.dart';

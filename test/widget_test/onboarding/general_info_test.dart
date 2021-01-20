@@ -4,9 +4,9 @@ import 'package:custom_dropdown/custom_dropdown.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:balance_app/screens/onboarding/general_info.dart';
+import 'package:balance_app/screens/intro/slider/general_info.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/onboarding_bloc.dart';
+import 'package:balance_app/screens/intro/bloc/onboarding_bloc.dart';
 
 void main() {
   testWidgets("No initial value", (tester) async {

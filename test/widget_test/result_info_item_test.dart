@@ -1,7 +1,7 @@
 
 import 'package:balance_app/floor/test_database_view.dart';
-import 'package:balance_app/res/b_icons.dart';
-import 'package:balance_app/widgets/result_info_item.dart';
+import 'package:balance_app/screens/res/b_icons.dart';
+import 'package:balance_app/screens/results/widgets/result_info_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

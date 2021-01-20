@@ -1,5 +1,5 @@
 
-import 'package:balance_app/bloc/states/countdown_state.dart';
+import 'package:balance_app/bloc/main/home/states/countdown_state.dart';
 import 'package:balance_app/screens/res/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

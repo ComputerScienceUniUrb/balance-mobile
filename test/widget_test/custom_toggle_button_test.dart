@@ -1,5 +1,5 @@
 
-import 'package:balance_app/widgets/custom_toggle_button.dart';
+import 'package:balance_app/screens/main/home/widgets/custom_toggle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
