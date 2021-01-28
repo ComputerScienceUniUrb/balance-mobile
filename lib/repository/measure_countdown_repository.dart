@@ -57,9 +57,9 @@ class MeasureCountdownRepository {
     Response response = await post(url, headers: headers, body: json);
 
     // response
-    int statusCode = response.statusCode;
-    String body = response.body;
-    print("RawMeasurement Sent to the Backend");
+    //int statusCode = response.statusCode;
+    //String body = response.body;
+    print("Response from backend: "+response.toString());
   }
 
   /// Asynchronously generate the [RawMeasurementData] from the [SensorData]

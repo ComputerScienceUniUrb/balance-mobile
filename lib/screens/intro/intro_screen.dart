@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:balance_app/manager/preference_manager.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:balance_app/model/system_info.dart';
 import 'package:balance_app/routes.dart';
 import 'package:balance_app/screens/intro/widgets/next_button.dart';
 import 'package:balance_app/screens/intro/widgets/back_button.dart';
@@ -31,7 +31,7 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-  final PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0, keepPage: false);
   int _currentPage = 0;
   bool _isNextBtnEnable = true;
   List<Color> _pageColors = [
@@ -68,7 +68,7 @@ class _IntroScreenState extends State<IntroScreen> {
                         FocusScope.of(context).unfocus();
                         // If we are in the last page go to home
                         if (_currentPage == 7) {
-                          PreferenceManager.firstLaunchDone();
+                          //PreferenceManager.firstLaunchDone();
                           _makePostRequest(jsonEncode(await PreferenceManager.userInfo));
                           Navigator.pushReplacementNamed(context, Routes.main);
                         } else {
@@ -76,6 +76,7 @@ class _IntroScreenState extends State<IntroScreen> {
                             * All the required data are stored... mark the
                             * first launch as done so we don't ask this data anymore
                             */
+                          print(await PreferenceManager.userInfo);
                           // Move to next page
                           _pageController.nextPage(
                             duration: Duration(milliseconds: 800),
@@ -89,20 +90,23 @@ class _IntroScreenState extends State<IntroScreen> {
                         onPageChanged: (newPage) =>
                           setState(() {
                             _currentPage = newPage;
-                            if (newPage == 1 || newPage == 2)
+                            if (newPage == 1 || newPage == 2 || newPage == 3)
                               _isNextBtnEnable = false;
                           }),
                         children: [
                           WelcomeScreen(0),
                           ConsentScreen(1, (isEnable) =>
-                              setState(() => _isNextBtnEnable = isEnable)),
+                              setState(() => _isNextBtnEnable = isEnable),),
                           HeightScreen(2, (isEnable) =>
-                              setState(() => _isNextBtnEnable = isEnable)),
+                              setState(() => _isNextBtnEnable = isEnable),),
                           GeneralInfoScreen(3, (isEnable) =>
                               setState(() => _isNextBtnEnable = isEnable)),
-                          PostureScreen(4),
-                          TraumaScreen(5),
-                          HabitsScreen(6),
+                          PostureScreen(4, (isEnable) =>
+                              setState(() => _isNextBtnEnable = isEnable)),
+                          TraumaScreen(5, (isEnable) =>
+                              setState(() => _isNextBtnEnable = isEnable)),
+                          HabitsScreen(6, (isEnable) =>
+                              setState(() => _isNextBtnEnable = isEnable)),
                           SightScreen(7),
                         ],
                       ),
@@ -169,12 +173,25 @@ _makePostRequest(var data) async {
   //String url = 'http://192.168.1.206:8000/api/v1/user/signup';
   Map<String, String> headers = {"Content-type": "application/json"};
   String json = data;
-  print(data);
+  print("_SendingData.signup: "+data);
   // make POST request
   Response response = await post(url, headers: headers, body: json);
 
   // response
-  int statusCode = response.statusCode;
+  //int statusCode = response.statusCode;
   String body = response.body;
   PreferenceManager.updateUserInfo(token: jsonDecode(body)["response"].toString());
+
+  // Send System Info
+  //String url = 'https://balancemobile.it/api/v1/user/signup';
+  //url = 'http://192.168.1.206:8000/api/v1/user/signup';
+  //headers = {"Content-type": "application/json"};
+  //json = (await PreferenceManager.systemInfo).toJson() as String;
+  //print("_SendingData.signup: "+data);
+  //// make POST request
+  ////Response response = await post(url, headers: headers, body: json);
+
+  //// response
+  ////int statusCode = response.statusCode;
+  //String body = response.body;
 }

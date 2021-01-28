@@ -9,14 +9,13 @@ class UserInfo {
   final List<bool> posturalProblems; // []
   final bool problemsInFamily;
   final bool useOfDrugs;
-  final String medicines;
-  final bool alcoholIntake;
-  final int alcoholQuantity; // Can be 0,1,2,3,4 -> [no, occasional, with meals, everytime possible]
+  final int alcoholIntake; // Can be 0,1,2,3,4 -> [no, occasional, with meals, everytime possible]
+  final int sportsActivity; // Can be 0,1,2,3,4 -> [no, occasional, with meals, everytime possible]
   final List<bool> physicalTrauma;
-  final bool needGlasses;
-  final List<bool> sightProblems;
-  final int hearingProblems;
-  final int hearingLoss; // Can be 0,1,2,3,4 -> [no, occasional, with meals, everytime possible]
+  final bool visionLoss;
+  final List<bool> visionProblems;
+  final bool hearingLoss;
+  final List<bool> hearingProblems; // Can be 0,1,2,3,4 -> [no, occasional, with meals, everytime possible]
   // TODO: Region
 
   UserInfo({
@@ -29,14 +28,13 @@ class UserInfo {
     this.posturalProblems,
     this.problemsInFamily,
     this.useOfDrugs,
-    this.medicines,
     this.alcoholIntake,
-    this.alcoholQuantity,
+    this.sportsActivity,
     this.physicalTrauma,
-    this.needGlasses,
-    this.sightProblems,
-    this.hearingProblems,
+    this.visionLoss,
+    this.visionProblems,
     this.hearingLoss,
+    this.hearingProblems,
   });
 
   /// Maps this object to json
@@ -51,14 +49,13 @@ class UserInfo {
         'injuries': this.posturalProblems,
         'inheritance': this.problemsInFamily,
         'use_of_drugs': this.useOfDrugs,
-        'medicines': this.medicines,
         'alcool_intake': this.alcoholIntake,
-        'alcool_quantity': this.alcoholQuantity,
+        'sports_activity': this.sportsActivity,
         'trauma': this.physicalTrauma,
-        'need_glasses': this.needGlasses,
-        'eyesight_problems': this.sightProblems,
-        'hearing_problems': this.hearingProblems,
+        'vision_loss': this.visionLoss,
+        'vision_problems': this.visionProblems,
         'hearing_loss': this.hearingLoss,
+        'hearing_problems': this.hearingProblems,
       };
 
   @override
@@ -73,13 +70,12 @@ class UserInfo {
         "injuries=$posturalProblems, "
         "inheritance=$problemsInFamily, "
         "use_of_drugs=$useOfDrugs, "
-        "medicines=$medicines, "
         "alcool_intake=$alcoholIntake, "
-        "alcool_quantity=$alcoholQuantity, "
+        "sports_activity=$sportsActivity, "
         "trauma=$physicalTrauma, "
-        "need_glasses=$needGlasses, "
-        "eyesight_problems=$sightProblems, "
-        "hearing_problems=$hearingProblems, "
-        "hearing_loss=$hearingLoss"
+        "vision_loss=$visionLoss, "
+        "vision_problems=$visionProblems, "
+        "hearing_loss=$hearingLoss, "
+        "hearing_problems=$hearingProblems"
       ")";
 }

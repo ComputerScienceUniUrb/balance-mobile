@@ -40,7 +40,7 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
   CountdownBloc _bloc;
   bool _measuring = false;
   VibrationManager vibrationManager;
-  var _battery = Battery();
+  var battery = Battery();
 
   @override
   void initState() {
@@ -128,34 +128,45 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                     SizedBox(height: 0),
                     RaisedButton(
                       onPressed: () async{
-                        if (state is CountdownIdleState || state is CountdownCompleteState) {
-                          /*
-                   * Every time the user presses the start button we need to check
-                   * two conditions:
-                   * - the device is calibrated? if not ask the user to do it
-                   * - we need to show the tutorial?
-                   */
-                          bool isDeviceCalibrated = await PreferenceManager.isDeviceCalibrated;
-                          bool showTutorial = await PreferenceManager.showMeasuringTutorial;
-                          if (!isDeviceCalibrated)
-                            showCalibrateDeviceDialog(context);
-                          else if (showTutorial)
-                            showTutorialDialog(
-                                context,
-                                    () => context.bloc<CountdownBloc>().add(CountdownEvents.startPreMeasure)
-                            );
-                          else
-                            context.bloc<CountdownBloc>().add(CountdownEvents.startPreMeasure);
-                        }
-                        else if (state is CountdownPreMeasureState) {
-                          // Stop the pre measure countdown
-                          vibrationManager.cancel();
-                          context.bloc<CountdownBloc>().add(CountdownEvents.stopPreMeasure);
-                        }
-                        else if (state is CountdownMeasureState) {
-                          // Stop the measurement
-                          vibrationManager.cancel();
-                          context.bloc<CountdownBloc>().add(CountdownEvents.stopMeasure);
+                        int batteryLevel = await battery.batteryLevel;
+                        if (batteryLevel >= 30) {
+                          if (state is CountdownIdleState ||
+                              state is CountdownCompleteState) {
+                            /*
+                             * Every time the user presses the start button we need to check
+                             * two conditions:
+                             * - the device is calibrated? if not ask the user to do it
+                             * - we need to show the tutorial?
+                             */
+                            bool isDeviceCalibrated = await PreferenceManager
+                                .isDeviceCalibrated;
+                            bool showTutorial = await PreferenceManager
+                                .showMeasuringTutorial;
+                            if (!isDeviceCalibrated)
+                              showCalibrateDeviceDialog(context);
+                            else if (showTutorial)
+                              showTutorialDialog(
+                                  context,
+                                      () =>
+                                      context.bloc<CountdownBloc>().add(
+                                          CountdownEvents.startPreMeasure)
+                              );
+                            else
+                              context.bloc<CountdownBloc>().add(
+                                  CountdownEvents.startPreMeasure);
+                          }
+                          else if (state is CountdownPreMeasureState) {
+                            // Stop the pre measure countdown
+                            vibrationManager.cancel();
+                            context.bloc<CountdownBloc>().add(
+                                CountdownEvents.stopPreMeasure);
+                          }
+                          else if (state is CountdownMeasureState) {
+                            // Stop the measurement
+                            vibrationManager.cancel();
+                            context.bloc<CountdownBloc>().add(
+                                CountdownEvents.stopMeasure);
+                          }
                         }
                       },
                       color: BColors.colorAccent,

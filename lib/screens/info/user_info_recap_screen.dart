@@ -2,7 +2,6 @@
 import 'package:balance_app/manager/preference_manager.dart';
 import 'package:balance_app/model/user_info.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:balance_app/routes.dart';
 import 'package:flutter/material.dart';
 
 /// Extension function used in [UserInfoRecapScreen].
@@ -56,12 +55,12 @@ class UserInfoRecapScreen extends StatelessWidget {
     return "[${list.whereIndexed().map((e) => problems[e]).join(", ")}]";
   }
   /// Get the String of hearing problems
-  static String _getHearingString(int value) {
-    if (value == null || value < 0 || value > 5)
+  static String _getHearingString(List<bool> list) {
+    if (list == null || list.where((element) => element).isEmpty)
       return 'none'.tr();
 
-    final problems = ['none'.tr(), 'light_txt'.tr(), 'moderate_txt'.tr(), 'severe_txt'.tr(), 'deep_txt'.tr()];
-    return problems[value];
+    final problems = ['Destro', 'Sinistro'];
+    return "[${list.whereIndexed().map((e) => problems[e]).join(", ")}]";
   }
 
 
@@ -87,7 +86,7 @@ class UserInfoRecapScreen extends StatelessWidget {
           final userInfo = snapshot.data as UserInfo;
           return ListView(
             children: <Widget>[
-              // General Info Card
+              //// General Info Card
               Card(
                 margin: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 8),
                 child: Padding(
@@ -197,13 +196,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                             'postural_problems_txt'.tr(),
                             style: headlineTextStyle,
                           ),
-                          Flexible(
-                            child: Text(
-                              _getPostureString(userInfo?.posturalProblems),
-                              style: valueTextStyle,
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
+                          //Flexible(
+                          //  child: Text(
+                          //    _getPostureString(userInfo?.posturalProblems),
+                          //    style: valueTextStyle,
+                          //    textAlign: TextAlign.end,
+                          //  ),
+                          //),
                         ],
                       ),
                       SizedBox(height: 16),
@@ -230,13 +229,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                             style: headlineTextStyle,
                           ),
                           SizedBox(width: 16),
-                          Flexible(
-                              child: Text(
-                                _getTraumaString(userInfo?.physicalTrauma),
-                                style: valueTextStyle,
-                                textAlign: TextAlign.end,
-                              )
-                          ),
+                          //Flexible(
+                          //    child: Text(
+                          //      _getTraumaString(userInfo?.physicalTrauma),
+                          //      style: valueTextStyle,
+                          //      textAlign: TextAlign.end,
+                          //    )
+                          //),
                         ],
                       ),
                     ],
@@ -265,7 +264,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                           Flexible(
                             child: Text(
-                              _getSightString(userInfo?.sightProblems),
+                              _getSightString(userInfo?.visionProblems),
                               style: valueTextStyle,
                               textAlign: TextAlign.end,
                             ),
@@ -281,7 +280,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                             style: headlineTextStyle,
                           ),
                           Text(
-                            _getHearingString(userInfo?.hearingLoss),
+                            _getHearingString(userInfo?.hearingProblems),
                             style: valueTextStyle,
                           ),
                         ],

@@ -1,4 +1,5 @@
 
+import 'package:balance_app/screens/intro/slider/widgets/lite_rolling_switch.dart';
 import 'package:balance_app/screens/res/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -23,16 +24,19 @@ class HabitsScreen extends StatefulWidget {
   final bool problemsInFamily;
   final bool useOfDrugs;
   final String medicines;
-  final bool alcoholIntake;
+  final int alcoholIntake;
   final int alcoholIndex;
+  final int sportsActivity;
+  final ValueChanged<bool> enableNextBtnCallback;
 
-  HabitsScreen(this.screenIndex, {
+  HabitsScreen(this.screenIndex, this.enableNextBtnCallback, {
     this.posture,
     this.problemsInFamily,
     this.useOfDrugs,
     this.medicines,
     this.alcoholIntake,
     this.alcoholIndex,
+    this.sportsActivity,
   });
 
   @override
@@ -41,24 +45,23 @@ class HabitsScreen extends StatefulWidget {
 
 class _HabitsScreenState extends State<HabitsScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _alcoholQuantity = ['Astemio', 'Occasionale', 'Ai Pasti', 'Fuori Pasto'];
+  final _alcoholIntake = ['Astemio', 'Occasionale', 'Ai Pasti', 'Fuori Pasto'];
+  String _alcoholSelected;
+  final _sportsActivity = ['Affatto', 'Occasionale', 'Settimanale', 'Quotidiano'];
+  double _sportsSliderValue = 0;
+  String _sportsActivitySelected;
   List<bool> _selectedPosture;
-  bool _useOfDrugs = false;
-  String _medicines;
-  bool _alcoholIntake = false;
+  bool _useOfDrugs;
   int _alcoholIndex;
   double _currentSliderValue = 0;
-  String _alcoholSelected;
 
   @override
   void initState() {
     super.initState();
     _selectedPosture = widget.posture;
     _useOfDrugs = widget.useOfDrugs ?? false;
-    _medicines = widget.medicines ?? 'Astemio';
-    _alcoholIntake = widget.alcoholIntake ?? false;
     _alcoholIndex = widget.alcoholIndex ?? 0;
-    _alcoholSelected = _alcoholQuantity.elementAt(0);
+    _alcoholSelected = _alcoholIntake.elementAt(0);
   }
 
   @override
@@ -90,18 +93,35 @@ class _HabitsScreenState extends State<HabitsScreen> {
                 ),
               ),
               SizedBox(height: 40),
-              PlainCheckboxFormField(
-                child: Text(
-                  'use_of_drugs_txt'.tr(),
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                    fontSize: 18,
-                    color: Colors.white,
+              Row(
+                children: <Widget>[
+                  Flexible(
+                    child: RichText(
+                      overflow: TextOverflow.clip,
+                      text: TextSpan(
+                        text: 'use_of_drugs_txt'.tr(),
+                        style: Theme.of(context).textTheme.headline6.copyWith(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                value: _useOfDrugs,
-                onChanged: (value) => setState(() => _useOfDrugs = value),
-                validator: (value) => null,
-                onSaved: (newValue) => PreferenceManager.updateUserInfo(useOfDrugs: newValue),
+                  LiteRollingSwitch(
+                      value: false,
+                      textOn: 'Si',
+                      textOff: 'No',
+                      colorOn: Colors.indigoAccent,
+                      colorOff: Colors.white70,
+                      iconOn: Icons.done,
+                      iconOff: Icons.remove_circle_outline,
+                      textSize: 16.0,
+                      onChanged: (bool state) {
+                        PreferenceManager.updateUserInfo(useOfDrugs: state);
+                        _useOfDrugs = state;
+                      }
+                  ),
+                ],
               ),
               SizedBox(height: 36),
               Text(
@@ -165,13 +185,82 @@ class _HabitsScreenState extends State<HabitsScreen> {
                   onChanged: (double value) {
                     setState(() {
                       _currentSliderValue = value;
-                      _alcoholSelected = _alcoholQuantity.elementAt(((value*3/100).round()));
+                      _alcoholSelected = _alcoholIntake.elementAt(((value*3/100).round()));
                     });
                   },
                   onChangeEnd: (newValue) {
-                    print(((newValue*3/100).round()).toInt());
-                    PreferenceManager.updateUserInfo(alcoholQuantity: ((newValue*3/100).round()).toInt());
+                    PreferenceManager.updateUserInfo(alcoholIntake: ((newValue*3/100).round()).toInt());
                   }
+                ),
+              ),
+              SizedBox(height: 36),
+              Text(
+                'Svolgi attività motoria?',
+                style: Theme.of(context).textTheme.headline4.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 24),
+              Row(
+                children: <Widget>[
+                  Text(
+                    'Affatto',
+                    style: Theme.of(context).textTheme.headline4.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    'Occasionale',
+                    style: Theme.of(context).textTheme.headline4.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    'Settimanale',
+                    style: Theme.of(context).textTheme.headline4.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    'Quotidiana',
+                    style: Theme.of(context).textTheme.headline4.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+              SliderTheme(
+                data: SliderThemeData(
+                  thumbColor: BColors.colorPrimary,
+                  showValueIndicator: ShowValueIndicator.never,
+                ),
+                child: Slider(
+                    value: _sportsSliderValue,
+                    min: 0,
+                    max: 100,
+                    divisions: 3,
+                    onChanged: (double value) {
+                      setState(() {
+                        _sportsSliderValue = value;
+                        _sportsActivitySelected = _sportsActivity.elementAt(((value*3/100).round()));
+                      });
+                    },
+                    onChangeEnd: (newValue) {
+                      PreferenceManager.updateUserInfo(sportsActivity: ((newValue*3/100).round()).toInt());
+                    }
                 ),
               ),
               SizedBox(height: 105)

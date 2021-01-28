@@ -20,8 +20,9 @@ class PostureScreen extends StatefulWidget {
   final int screenIndex;
   final List<bool> posture;
   final bool problemsInFamily;
+  final ValueChanged<bool> enableNextBtnCallback;
 
-  PostureScreen(this.screenIndex, {
+  PostureScreen(this.screenIndex, this.enableNextBtnCallback, {
     this.posture,
     this.problemsInFamily,
   });
@@ -32,14 +33,14 @@ class PostureScreen extends StatefulWidget {
 
 class _PostureScreenState extends State<PostureScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _postureProblems = ['scoliosis_txt'.tr(), 'kyphosis_txt'.tr(), 'lordosis_txt'.tr()];
+  final _postureProblems = ['none_txt'.tr(), 'scoliosis_txt'.tr(), 'kyphosis_txt'.tr(), 'lordosis_txt'.tr()];
   List<bool> _selectedPosture;
   bool _problemsInFamily = false;
 
   @override
   void initState() {
     super.initState();
-    _selectedPosture = widget.posture;
+    _selectedPosture = widget.posture ?? [false, false, false, false];
     _problemsInFamily = widget.problemsInFamily ?? false;
   }
 
@@ -76,13 +77,9 @@ class _PostureScreenState extends State<PostureScreen> {
                 CheckboxGroupFormField(
                   items: _postureProblems,
                   validator: (value) => null,
-                  onSaved: (newValue) => PreferenceManager.updateUserInfo(
-                    posturalProblems: newValue ?? List.filled(3, false)
-                  ),
+                  onSaved: (newValue) => PreferenceManager.updateUserInfo(posturalProblems: newValue ?? List.filled(3, false)),
                   value: _selectedPosture,
-                  onChanged: (value) => setState(() {
-                    _selectedPosture = value;
-                  }),
+                  onChanged: (value) => setState(() => _selectedPosture = value),
                 ),
                 SizedBox(height: 24),
                 PlainCheckboxFormField(

@@ -2,7 +2,6 @@
 import 'package:floor/floor.dart';
 import 'package:balance_app/model/measurement.dart';
 import 'package:balance_app/model/sensor_data.dart';
-import 'package:balance_app/manager/preference_manager.dart';
 
 @Entity(
   tableName: "raw_measurements_data",

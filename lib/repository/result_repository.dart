@@ -62,9 +62,9 @@ class ResultRepository {
     Response response = await post(url, headers: headers, body: json);
 
     // response
-    int statusCode = response.statusCode;
-    String body = response.body;
-    print("Measurement Sent to the Backend");
+    //int statusCode = response.statusCode;
+    //String body = response.body;
+    print("Response from backend: "+response.toString());
   }
 
   /// Save all the measurement in a .json file

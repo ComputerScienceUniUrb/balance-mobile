@@ -34,6 +34,7 @@ class BackCustomButton extends StatelessWidget {
       width: 64,
       child: FloatingActionButton(
         onPressed: isEnable? onTap: null,
+        heroTag: 'back_btn',
         child: isDone?
           Text(
             'done_btn'.tr(),

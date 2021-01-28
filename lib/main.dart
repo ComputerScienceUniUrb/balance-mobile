@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:balance_app/screens/res/colors.dart';
 import 'package:balance_app/screens/res/theme.dart';
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +29,25 @@ Future<void> main() async {
 	final isFirstTimeLaunch = await PreferenceManager.isFirstTimeLaunch;
 	final dbInstance = await MeasurementDatabase.getDatabase();
 	await intl.initializeDateFormatting("en");
+
+	if (Platform.isAndroid) {
+		var androidInfo = await DeviceInfoPlugin().androidInfo;
+		var release = androidInfo.version.release;
+		var sdkInt = androidInfo.version.sdkInt;
+		var manufacturer = androidInfo.manufacturer;
+		var model = androidInfo.model;
+		PreferenceManager.updateSystemInfo(manufacturer, model, "alpha.5", "Android "+release+" SDK "+sdkInt.toString());
+	}
+
+	if (Platform.isIOS) {
+		var iosInfo = await DeviceInfoPlugin().iosInfo;
+		var systemName = iosInfo.systemName;
+		var version = iosInfo.systemVersion;
+		var name = iosInfo.name;
+		var model = iosInfo.model;
+		PreferenceManager.updateSystemInfo("Apple", name, "alpha.5", systemName+" "+version);
+	}
+
 	runApp(
 		EasyLocalization(
 			child: BalanceApp(isFirstTimeLaunch, dbInstance),

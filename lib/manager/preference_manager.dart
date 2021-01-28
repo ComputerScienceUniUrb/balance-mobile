@@ -34,11 +34,12 @@ class PreferenceManager {
   static const _problemsInFamily = "problemsInFamily";
   static const _useOfDrugs = "useOfDrugs";
   static const _alcoholIntake = "alcoholIntake";
-  static const _alcoholQuantity = "alcoholQuantity";
+  static const _sportsActivity = "sportsActivity";
   static const _otherTrauma = "otherTrauma";
+  static const _visionLoss = "visionLoss";
   static const _sightProblems = "sightProblems";
-  static const _hearingProblems = "hearingProblems";
   static const _hearingLoss = "hearingLoss";
+  static const _hearingProblems = "hearingProblems";
 
   /// Is this the first time the app has been launched?
   static Future<bool> get isFirstTimeLaunch async {
@@ -158,7 +159,7 @@ class PreferenceManager {
     if (height == null) return null;
     try {
       return UserInfo(
-        token: pref.getString(_token),
+        token: pref.getString(_token) ?? '',
         height: height,
         age: pref.getInt(_age), // Defaults to null
         weight: pref.getInt(_weight), // Defaults to null
@@ -169,21 +170,26 @@ class PreferenceManager {
           ?.toList(), // Defaults to null
         problemsInFamily: pref.getBool(_problemsInFamily) ?? false, // Defaults to false
         useOfDrugs: pref.getBool(_useOfDrugs) ?? false, // Defaults to false
-        alcoholIntake: pref.getBool(_alcoholIntake) ?? false, // Defaults to false
-        alcoholQuantity: pref.getInt(_alcoholQuantity) ?? 0, // Defaults to false
+        alcoholIntake: pref.getInt(_alcoholIntake) ?? 0, // Defaults to false
+        sportsActivity: pref.getInt(_sportsActivity) ?? 0, // Defaults to false
         physicalTrauma: pref.getString(_otherTrauma)
           ?.split(",")
           ?.map((e) => e == 'true')
           ?.toList(), // Defaults to null
-        sightProblems: pref.getString(_sightProblems)
+        visionLoss: pref.getBool(_visionLoss) ?? false,
+        visionProblems: pref.getString(_sightProblems)
           ?.split(",")
           ?.map((e) => e == 'true')
           ?.toList(), // Defaults to null
-        hearingProblems: pref.getInt(_hearingProblems) ?? 0,
-        hearingLoss: pref.getInt(_hearingLoss) ?? 0, // Defaults to none
+        hearingLoss: pref.getBool(_hearingLoss) ?? false,
+        hearingProblems: pref.getString(_hearingProblems)
+          ?.split(",")
+          ?.map((e) => e == 'true')
+          ?.toList(), // Defaults to null
       );
-    } catch(_) {
+    } catch(e) {
       // Some error occurred... return a null object
+      print("_PreferenceManager.get.userInfo: "+e.toString());
       return null;
     }
   }
@@ -205,14 +211,13 @@ class PreferenceManager {
     List<bool> posturalProblems,
     bool problemsInFamily,
     bool useOfDrugs,
-    bool medicines,
-    bool alcoholIntake,
-    int alcoholQuantity,
+    int alcoholIntake,
+    int sportsActivity,
     List<bool> physicalTrauma,
-    bool wearGlasses,
-    List<bool> sightProblems,
-    int hearingProblems,
-    int hearingLoss,
+    bool visionLoss,
+    List<bool> visionProblems,
+    bool hearingLoss,
+    List<bool> hearingProblems,
   }) async {
     var pref = await SharedPreferences.getInstance();
 
@@ -234,16 +239,18 @@ class PreferenceManager {
     if (useOfDrugs != null)
       pref.setBool(_useOfDrugs, useOfDrugs);
     if (alcoholIntake != null)
-      pref.setBool(_alcoholIntake, alcoholIntake);
-    if (alcoholQuantity != null)
-      pref.setInt(_alcoholQuantity, alcoholQuantity);
+      pref.setInt(_alcoholIntake, alcoholIntake);
+    if (sportsActivity != null)
+      pref.setInt(_sportsActivity, sportsActivity);
     if (physicalTrauma != null)
       pref.setString(_otherTrauma, physicalTrauma.join(","));
-    if (sightProblems != null)
-      pref.setString(_sightProblems, sightProblems.join(","));
-    if (hearingProblems != null)
-      pref.setInt(_hearingProblems, hearingProblems);
+    if (visionLoss != null)
+      pref.setBool(_visionLoss, visionLoss);
+    if (visionProblems != null)
+      pref.setString(_sightProblems, visionProblems.join(","));
     if (hearingLoss != null)
-      pref.setInt(_hearingLoss, hearingLoss);
+      pref.setBool(_hearingLoss, hearingLoss);
+    if (hearingProblems != null)
+      pref.setString(_hearingProblems, hearingProblems.join(","));
   }
 }

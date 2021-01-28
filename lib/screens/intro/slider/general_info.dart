@@ -39,7 +39,6 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
   int _genderIndex;
   bool _age;
   bool _weight;
-  bool _canGoNext = false;
 
   @override
   void initState() {
@@ -94,6 +93,7 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
                       CustomNumberFormField(
                         labelText: 'age_txt'.tr(),
                         initialValue: widget.age,
+                        suffix: "anni",
                         onChanged: (isNotEmpty) {
                           // Enable/Disable the next button if the text field is empty
                           if (isNotEmpty) {
@@ -151,6 +151,7 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
                       CustomNumberFormField(
                         labelText: 'weight_txt'.tr(),
                         initialValue: widget.weight,
+                        suffix: "kg",
                         onChanged: (isNotEmpty) {
                           // Enable/Disable the next button if the text field is empty
                           if (isNotEmpty) {

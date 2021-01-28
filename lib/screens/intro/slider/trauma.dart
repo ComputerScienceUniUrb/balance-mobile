@@ -22,8 +22,9 @@ class TraumaScreen extends StatefulWidget {
   /// Index of the screen
   final int screenIndex;
   final List<bool> trauma;
+  final ValueChanged<bool> enableNextBtnCallback;
 
-  TraumaScreen(this.screenIndex, {
+  TraumaScreen(this.screenIndex, this.enableNextBtnCallback, {
     this.trauma,
   });
 
@@ -33,7 +34,7 @@ class TraumaScreen extends StatefulWidget {
 
 class _TraumaScreenState extends State<TraumaScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _physicalTrauma = ['fractures_txt'.tr(), 'limb_operations_txt'.tr(), 'falls_txt'.tr(), 'distortions_txt'.tr(), 'head_trauma'.tr()];
+  final _physicalTrauma = ['none_txt'.tr(), 'fractures_txt'.tr(), 'limb_operations_txt'.tr(), 'falls_txt'.tr(), 'distortions_txt'.tr(), 'head_trauma'.tr()];
   List<bool> _selectedTrauma;
 
   @override
