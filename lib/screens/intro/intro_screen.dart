@@ -38,11 +38,10 @@ class _IntroScreenState extends State<IntroScreen> {
     BColors.colorPrimary,
     Color(0xFF398AA7),
     Color(0xFF36836C),
-    Color(0xFB93936C),
-    Color(0xffF2BB25),
-    Color(0xFFC95E4B),
-    Color(0xFB939AA7),
-    Color(0xFF398AA7),
+    Color(0xFF739AA7),
+    Color(0xFF798CA7),
+    Color(0xFF8F8CA7),
+    Color(0xFF897AA7),
   ];
 
   @override
@@ -53,113 +52,111 @@ class _IntroScreenState extends State<IntroScreen> {
         create: (context) => OnBoardingBloc.create(),
         child: Builder(
           builder: (context) =>
-            AnnotatedRegion<SystemUiOverlayStyle>(
-              value: SystemUiOverlayStyle.light,
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  // Main page view
-                  AnimatedContainer(
-                    duration: Duration(milliseconds: 500),
-                    color: _pageColors[_currentPage],
-                    child: BlocListener<OnBoardingBloc, OnBoardingState>(
-                      condition: (_, current) => current is ValidationSuccessState,
-                      listener: (context, _) async {
-                        FocusScope.of(context).unfocus();
-                        // If we are in the last page go to home
-                        if (_currentPage == 7) {
-                          //PreferenceManager.firstLaunchDone();
-                          _makePostRequest(jsonEncode(await PreferenceManager.userInfo));
-                          Navigator.pushReplacementNamed(context, Routes.main);
-                        } else {
-                          /*
+              AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle.light,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: <Widget>[
+                    // Main page view
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 500),
+                      color: _pageColors[_currentPage],
+                      child: BlocListener<OnBoardingBloc, OnBoardingState>(
+                        condition: (_, current) => current is ValidationSuccessState,
+                        listener: (context, _) async {
+                          FocusScope.of(context).unfocus();
+                          // If we are in the last page go to home
+                          if (_currentPage == 6) {
+                            PreferenceManager.firstLaunchDone();
+                            _makePostRequest(jsonEncode(await PreferenceManager.userInfo));
+                            Navigator.pushReplacementNamed(context, Routes.main);
+                          } else {
+                            /*
                             * All the required data are stored... mark the
                             * first launch as done so we don't ask this data anymore
                             */
-                          print(await PreferenceManager.userInfo);
-                          // Move to next page
-                          _pageController.nextPage(
-                            duration: Duration(milliseconds: 800),
-                            curve: Curves.ease
-                          );
-                        }
-                      },
-                      child: PageView(
-                        physics: NeverScrollableScrollPhysics(),
-                        controller: _pageController,
-                        onPageChanged: (newPage) =>
-                          setState(() {
-                            _currentPage = newPage;
-                            if (newPage == 1 || newPage == 2 || newPage == 3)
-                              _isNextBtnEnable = false;
-                          }),
-                        children: [
-                          WelcomeScreen(0),
-                          ConsentScreen(1, (isEnable) =>
-                              setState(() => _isNextBtnEnable = isEnable),),
-                          HeightScreen(2, (isEnable) =>
-                              setState(() => _isNextBtnEnable = isEnable),),
-                          GeneralInfoScreen(3, (isEnable) =>
-                              setState(() => _isNextBtnEnable = isEnable)),
-                          PostureScreen(4, (isEnable) =>
-                              setState(() => _isNextBtnEnable = isEnable)),
-                          TraumaScreen(5, (isEnable) =>
-                              setState(() => _isNextBtnEnable = isEnable)),
-                          HabitsScreen(6, (isEnable) =>
-                              setState(() => _isNextBtnEnable = isEnable)),
-                          SightScreen(7),
+                            print(await PreferenceManager.userInfo);
+                            // Move to next page
+                            _pageController.nextPage(
+                                duration: Duration(milliseconds: 800),
+                                curve: Curves.ease
+                            );
+                          }
+                        },
+                        child: PageView(
+                          physics: NeverScrollableScrollPhysics(),
+                          controller: _pageController,
+                          onPageChanged: (newPage) =>
+                              setState(() {
+                                _currentPage = newPage;
+                                if (newPage == 1 || newPage == 2 || newPage == 3 || newPage == 4)
+                                  _isNextBtnEnable = false;
+                              }),
+                          children: [
+                            WelcomeScreen(0),
+                            ConsentScreen(1, (isEnable) =>
+                                setState(() => _isNextBtnEnable = isEnable),),
+                            HeightScreen(2, (isEnable) =>
+                                setState(() => _isNextBtnEnable = isEnable),),
+                            GeneralInfoScreen(3, (isEnable) =>
+                                setState(() => _isNextBtnEnable = isEnable)),
+                            PostureScreen(4, (isEnable) =>
+                                setState(() => _isNextBtnEnable = isEnable)),
+                            HabitsScreen(5, (isEnable) =>
+                                setState(() => _isNextBtnEnable = isEnable)),
+                            SightScreen(6),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Bottom bar with progress, skip and next button
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 500),
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+                      color: _pageColors[_currentPage],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          AnimatedContainer(
+                            duration: Duration(milliseconds: 270),
+                            height: 48,
+                            child: Row(children: <Widget>[
+                              BackCustomButton(
+                                onTap: () => [_pageController.previousPage(
+                                    duration: Duration(milliseconds: 800),
+                                    curve: Curves.ease
+                                ),
+                                  _isNextBtnEnable = true],
+                                isEnable: (_currentPage == 0) ? false : true,
+                                backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors.colorPrimary,
+                              ),
+                            ]),
+                          ),
+                          DotsIndicator(
+                            size: 7,
+                            selected: _currentPage,
+                          ),
+                          AnimatedContainer(
+                            duration: Duration(milliseconds: 270),
+                            height: 48,
+                            child: Row(children: <Widget>[
+                              NextButton(
+                                onTap: () =>
+                                    BlocProvider.of<OnBoardingBloc>(context).add(
+                                        NeedToValidateEvent(_currentPage)),
+                                isEnable: _isNextBtnEnable,
+                                isDone: _currentPage == 6,
+                                backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors
+                                    .colorPrimary,
+                              ),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                  // Bottom bar with progress, skip and next button
-                  AnimatedContainer(
-                    duration: Duration(milliseconds: 500),
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-                    color: _pageColors[_currentPage],
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        AnimatedContainer(
-                          duration: Duration(milliseconds: 270),
-                          height: 48,
-                          child: Row(children: <Widget>[
-                            BackCustomButton(
-                              onTap: () => [_pageController.previousPage(
-                                  duration: Duration(milliseconds: 800),
-                                  curve: Curves.ease
-                              ),
-                              _isNextBtnEnable = true],
-                              isEnable: (_currentPage == 0) ? false : true,
-                              backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors.colorPrimary,
-                            ),
-                          ]),
-                        ),
-                        DotsIndicator(
-                          size: 8,
-                          selected: _currentPage,
-                        ),
-                        AnimatedContainer(
-                          duration: Duration(milliseconds: 270),
-                          height: 48,
-                          child: Row(children: <Widget>[
-                            NextButton(
-                              onTap: () =>
-                                BlocProvider.of<OnBoardingBloc>(context).add(
-                                  NeedToValidateEvent(_currentPage)),
-                              isEnable: _isNextBtnEnable,
-                              isDone: _currentPage == 7,
-                              backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors
-                                .colorPrimary,
-                            ),
-                          ]),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
         ),
       ),
     );

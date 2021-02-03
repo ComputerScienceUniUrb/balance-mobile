@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:balance_app/bloc/main/home/countdown_bloc_impl.dart';
 import 'package:balance_app/screens/res/colors.dart';
 import 'package:balance_app/screens/res/theme.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:intl/date_symbol_data_local.dart' as intl;
 import 'package:easy_localization/easy_localization.dart';
@@ -49,14 +51,14 @@ Future<void> main() async {
 	}
 
 	runApp(
-		EasyLocalization(
-			child: BalanceApp(isFirstTimeLaunch, dbInstance),
-			supportedLocales: [Locale("en"), Locale("it")],
-			fallbackLocale: Locale("en"),
-			path: "assets/translations",
-			assetLoader: CodegenLoader(),
-			preloaderColor: BColors.colorPrimary,
-		)
+			EasyLocalization(
+				child: BalanceApp(isFirstTimeLaunch, dbInstance),
+				supportedLocales: [Locale("en"), Locale("it")],
+				fallbackLocale: Locale("en"),
+				path: "assets/translations",
+				assetLoader: CodegenLoader(),
+				preloaderColor: BColors.colorPrimary,
+			)
 	);
 }
 
@@ -67,7 +69,7 @@ class BalanceApp extends StatelessWidget {
 	const BalanceApp(this.isFirstLaunch, this.dbInstance);
 
 	@override
-  Widget build(BuildContext context) {
+	Widget build(BuildContext context) {
 		SystemChrome.setPreferredOrientations([
 			DeviceOrientation.portraitUp,
 			DeviceOrientation.portraitDown,
@@ -77,14 +79,14 @@ class BalanceApp extends StatelessWidget {
 				providers: [
 					Provider<MeasurementDatabase>(create: (context) => dbInstance),
 				],
-			  child: MaterialApp(
+				child: MaterialApp(
 					title: "Balance",
 					initialRoute: isFirstLaunch ? Routes.intro: Routes.main,
 					theme: lightTheme,
 					darkTheme: darkTheme,
 					routes: {
 						Routes.intro: (_) => IntroScreen(),
-						Routes.main: (_) => MainScreen(),
+						Routes.main: (_) => BlocProvider(child: MainScreen(), create: (context) => CountdownBloc.create(Provider.of<MeasurementDatabase>(context, listen: false))),
 						Routes.calibration: (_) => CalibrateDeviceScreen(),
 						Routes.info: (_) => UserInfoRecapScreen(),
 						Routes.slider: (_) => SliderScreen(),
@@ -94,5 +96,5 @@ class BalanceApp extends StatelessWidget {
 				),
 			),
 		);
-  }
+	}
 }
