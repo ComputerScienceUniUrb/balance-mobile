@@ -51,6 +51,7 @@ dependencies:
   device_info: ^1.0.0
   group_button: ^1.1.0 #latest version
   flutter_range_slider: ^1.5.0
+  equatable: 
 
 
 dev_dependencies:
