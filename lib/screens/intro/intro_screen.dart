@@ -1,8 +1,8 @@
 
 import 'dart:convert';
 
+import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
 import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/model/system_info.dart';
 import 'package:balance_app/routes.dart';
 import 'package:balance_app/screens/intro/widgets/next_button.dart';
 import 'package:balance_app/screens/intro/widgets/back_button.dart';
@@ -20,7 +20,6 @@ import 'slider/consent.dart';
 import 'slider/height.dart';
 import 'slider/general_info.dart';
 import 'slider/posture.dart';
-import 'slider/trauma.dart';
 import 'slider/habits.dart';
 import 'slider/sight.dart';
 
@@ -89,22 +88,23 @@ class _IntroScreenState extends State<IntroScreen> {
                           onPageChanged: (newPage) =>
                               setState(() {
                                 _currentPage = newPage;
-                                if (newPage == 1 || newPage == 2 || newPage == 3 || newPage == 4)
+                                if (newPage != 0)
                                   _isNextBtnEnable = false;
                               }),
                           children: [
                             WelcomeScreen(0),
                             ConsentScreen(1, (isEnable) =>
-                                setState(() => _isNextBtnEnable = isEnable),),
+                                setState(() => _isNextBtnEnable = isEnable)),
                             HeightScreen(2, (isEnable) =>
-                                setState(() => _isNextBtnEnable = isEnable),),
+                                setState(() => _isNextBtnEnable = isEnable)),
                             GeneralInfoScreen(3, (isEnable) =>
                                 setState(() => _isNextBtnEnable = isEnable)),
                             PostureScreen(4, (isEnable) =>
                                 setState(() => _isNextBtnEnable = isEnable)),
                             HabitsScreen(5, (isEnable) =>
                                 setState(() => _isNextBtnEnable = isEnable)),
-                            SightScreen(6),
+                            SightScreen(6, (isEnable) =>
+                                setState(() => _isNextBtnEnable = isEnable)),
                           ],
                         ),
                       ),
@@ -140,15 +140,17 @@ class _IntroScreenState extends State<IntroScreen> {
                             duration: Duration(milliseconds: 270),
                             height: 48,
                             child: Row(children: <Widget>[
-                              NextButton(
-                                onTap: () =>
-                                    BlocProvider.of<OnBoardingBloc>(context).add(
-                                        NeedToValidateEvent(_currentPage)),
-                                isEnable: _isNextBtnEnable,
-                                isDone: _currentPage == 6,
-                                backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors
-                                    .colorPrimary,
-                              ),
+                              BlocBuilder<OnBoardingDataBloc, OnBoardingData>(builder: (context, state) {
+                                return NextButton(
+                                  onTap: () =>
+                                      BlocProvider.of<OnBoardingBloc>(context).add(
+                                          NeedToValidateEvent(_currentPage)),
+                                  isEnable: state.isButtonEnabled(_currentPage),
+                                  isDone: _currentPage == 6,
+                                  backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors
+                                      .colorPrimary,
+                                );
+                              })
                             ]),
                           ),
                         ],

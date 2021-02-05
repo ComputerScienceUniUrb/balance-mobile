@@ -6,7 +6,6 @@ import 'package:balance_app/screens/res/b_icons.dart';
 
 import 'package:balance_app/routes.dart';
 import 'package:balance_app/screens/main/settings/widgets/settings_widget.dart';
-import 'package:balance_app/screens/main/settings/widgets/about_balance_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -62,28 +61,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SettingsElement(
               icon: Image.asset("assets/app_logo.png", width: 24, height: 24,),
               text: 'about_balance_txt'.tr(),
-              onTap: () => showAboutBalanceDialog(context),
+              onTap: () => Navigator.of(context).pushNamed(Routes.credits),
             ),
           ]
         ),
         SettingsGroup(
-            title: 'version_txt'.tr(),
-            children: [
-              SettingsElement(
-                  icon: Icon(BIcons.version),
-                  text: "${'version_txt'.tr()} ${packageInfo?.version} (${'build_txt'.tr()}${packageInfo?.buildNumber})",
-                  onLongPress: () {
-                    Scaffold.of(context)
-                        .showSnackBar(
-                        SnackBar(
-                          behavior: SnackBarBehavior.floating,
-                          content: Text('easter_egg_txt'.tr()),
-                          duration: Duration(seconds: 2),
-                        )
-                    );
-                  }
-              ),
-            ]
+          title: 'version_txt'.tr(),
+          children: [
+            SettingsElement(
+                icon: Icon(BIcons.version),
+                text: "${'version_txt'.tr()} ${packageInfo?.version} (${'build_txt'.tr()}${packageInfo?.buildNumber})",
+                onLongPress: () {
+                  Scaffold.of(context)
+                      .showSnackBar(
+                      SnackBar(
+                        behavior: SnackBarBehavior.floating,
+                        content: Text('easter_egg_txt'.tr()),
+                        duration: Duration(seconds: 2),
+                      )
+                  );
+                }
+            ),
+          ]
         ),
       ]
     );

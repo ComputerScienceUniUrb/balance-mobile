@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
 import 'package:balance_app/bloc/main/home/countdown_bloc_impl.dart';
 import 'package:balance_app/screens/res/colors.dart';
 import 'package:balance_app/screens/res/theme.dart';
@@ -24,6 +25,7 @@ import 'package:balance_app/screens/calibration/calibrate_device_screen.dart';
 import 'package:balance_app/screens/info/user_info_recap_screen.dart';
 import 'package:balance_app/screens/opensource/open_source_screen.dart';
 import 'package:balance_app/screens/slider_screen.dart';
+import 'package:balance_app/screens/credits/credits.dart';
 
 Future<void> main() async {
 	WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +48,7 @@ Future<void> main() async {
 		var systemName = iosInfo.systemName;
 		var version = iosInfo.systemVersion;
 		var name = iosInfo.name;
-		var model = iosInfo.model;
+		//var model = iosInfo.model;
 		PreferenceManager.updateSystemInfo("Apple", name, "alpha.5", systemName+" "+version);
 	}
 
@@ -85,11 +87,12 @@ class BalanceApp extends StatelessWidget {
 					theme: lightTheme,
 					darkTheme: darkTheme,
 					routes: {
-						Routes.intro: (_) => IntroScreen(),
+						Routes.intro: (_) => BlocProvider(child: IntroScreen(), create: (context) => OnBoardingDataBloc()),
 						Routes.main: (_) => BlocProvider(child: MainScreen(), create: (context) => CountdownBloc.create(Provider.of<MeasurementDatabase>(context, listen: false))),
 						Routes.calibration: (_) => CalibrateDeviceScreen(),
 						Routes.info: (_) => UserInfoRecapScreen(),
 						Routes.slider: (_) => SliderScreen(),
+						Routes.credits: (_) => OpenSourceScreen(),//CreditsScreen(),
 						Routes.result: (_) => ResultScreen(),
 						Routes.open_source: (_) => OpenSourceScreen(),
 					},

@@ -64,12 +64,12 @@ class UserInfoRecapScreen extends StatelessWidget {
   }
   /// Get the String of hearing problems
   static String _getSportString(int element) {
-    final problems = ['Affatto', 'Occasionale', 'Settimanale', 'Quotidiano'];
+    final problems = ['nope_txt'.tr(), 'occasional_txt'.tr(), 'weekly_txt'.tr(), 'daily_txt'.tr()];
     return "${problems[element]}";
   }
   /// Get the String of hearing problems
   static String _getAlcoholString(int element) {
-    final problems = ['Astemio', 'Occasionale', 'Ai Pasti', 'Fuori Pasto'];
+    final problems = ['abstemious_txt'.tr(), 'occasional_txt'.tr(), 'at_meals_txt'.tr(), 'outside_meals_txt'.tr()];
     return "${problems[element]}";
   }
 
@@ -269,7 +269,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            'Indossi occhiali',
+                            'wear_glasses_txt'.tr(),
                             style: headlineTextStyle,
                           ),
                           Flexible(
@@ -303,7 +303,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            'Difficoltà uditive',
+                            'hearing_defects_txt'.tr(),
                             style: headlineTextStyle,
                           ),
                           Text(
@@ -317,7 +317,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            'Orecchie coinvolte',
+                            'which_hear_txt'.tr(),
                             style: headlineTextStyle,
                           ),
                           Text(
@@ -339,7 +339,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'ABITUDINI',
+                        'habits_txt'.tr(),
                         style: titleTextStyle,
                       ),
                       SizedBox(height: 16),
@@ -349,7 +349,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                         children: <Widget>[
                           Flexible(
                               child: Text(
-                                'Utilizzo abituale di Medicinali',
+                                'drugs_txt'.tr(),
                                 style: headlineTextStyle,
                               )
                           ),
@@ -366,7 +366,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                         children: <Widget>[
                           Flexible(
                               child: Text(
-                                'Attività Sportiva'.tr(),
+                                'sport_txt'.tr(),
                                 style: headlineTextStyle,
                               )
                           ),
@@ -383,7 +383,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                         children: <Widget>[
                           Flexible(
                               child: Text(
-                                'Assunzione di Sostanze Alcoliche',
+                                'alcohol_txt'.tr(),
                                 style: headlineTextStyle,
                               )
                           ),

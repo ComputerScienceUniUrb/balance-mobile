@@ -52,6 +52,7 @@ dependencies:
   group_button: ^1.1.0 #latest version
   flutter_range_slider: ^1.5.0
   toggle_switch: ^0.1.8
+  equatable:
 
 
 dev_dependencies:

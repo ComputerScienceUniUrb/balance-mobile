@@ -2,12 +2,12 @@
 import 'dart:async';
 
 import 'package:balance_app/manager/vibration_manager.dart';
+import 'package:battery/battery.dart';
 import 'package:flutter/material.dart';
 import 'package:balance_app/routes.dart';
 import 'package:balance_app/screens/res/colors.dart';
 import 'package:balance_app/screens/main/home/widgets/circular_countdown.dart';
 import 'package:balance_app/screens/main/home/widgets/custom_toggle_button.dart';
-import 'package:balance_app/floor/measurement_database.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:balance_app/manager/preference_manager.dart';
 
@@ -17,12 +17,10 @@ import 'package:balance_app/screens/main/home/widgets/measuring_tutorial_dialog.
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:balance_app/bloc/main/home/countdown_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:focus_detector/focus_detector.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:battery/battery.dart';
 
 /// Widget that manage the entire measuring process
 ///
@@ -40,6 +38,7 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
   CountdownBloc _bloc;
   bool _measuring = false;
   VibrationManager vibrationManager;
+  Battery _battery = Battery();
 
   @override
   void initState() {
@@ -120,47 +119,47 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                   SizedBox(height: 0),
                   RaisedButton(
                     onPressed: () async{
-                      //int batteryLevel = await battery.batteryLevel;
-                      //if (batteryLevel >= 30) {
-                      if (state is CountdownIdleState ||
-                          state is CountdownCompleteState) {
-                        /*
-                             * Every time the user presses the start button we need to check
-                             * two conditions:
-                             * - the device is calibrated? if not ask the user to do it
-                             * - we need to show the tutorial?
-                             */
-                        bool isDeviceCalibrated = await PreferenceManager
-                            .isDeviceCalibrated;
-                        bool showTutorial = await PreferenceManager
-                            .showMeasuringTutorial;
-                        if (!isDeviceCalibrated)
-                          showCalibrateDeviceDialog(context);
-                        else if (showTutorial)
-                          showTutorialDialog(
-                              context,
-                                  () =>
-                                  context.bloc<CountdownBloc>().add(
-                                      CountdownEvents.startPreMeasure)
-                          );
-                        else
+                      int batteryLevel = await _battery.batteryLevel;
+                      if (batteryLevel >= 30) {
+                        if (state is CountdownIdleState ||
+                            state is CountdownCompleteState) {
+                          /*
+                               * Every time the user presses the start button we need to check
+                               * two conditions:
+                               * - the device is calibrated? if not ask the user to do it
+                               * - we need to show the tutorial?
+                               */
+                          bool isDeviceCalibrated = await PreferenceManager
+                              .isDeviceCalibrated;
+                          bool showTutorial = await PreferenceManager
+                              .showMeasuringTutorial;
+                          if (!isDeviceCalibrated)
+                            showCalibrateDeviceDialog(context);
+                          else if (showTutorial)
+                            showTutorialDialog(
+                                context,
+                                    () =>
+                                    context.bloc<CountdownBloc>().add(
+                                        CountdownEvents.startPreMeasure)
+                            );
+                          else
+                            context.bloc<CountdownBloc>().add(
+                                CountdownEvents.startPreMeasure);
+                        }
+                        else if (state is CountdownPreMeasureState) {
+                          // Stop the pre measure countdown
+                          vibrationManager.cancel();
                           context.bloc<CountdownBloc>().add(
-                              CountdownEvents.startPreMeasure);
-                      }
-                      else if (state is CountdownPreMeasureState) {
-                        // Stop the pre measure countdown
-                        vibrationManager.cancel();
-                        context.bloc<CountdownBloc>().add(
-                            CountdownEvents.stopPreMeasure);
-                      }
-                      else if (state is CountdownMeasureState) {
-                        // Stop the measurement
-                        vibrationManager.cancel();
-                        context.bloc<CountdownBloc>().add(
-                            CountdownEvents.stopMeasure);
-                      }
+                              CountdownEvents.stopPreMeasure);
+                        }
+                        else if (state is CountdownMeasureState) {
+                          // Stop the measurement
+                          vibrationManager.cancel();
+                          context.bloc<CountdownBloc>().add(
+                              CountdownEvents.stopMeasure);
+                        }
+                      };
                     },
-                    //},
                     color: BColors.colorAccent,
                     child: Text(
                       state is CountdownIdleState || state is CountdownCompleteState? 'start_test_btn'.tr() : 'stop_test_btn'.tr(),

@@ -50,6 +50,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
   void initState() {
     super.initState();
     _isEnable = widget.onChanged != null;
+    _selected = widget.initial ?? -1;
   }
 
   @override
@@ -75,7 +76,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
               }
             }: null,
             fontWeight: _getFontWeight(_selected == 0),
-            backgroundColor: Colors.blueGrey,//_getBackgroundColor(_selected == 0, toggleButtonTheme),
+            backgroundColor: _getBackgroundColor(_selected == 0, toggleButtonTheme),
             textColor: Colors.white,//_getTextColor(_selected == 0, toggleButtonTheme),
             shapeBorder: RoundedRectangleBorder(
               borderRadius: _getBorderRadius(0, toggleButtonTheme),
@@ -96,7 +97,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
               }
             }: null,
             fontWeight: _getFontWeight(_selected == 1),
-            backgroundColor: Colors.blueGrey,//_getBackgroundColor(_selected == 1, toggleButtonTheme),
+            backgroundColor: _getBackgroundColor(_selected == 1, toggleButtonTheme),
             textColor: Colors.white,//_getTextColor(_selected == 1, toggleButtonTheme),
             shapeBorder: RoundedRectangleBorder(
               borderRadius: _getBorderRadius(1, toggleButtonTheme),
@@ -122,7 +123,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
   Color _getBackgroundColor(bool isSelected, ToggleButtonsThemeData toggleButtonTheme) =>
     (_isEnable && isSelected)
       ? toggleButtonTheme.fillColor ?? Colors.red.shade200
-      : Colors.transparent;
+      : Colors.blueGrey;
 
   /// Return the text [Color]
   Color _getTextColor(bool isSelected, ToggleButtonsThemeData toggleButtonTheme) {
