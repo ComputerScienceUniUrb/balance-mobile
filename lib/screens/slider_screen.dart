@@ -14,7 +14,6 @@ import 'intro/slider/consent.dart';
 import 'intro/slider/height.dart';
 import 'intro/slider/general_info.dart';
 import 'intro/slider/posture.dart';
-import 'intro/slider/trauma.dart';
 import 'intro/slider/habits.dart';
 import 'intro/slider/sight.dart';
 import 'intro/slider/welcome.dart';
@@ -115,13 +114,10 @@ class _SliderScreenState extends State<Slider> {
                           HeightScreen(
                             2,
                               (isEnable) => setState(() => _isNextBtnEnable = isEnable),
-                            height: userInfo?.height?.toStringAsFixed(1),
                           ),
                           GeneralInfoScreen(
                             3,
                             (isEnable) => setState(() => _isNextBtnEnable = isEnable),
-                            age: userInfo?.age?.toString(),
-                            weight: userInfo?.weight?.toStringAsFixed(1),
                             gender: userInfo?.gender,
                           ),
                           PostureScreen(
@@ -130,20 +126,14 @@ class _SliderScreenState extends State<Slider> {
                             posture: userInfo?.posturalProblems,
                             problemsInFamily: userInfo?.problemsInFamily,
                           ),
-                          TraumaScreen(
+                          HabitsScreen(
                             5,
                             (isEnable) => setState(() => _isNextBtnEnable = isEnable),
-                            trauma: userInfo?.physicalTrauma,
-                          ),
-                          HabitsScreen(
-                            6,
-                            (isEnable) => setState(() => _isNextBtnEnable = isEnable),
-                            posture: userInfo?.posturalProblems,
-                            problemsInFamily: userInfo?.problemsInFamily,
                             useOfDrugs: userInfo?.useOfDrugs,
                           ),
                           SightScreen(
-                            7,
+                            6,
+                            (isEnable) => setState(() => _isNextBtnEnable = isEnable),
                             visionLoss: userInfo?.visionLoss,
                             visionProblems: userInfo?.visionProblems,
                             hearingLoss: userInfo?.hearingLoss,

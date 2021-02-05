@@ -1,5 +1,4 @@
 
-import 'package:balance_app/screens/res/b_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_check_box/circular_check_box.dart';
 import 'package:balance_app/screens/res/colors.dart';

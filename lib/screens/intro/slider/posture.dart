@@ -1,4 +1,9 @@
 
+import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
+import 'package:balance_app/screens/intro/slider/widgets/about_balance_dialog.dart';
+import 'package:balance_app/screens/intro/slider/widgets/custom_switch.dart';
+import 'package:balance_app/screens/intro/slider/widgets/info_widget.dart';
+import 'package:balance_app/screens/res/b_icons.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:balance_app/manager/preference_manager.dart';
@@ -33,16 +38,8 @@ class PostureScreen extends StatefulWidget {
 
 class _PostureScreenState extends State<PostureScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _postureProblems = ['none_txt'.tr(), 'scoliosis_txt'.tr(), 'kyphosis_txt'.tr(), 'lordosis_txt'.tr()];
-  List<bool> _selectedPosture;
-  bool _problemsInFamily = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedPosture = widget.posture ?? [false, false, false, false];
-    _problemsInFamily = widget.problemsInFamily ?? false;
-  }
+  final _postureProblems = ['scoliosis_txt'.tr(), 'kyphosis_txt'.tr(), 'lordosis_txt'.tr()];
+  final _physicalTrauma = ['fractures_txt'.tr(), 'limb_operations_txt'.tr(), 'falls_txt'.tr(), 'distortions_txt'.tr(), 'head_trauma'.tr()];
 
   @override
   Widget build(BuildContext context) {
@@ -56,51 +53,173 @@ class _PostureScreenState extends State<PostureScreen> {
         }
         print("_PostureScreenState.build: Posture info are ${isValid? "valid": "invalid"}");
       },
-      child: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: 64),
-                Text(
-                  'postural_problem_title'.tr(),
-                  style: Theme.of(context).textTheme.headline4.copyWith(
-                    fontSize: 36,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 40),
-                CheckboxGroupFormField(
-                  items: _postureProblems,
-                  validator: (value) => null,
-                  onSaved: (newValue) => PreferenceManager.updateUserInfo(posturalProblems: newValue ?? List.filled(3, false)),
-                  value: _selectedPosture,
-                  onChanged: (value) => setState(() => _selectedPosture = value),
-                ),
-                SizedBox(height: 24),
-                PlainCheckboxFormField(
-                  child: Text(
-                    'postural_problem_in_family_title'.tr(),
-                    style: Theme.of(context).textTheme.headline6.copyWith(
-                      fontSize: 18,
+      child: BlocBuilder<OnBoardingDataBloc, OnBoardingData>(
+      builder: (ctx, state) {
+        return SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 64),
+                  Text(
+                    'Condizione fisica',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline4
+                        .copyWith(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w500,
                       color: Colors.white,
                     ),
                   ),
-                  value: _problemsInFamily,
-                  onChanged: (value) => setState(() => _problemsInFamily = value),
-                  validator: (value) => null,
-                  onSaved: (newValue) => PreferenceManager.updateUserInfo(problemsInFamily: newValue),
-                ),
-                SizedBox(height: 105)
-              ],
+                  SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'postural_problem_title'.tr(),
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline4
+                              .copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      CustomToggleButton(
+                        initial: state.postureCondition,
+                        onChanged: (selected) {
+                          // Enable/Disable the next button if the text field is empty
+                          context
+                              .bloc<OnBoardingDataBloc>()
+                              .add(acceptPosture(postureCondition: selected));
+                        },
+                        leftText: Text('no'.tr()),
+                        rightText: Text('yes'.tr()),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Visibility(
+                    visible: state.postureCondition == 1 ? true : false,
+                    child: CheckboxGroupFormField(
+                      items: _postureProblems,
+                      validator: (value) => null,
+                      onSaved: (newValue) =>
+                          PreferenceManager.updateUserInfo(
+                              posturalProblems: newValue ??
+                                  List.filled(3, false)),
+                      value: state.posturalProblems ?? List.filled(3, false),
+                      onChanged: (value) {
+                        // Enable/Disable the next button if the text field is empty
+                        context
+                            .bloc<OnBoardingDataBloc>()
+                            .add(acceptPosture(posturalProblems: value));
+                      }
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'postural_problem_in_family_title'.tr(),
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6
+                              .copyWith(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      CustomToggleButton(
+                        initial: state.problemsInFamily,
+                        onChanged: (selected) {
+                          // Enable/Disable the next button if the text field is empty
+                          context
+                              .bloc<OnBoardingDataBloc>()
+                              .add(acceptPosture(problemsInFamily: selected));
+                          PreferenceManager.updateUserInfo(problemsInFamily: selected != 0 ? true : false);
+                        },
+                        leftText: Text('no'.tr()),
+                        rightText: Text('yes'.tr()),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'Hai subito precedenti traumi?',
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline6
+                              .copyWith(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      CustomToggleButton(
+                        initial: state.previousTrauma,
+                        onChanged: (selected) {
+                          // Enable/Disable the next button if the text field is empty
+                          context
+                              .bloc<OnBoardingDataBloc>()
+                              .add(acceptPosture(previousTrauma: selected));
+                          PreferenceManager.updateUserInfo(problemsInFamily: selected != 0 ? true : false);
+                        },
+                        leftText: Text('no'.tr()),
+                        rightText: Text('yes'.tr()),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Visibility(
+                    visible: state.previousTrauma == 1 ? true : false,
+                    child: CheckboxGroupFormField(
+                      items: _physicalTrauma,
+                      value: state.traumas ?? List.filled(5, false),
+                      onChanged: (value) {
+                        // Enable/Disable the next button if the text field is empty
+                        context
+                            .bloc<OnBoardingDataBloc>()
+                            .add(acceptPosture(traumas: value));
+                      },
+                      validator: (value) => null,
+                      onSaved: (newValue) =>
+                          PreferenceManager.updateUserInfo(
+                              physicalTrauma: newValue ?? List.filled(5, false)
+                          ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  InfoElement(
+                    icon: Icon(BIcons.info_outline),
+                    text: 'Informazioni sui dati richiesti',
+                    onTap: () => showDataInfoDialog(context),
+                  ),
+                  SizedBox(height: 105)
+                ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        );
+      }
+    ));
   }
 }

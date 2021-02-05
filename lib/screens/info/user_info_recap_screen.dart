@@ -10,7 +10,7 @@ extension _UserInfoIterableExtension on Iterable<bool> {
   /// are the index of all the elements with value true.
   Iterable<int> whereIndexed() sync*{
     for (var i = 0; i < this.length; i++)
-       if (this.elementAt(i))
+      if (this.elementAt(i))
         yield i;
   }
 }
@@ -33,7 +33,7 @@ class UserInfoRecapScreen extends StatelessWidget {
   /// Get the String of posture problems
   static String _getPostureString(List<bool> list) {
     if (list == null || list.where((element) => element).isEmpty)
-      return 'none'.tr();
+      return 'none_txt'.tr();
 
     final problems = ['scoliosis_txt'.tr(), 'kyphosis_txt'.tr(), 'lordosis_txt'.tr()];
     return "[${list.whereIndexed().map((e) => problems[e]).join(", ")}]";
@@ -41,7 +41,7 @@ class UserInfoRecapScreen extends StatelessWidget {
   /// Get the String of other trauma
   static String _getTraumaString(List<bool> list) {
     if (list == null || list.where((element) => element).isEmpty)
-      return 'none'.tr();
+      return 'none_txt'.tr();
 
     final problems = ['fractures_txt'.tr(), 'limb_operations_txt'.tr(), 'falls_txt'.tr(), 'distortions_txt'.tr(), 'head_trauma'.tr()];
     return "[${list.whereIndexed().map((e) => problems[e]).join(", ")}]";
@@ -49,7 +49,7 @@ class UserInfoRecapScreen extends StatelessWidget {
   /// Get the String of sight problems
   static String _getSightString(List<bool> list) {
     if (list == null || list.where((element) => element).isEmpty)
-      return 'none'.tr();
+      return 'none_txt'.tr();
 
     final problems = ['myopia_txt'.tr(), 'presbyopia_txt'.tr(), 'farsightedness_txt'.tr(), 'astigmatism_txt'.tr()];
     return "[${list.whereIndexed().map((e) => problems[e]).join(", ")}]";
@@ -57,10 +57,20 @@ class UserInfoRecapScreen extends StatelessWidget {
   /// Get the String of hearing problems
   static String _getHearingString(List<bool> list) {
     if (list == null || list.where((element) => element).isEmpty)
-      return 'none'.tr();
+      return 'none_txt'.tr();
 
     final problems = ['Destro', 'Sinistro'];
     return "[${list.whereIndexed().map((e) => problems[e]).join(", ")}]";
+  }
+  /// Get the String of hearing problems
+  static String _getSportString(int element) {
+    final problems = ['nope_txt'.tr(), 'occasional_txt'.tr(), 'weekly_txt'.tr(), 'daily_txt'.tr()];
+    return "${problems[element]}";
+  }
+  /// Get the String of hearing problems
+  static String _getAlcoholString(int element) {
+    final problems = ['abstemious_txt'.tr(), 'occasional_txt'.tr(), 'at_meals_txt'.tr(), 'outside_meals_txt'.tr()];
+    return "${problems[element]}";
   }
 
 
@@ -150,8 +160,8 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                           Text(
                             userInfo?.height != null
-                              ? "${userInfo.height.toStringAsFixed(1)} cm"
-                              : "-",
+                                ? "${userInfo.height.toStringAsFixed(1)} cm"
+                                : "-",
                             style: valueTextStyle,
                           ),
                         ],
@@ -166,8 +176,8 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                           Text(
                             userInfo?.weight != null
-                              ? "${userInfo.weight.toStringAsFixed(1)} Kg"
-                              : "-",
+                                ? "${userInfo.weight.toStringAsFixed(1)} Kg"
+                                : "-",
                             style: valueTextStyle,
                           ),
                         ],
@@ -196,13 +206,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                             'postural_problems_txt'.tr(),
                             style: headlineTextStyle,
                           ),
-                          //Flexible(
-                          //  child: Text(
-                          //    _getPostureString(userInfo?.posturalProblems),
-                          //    style: valueTextStyle,
-                          //    textAlign: TextAlign.end,
-                          //  ),
-                          //),
+                          Flexible(
+                            child: Text(
+                              _getPostureString(userInfo?.posturalProblems),
+                              style: valueTextStyle,
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(height: 16),
@@ -229,13 +239,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                             style: headlineTextStyle,
                           ),
                           SizedBox(width: 16),
-                          //Flexible(
-                          //    child: Text(
-                          //      _getTraumaString(userInfo?.physicalTrauma),
-                          //      style: valueTextStyle,
-                          //      textAlign: TextAlign.end,
-                          //    )
-                          //),
+                          Flexible(
+                              child: Text(
+                                _getTraumaString(userInfo?.physicalTrauma),
+                                style: valueTextStyle,
+                                textAlign: TextAlign.end,
+                              )
+                          ),
                         ],
                       ),
                     ],
@@ -253,6 +263,23 @@ class UserInfoRecapScreen extends StatelessWidget {
                       Text(
                         'hearing_defects_title'.tr(),
                         style: titleTextStyle,
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'wear_glasses_txt'.tr(),
+                            style: headlineTextStyle,
+                          ),
+                          Flexible(
+                            child: Text(
+                              userInfo != null && userInfo.visionLoss ? 'yes'.tr() : 'no'.tr(),
+                              style: valueTextStyle,
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 16),
                       Row(
@@ -280,6 +307,20 @@ class UserInfoRecapScreen extends StatelessWidget {
                             style: headlineTextStyle,
                           ),
                           Text(
+                            userInfo != null && userInfo.hearingLoss ? 'yes'.tr() : 'no'.tr(),
+                            style: valueTextStyle,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'which_hear_txt'.tr(),
+                            style: headlineTextStyle,
+                          ),
+                          Text(
                             _getHearingString(userInfo?.hearingProblems),
                             style: valueTextStyle,
                           ),
@@ -298,7 +339,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'ABITUDINI',
+                        'habits_txt'.tr(),
                         style: titleTextStyle,
                       ),
                       SizedBox(height: 16),
@@ -308,7 +349,7 @@ class UserInfoRecapScreen extends StatelessWidget {
                         children: <Widget>[
                           Flexible(
                               child: Text(
-                                'use_of_drugs_txt'.tr(),
+                                'drugs_txt'.tr(),
                                 style: headlineTextStyle,
                               )
                           ),
@@ -325,12 +366,29 @@ class UserInfoRecapScreen extends StatelessWidget {
                         children: <Widget>[
                           Flexible(
                               child: Text(
-                                'use_of_alcohol'.tr(),
+                                'sport_txt'.tr(),
                                 style: headlineTextStyle,
                               )
                           ),
                           Text(
-                            userInfo != null && userInfo.useOfDrugs ? 'yes'.tr() : 'no'.tr(),
+                            _getSportString(userInfo?.sportsActivity),
+                            style: valueTextStyle,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Flexible(
+                              child: Text(
+                                'alcohol_txt'.tr(),
+                                style: headlineTextStyle,
+                              )
+                          ),
+                          Text(
+                            _getAlcoholString(userInfo?.alcoholIntake),
                             style: valueTextStyle,
                           ),
                         ],

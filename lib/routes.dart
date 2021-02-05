@@ -10,4 +10,5 @@ class Routes {
   static const String slider = "/slider_route";
   static const String result = "/result_route";
   static const String open_source = "/open_source";
+  static const String credits = "/credits";
 }

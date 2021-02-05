@@ -2,12 +2,12 @@
 import 'dart:async';
 
 import 'package:balance_app/manager/vibration_manager.dart';
+import 'package:battery/battery.dart';
 import 'package:flutter/material.dart';
 import 'package:balance_app/routes.dart';
 import 'package:balance_app/screens/res/colors.dart';
 import 'package:balance_app/screens/main/home/widgets/circular_countdown.dart';
 import 'package:balance_app/screens/main/home/widgets/custom_toggle_button.dart';
-import 'package:balance_app/floor/measurement_database.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:balance_app/manager/preference_manager.dart';
 
@@ -17,12 +17,10 @@ import 'package:balance_app/screens/main/home/widgets/measuring_tutorial_dialog.
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:balance_app/bloc/main/home/countdown_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:focus_detector/focus_detector.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:battery/battery.dart';
 
 /// Widget that manage the entire measuring process
 ///
@@ -40,16 +38,13 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
   CountdownBloc _bloc;
   bool _measuring = false;
   VibrationManager vibrationManager;
-  var battery = Battery();
+  Battery _battery = Battery();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // Create a CountdownBloc with an instance of the database
-    _bloc = CountdownBloc.create(
-      Provider.of<MeasurementDatabase>(context, listen: false)
-    );
+    _bloc = context.bloc<CountdownBloc>();
     _bloc.eyesOpen = true;
     vibrationManager = VibrationManager();
   }
@@ -67,8 +62,6 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
   void dispose() {
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
-    // Dismiss the bloc
-    _bloc.close();
   }
 
   @override
@@ -91,101 +84,98 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
           _bloc.add(CountdownEvents.stopPreMeasure);
       },
       child: Center(
-        child: BlocProvider<CountdownBloc>.value(
-          value: _bloc,
-          child: BlocConsumer<CountdownBloc, CountdownState>(
-              listener: (_, state) {
-                state is CountdownMeasureState? _measuring = true: _measuring = false;
-                // TODO: This stuff here goes on error in iOS Debug
-                // Start/Stop the vibration
-                if (state is CountdownPreMeasureState) {
-                  Wakelock.enable();
-                  vibrationManager.playPattern();
-                }
-                else if (state is CountdownMeasureState || state is CountdownCompleteState) {
-                  Wakelock.enable();
-                  vibrationManager.playSingle();
-                }
-                else {
-                  Wakelock.disable();
-                  vibrationManager.cancel();
-                }
-              },
-              builder: (context, state) {
-                // Open the result page passing the measurement as argument
-                if (state is CountdownCompleteState)
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                    Navigator.of(context).pushNamed(
-                        Routes.result,
-                        arguments: state.result
-                    );
-                  });
-                // Build the ui based on the new state
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _buildWidgetForState(context, state),
-                    SizedBox(height: 0),
-                    RaisedButton(
-                      onPressed: () async{
-                        int batteryLevel = await battery.batteryLevel;
-                        if (batteryLevel >= 30) {
-                          if (state is CountdownIdleState ||
-                              state is CountdownCompleteState) {
-                            /*
-                             * Every time the user presses the start button we need to check
-                             * two conditions:
-                             * - the device is calibrated? if not ask the user to do it
-                             * - we need to show the tutorial?
-                             */
-                            bool isDeviceCalibrated = await PreferenceManager
-                                .isDeviceCalibrated;
-                            bool showTutorial = await PreferenceManager
-                                .showMeasuringTutorial;
-                            if (!isDeviceCalibrated)
-                              showCalibrateDeviceDialog(context);
-                            else if (showTutorial)
-                              showTutorialDialog(
-                                  context,
-                                      () =>
-                                      context.bloc<CountdownBloc>().add(
-                                          CountdownEvents.startPreMeasure)
-                              );
-                            else
-                              context.bloc<CountdownBloc>().add(
-                                  CountdownEvents.startPreMeasure);
-                          }
-                          else if (state is CountdownPreMeasureState) {
-                            // Stop the pre measure countdown
-                            vibrationManager.cancel();
-                            context.bloc<CountdownBloc>().add(
-                                CountdownEvents.stopPreMeasure);
-                          }
-                          else if (state is CountdownMeasureState) {
-                            // Stop the measurement
-                            vibrationManager.cancel();
-                            context.bloc<CountdownBloc>().add(
-                                CountdownEvents.stopMeasure);
-                          }
-                        }
-                      },
-                      color: BColors.colorAccent,
-                      child: Text(
-                        state is CountdownIdleState || state is CountdownCompleteState? 'start_test_btn'.tr() : 'stop_test_btn'.tr(),
-                        style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    CustomToggleButton(
-                      onChanged: (selected) => context.bloc<CountdownBloc>()
-                          .eyesOpen = (selected == 0)? true: false,
-                      leftText: Text('eyes_open'.tr()),
-                      rightText: Text('eyes_closed').tr(),
-                    )
-                  ],
-                );
+        child: BlocConsumer<CountdownBloc, CountdownState>(
+            listener: (_, state) {
+              state is CountdownMeasureState? _measuring = true: _measuring = false;
+              // TODO: This stuff here goes on error in iOS Debug
+              // Start/Stop the vibration
+              if (state is CountdownPreMeasureState) {
+                Wakelock.enable();
+                vibrationManager.playPattern();
               }
-          ),
+              else if (state is CountdownMeasureState || state is CountdownCompleteState) {
+                Wakelock.enable();
+                vibrationManager.playSingle();
+              }
+              else {
+                Wakelock.disable();
+                vibrationManager.cancel();
+              }
+            },
+            builder: (context, state) {
+              // Open the result page passing the measurement as argument
+              if (state is CountdownCompleteState)
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  Navigator.of(context).pushNamed(
+                      Routes.result,
+                      arguments: state.result
+                  );
+                });
+              // Build the ui based on the new state
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildWidgetForState(context, state),
+                  SizedBox(height: 0),
+                  RaisedButton(
+                    onPressed: () async{
+                      int batteryLevel = await _battery.batteryLevel;
+                      if (batteryLevel >= 30) {
+                        if (state is CountdownIdleState ||
+                            state is CountdownCompleteState) {
+                          /*
+                               * Every time the user presses the start button we need to check
+                               * two conditions:
+                               * - the device is calibrated? if not ask the user to do it
+                               * - we need to show the tutorial?
+                               */
+                          bool isDeviceCalibrated = await PreferenceManager
+                              .isDeviceCalibrated;
+                          bool showTutorial = await PreferenceManager
+                              .showMeasuringTutorial;
+                          if (!isDeviceCalibrated)
+                            showCalibrateDeviceDialog(context);
+                          else if (showTutorial)
+                            showTutorialDialog(
+                                context,
+                                    () =>
+                                    context.bloc<CountdownBloc>().add(
+                                        CountdownEvents.startPreMeasure)
+                            );
+                          else
+                            context.bloc<CountdownBloc>().add(
+                                CountdownEvents.startPreMeasure);
+                        }
+                        else if (state is CountdownPreMeasureState) {
+                          // Stop the pre measure countdown
+                          vibrationManager.cancel();
+                          context.bloc<CountdownBloc>().add(
+                              CountdownEvents.stopPreMeasure);
+                        }
+                        else if (state is CountdownMeasureState) {
+                          // Stop the measurement
+                          vibrationManager.cancel();
+                          context.bloc<CountdownBloc>().add(
+                              CountdownEvents.stopMeasure);
+                        }
+                      };
+                    },
+                    color: BColors.colorAccent,
+                    child: Text(
+                      state is CountdownIdleState || state is CountdownCompleteState? 'start_test_btn'.tr() : 'stop_test_btn'.tr(),
+                      style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  CustomToggleButton(
+                    onChanged: (selected) => context.bloc<CountdownBloc>()
+                        .eyesOpen = (selected == 0)? true: false,
+                    leftText: Text('eyes_open'.tr()),
+                    rightText: Text('eyes_closed').tr(),
+                  )
+                ],
+              );
+            }
         ),
       ),
     );
@@ -194,16 +184,16 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
   /// Return the correct widget based on the current state
   Widget _buildWidgetForState(BuildContext context, CountdownState state) {
     if (state is CountdownPreMeasureState || state is CountdownMeasureState)
-        return CircularCounter(state: state);
+      return CircularCounter(state: state);
     else
-        // Circular logo of the app
-        return Container(
-          margin: const EdgeInsets.all(20),
-          width: 180,
-          height: 180,
-          child: Center(
-            child: Image.asset("assets/app_logo_circle.png"),
-          ),
-        );
+      // Circular logo of the app
+      return Container(
+        margin: const EdgeInsets.all(20),
+        width: 180,
+        height: 180,
+        child: Center(
+          child: Image.asset("assets/app_logo_circle.png"),
+        ),
+      );
   }
 }

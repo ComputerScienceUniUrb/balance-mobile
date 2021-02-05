@@ -56,7 +56,7 @@ class PostureProcessor {
     // Compute the frequency domain features
     final freqFeat = await frequencyDomainFeatures(cogvAp, cogvMl);
     // Compute the structural features
-    final structFeat = await swayDensityAnalysis(cogvAp, cogvMl, 0.02);
+    final structFeat = await swayDensityAnalysis(cogvAp, cogvMl, 0.125);
     // Compute the gyroscopic features
     final gyroFeat = await gyroscopicFeatures(data);
 

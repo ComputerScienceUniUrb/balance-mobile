@@ -8,7 +8,7 @@ class CustomNumberFormField extends StatelessWidget {
   final String labelText;
   final String suffix;
   final bool decimal;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<String> onChanged;
   final FormFieldValidator<String> validator;
   final FormFieldSetter<String> onSaved;
 
@@ -54,7 +54,7 @@ class CustomNumberFormField extends StatelessWidget {
           ),
           autocorrect: false,
           initialValue: initialValue,
-          onChanged: (newValue) => onChanged?.call(newValue.isNotEmpty),
+          onChanged: (newValue) => onChanged?.call(newValue),
           validator: validator,
           onSaved: onSaved,
         ),
