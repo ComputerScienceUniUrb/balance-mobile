@@ -18,23 +18,8 @@ import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
 class SightScreen extends StatefulWidget {
   /// Index of the screen
   final int screenIndex;
-  /// Data of the Screen
-  final bool visionLoss;
-  final List<bool> visionProblems;
-  final bool hearingLoss;
-  final List<bool> hearingProblems;
-  final hearingVisibility;
-  final visionVisibility;
-  final ValueChanged<bool> enableNextBtnCallback;
 
-  SightScreen(this.screenIndex, this.enableNextBtnCallback, {
-    this.visionLoss,
-    this.visionProblems,
-    this.hearingLoss,
-    this.hearingProblems,
-    this.hearingVisibility,
-    this.visionVisibility,
-  });
+  SightScreen(this.screenIndex);
 
   @override
   _SightScreenState createState() => _SightScreenState();
@@ -43,25 +28,8 @@ class SightScreen extends StatefulWidget {
 class _SightScreenState extends State<SightScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  bool _visionLoss = false;
   final _visionProblems = ['myopia_txt'.tr(), 'presbyopia_txt'.tr(), 'farsightedness_txt'.tr(), 'astigmatism_txt'.tr()];
-  List<bool> _selectedVisionProblems;
-  bool _hearingLoss;
-  final _hearingProblems = ["Destro", "Sinistro"];
-  List<bool> _selectedHearingProblems;
-  bool _hearingVisibility;
-  bool _visionVisibility;
-  bool builded1 = false;
-  bool builded2 = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _visionLoss = widget.visionLoss ?? false;
-    _selectedVisionProblems = widget.visionProblems ?? [false, false, false, false];
-    _hearingLoss = widget.hearingLoss ?? false;
-    _selectedHearingProblems = widget.hearingProblems ?? [false, false];
-  }
+  final _hearingProblems = ['right_txt'.tr(), 'left_txt'.tr()];
 
   @override
   Widget build(BuildContext context) {
@@ -102,16 +70,18 @@ class _SightScreenState extends State<SightScreen> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          "Hai problemi d'udito?",
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .headline4
-                              .copyWith(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
+                        Flexible(
+                          child: Text(
+                            "hearing_issues_txt".tr(),
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .headline4
+                                .copyWith(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         CustomToggleButton(
@@ -134,7 +104,7 @@ class _SightScreenState extends State<SightScreen> {
                     visible: state.hearingLoss == 1 ? true : false,
                     child: CheckboxGroupFormField(
                       items: _hearingProblems,
-                      value: state.hearingProblems ?? List.filled(3, false),
+                      value: state.hearingProblems ?? List.filled(2, false),
                       onChanged: (value) {
                         // Enable/Disable the next button if the text field is empty
                         context
@@ -165,7 +135,7 @@ class _SightScreenState extends State<SightScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          "Indossi Occhiali?",
+                          "sight_issues_txt".tr(),
                           style: Theme
                               .of(context)
                               .textTheme

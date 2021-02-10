@@ -92,7 +92,7 @@ class BalanceApp extends StatelessWidget {
 						Routes.calibration: (_) => CalibrateDeviceScreen(),
 						Routes.info: (_) => UserInfoRecapScreen(),
 						Routes.slider: (_) => SliderScreen(),
-						Routes.credits: (_) => OpenSourceScreen(),//CreditsScreen(),
+						Routes.credits: (_) => CreditsScreen(),
 						Routes.result: (_) => ResultScreen(),
 						Routes.open_source: (_) => OpenSourceScreen(),
 					},

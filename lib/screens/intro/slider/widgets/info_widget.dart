@@ -35,7 +35,14 @@ class InfoElement extends StatelessWidget {
                 SizedBox(width: 16),
                 Text(
                   text,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),

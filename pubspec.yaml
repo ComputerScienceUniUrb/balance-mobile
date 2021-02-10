@@ -53,6 +53,7 @@ dependencies:
   flutter_range_slider: ^1.5.0
   toggle_switch: ^0.1.8
   equatable:
+  flutter_beep: ^0.2.0
 
 
 dev_dependencies:

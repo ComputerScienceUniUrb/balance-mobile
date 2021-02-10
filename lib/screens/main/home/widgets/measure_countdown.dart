@@ -4,11 +4,9 @@ import 'dart:async';
 import 'package:balance_app/manager/vibration_manager.dart';
 import 'package:battery/battery.dart';
 import 'package:flutter/material.dart';
-import 'package:balance_app/routes.dart';
 import 'package:balance_app/screens/res/colors.dart';
 import 'package:balance_app/screens/main/home/widgets/circular_countdown.dart';
 import 'package:balance_app/screens/main/home/widgets/custom_toggle_button.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:balance_app/manager/preference_manager.dart';
 
 import 'package:balance_app/screens/main/home/widgets/calibrate_device_dialog.dart';
@@ -68,10 +66,7 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
   Widget build(BuildContext context) {
     return FocusDetector(
       onFocusLost: () {
-        print(
-          'Focus Lost. Triggered when either [onVisibilityLost] or [onForegroundLost] '
-              'is called. Equivalent to onPause() on Android or viewDidDisappear() on iOS.',
-        );
+        print('Focus Lost.');
       },
       onVisibilityLost: () {
         print('Visibility Lost. Did you move to Test or Settings?.');
@@ -79,7 +74,7 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
       onForegroundLost: () {
         print('Foreground Lost. Do you switched to another app?');
         if (_bloc.state is CountdownPreMeasureState)
-          _bloc.add(CountdownEvents.stopPreMeasure);
+          _bloc.add(CountdownEvents.stopMeasure);
         if (_bloc.state is CountdownMeasureState)
           _bloc.add(CountdownEvents.stopPreMeasure);
       },
@@ -89,28 +84,28 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
               state is CountdownMeasureState? _measuring = true: _measuring = false;
               // TODO: This stuff here goes on error in iOS Debug
               // Start/Stop the vibration
-              if (state is CountdownPreMeasureState) {
-                Wakelock.enable();
-                vibrationManager.playPattern();
-              }
-              else if (state is CountdownMeasureState || state is CountdownCompleteState) {
-                Wakelock.enable();
-                vibrationManager.playSingle();
-              }
-              else {
-                Wakelock.disable();
-                vibrationManager.cancel();
-              }
+              //if (state is CountdownPreMeasureState) {
+              //  Wakelock.enable();
+              //  vibrationManager.playPattern();
+              //}
+              //else if (state is CountdownMeasureState || state is CountdownCompleteState) {
+              //  Wakelock.enable();
+              //  vibrationManager.playSingle();
+              //}
+              //else {
+              //  Wakelock.disable();
+              //  vibrationManager.cancel();
+              //}
             },
             builder: (context, state) {
               // Open the result page passing the measurement as argument
-              if (state is CountdownCompleteState)
-                SchedulerBinding.instance.addPostFrameCallback((_) {
-                  Navigator.of(context).pushNamed(
-                      Routes.result,
-                      arguments: state.result
-                  );
-                });
+              //if (state is CountdownCompleteState)
+              //  SchedulerBinding.instance.addPostFrameCallback((_) {
+              //    Navigator.of(context).pushNamed(
+              //        Routes.result,
+              //        arguments: state.result
+              //    );
+              //  });
               // Build the ui based on the new state
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -121,8 +116,7 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                     onPressed: () async{
                       int batteryLevel = await _battery.batteryLevel;
                       if (batteryLevel >= 30) {
-                        if (state is CountdownIdleState ||
-                            state is CountdownCompleteState) {
+                        if (state is CountdownIdleState) {
                           /*
                                * Every time the user presses the start button we need to check
                                * two conditions:
@@ -140,11 +134,11 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                                 context,
                                     () =>
                                     context.bloc<CountdownBloc>().add(
-                                        CountdownEvents.startPreMeasure)
+                                        CountdownEvents.startTargeting)
                             );
                           else
                             context.bloc<CountdownBloc>().add(
-                                CountdownEvents.startPreMeasure);
+                                CountdownEvents.startTargeting);
                         }
                         else if (state is CountdownPreMeasureState) {
                           // Stop the pre measure countdown
@@ -183,6 +177,7 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
 
   /// Return the correct widget based on the current state
   Widget _buildWidgetForState(BuildContext context, CountdownState state) {
+
     if (state is CountdownPreMeasureState || state is CountdownMeasureState)
       return CircularCounter(state: state);
     else

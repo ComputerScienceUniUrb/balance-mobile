@@ -19,11 +19,14 @@ import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
 class GeneralInfoScreen extends StatefulWidget {
   /// Index of the screen
   final int screenIndex;
-  final ValueChanged<bool> enableNextBtnCallback;
+  final int age;
   final int gender;
+  final int weight;
 
-  GeneralInfoScreen(this.screenIndex, this.enableNextBtnCallback, {
+  GeneralInfoScreen(this.screenIndex, {
+    this.age,
     this.gender,
+    this.weight,
   });
 
   @override
@@ -92,7 +95,7 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
                         CustomNumberFormField(
                           labelText: 'age_txt'.tr(),
                           initialValue: state.age ?? '',
-                          suffix: "anni",
+                          suffix: 'years_txt'.tr(),
                           onChanged: (value) {
                             // Enable/Disable the next button if the text field is empty
                             context

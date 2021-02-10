@@ -32,7 +32,7 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   final PageController _pageController = PageController(initialPage: 0, keepPage: false);
   int _currentPage = 0;
-  bool _isNextBtnEnable = true;
+
   List<Color> _pageColors = [
     BColors.colorPrimary,
     Color(0xFF398AA7),
@@ -88,23 +88,15 @@ class _IntroScreenState extends State<IntroScreen> {
                           onPageChanged: (newPage) =>
                               setState(() {
                                 _currentPage = newPage;
-                                if (newPage != 0)
-                                  _isNextBtnEnable = false;
                               }),
                           children: [
                             WelcomeScreen(0),
-                            ConsentScreen(1, (isEnable) =>
-                                setState(() => _isNextBtnEnable = isEnable)),
-                            HeightScreen(2, (isEnable) =>
-                                setState(() => _isNextBtnEnable = isEnable)),
-                            GeneralInfoScreen(3, (isEnable) =>
-                                setState(() => _isNextBtnEnable = isEnable)),
-                            PostureScreen(4, (isEnable) =>
-                                setState(() => _isNextBtnEnable = isEnable)),
-                            HabitsScreen(5, (isEnable) =>
-                                setState(() => _isNextBtnEnable = isEnable)),
-                            SightScreen(6, (isEnable) =>
-                                setState(() => _isNextBtnEnable = isEnable)),
+                            ConsentScreen(1),
+                            HeightScreen(2),
+                            GeneralInfoScreen(3),
+                            PostureScreen(4),
+                            HabitsScreen(5),
+                            SightScreen(6),
                           ],
                         ),
                       ),
@@ -125,8 +117,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                 onTap: () => [_pageController.previousPage(
                                     duration: Duration(milliseconds: 800),
                                     curve: Curves.ease
-                                ),
-                                  _isNextBtnEnable = true],
+                                )],
                                 isEnable: (_currentPage == 0) ? false : true,
                                 backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors.colorPrimary,
                               ),

@@ -6,6 +6,7 @@ void showDataInfoDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
+      backgroundColor: Colors.black45,
       title:
       Text('other_trauma_title'.tr(),
         style: Theme.of(context).textTheme.subtitle2.copyWith(
@@ -13,14 +14,14 @@ void showDataInfoDialog(BuildContext context) {
         color: Colors.white,
       ),),
       content:
-      Text('Fratture: una frattura é l\'interruzione dell\'integrità strutturale delle ossa\n\nOperazioni agli arti: Sono interventi chirurgici volti a riparare una lesione grave a carico di un arto\n\nCadute: cadere provoca generalmente contusioni ma può avere risvolti ben più gravi. È il tuo caso?\n\nDistorsioni: una distorsione è la perdita della congruità articolare in seguito ad un movimento anomalo a carico di un articolazione.\n\nTraumi cranici: il trauma cranico è un danno che coinvolge il distretto cranio-encefalico. A volte può essere davvero molto grave.',
+      Text('trauma_explained_txt'.tr(),
         style: Theme.of(context).textTheme.subtitle2.copyWith(
         fontSize: 12,
         color: Colors.white,
       ),),
       actions: [
         FlatButton(
-          child: Text('Chiudi',
+          child: Text('close'.tr(),
             style: Theme.of(context).textTheme.subtitle2.copyWith(
             fontSize: 10,
             color: Colors.white,

@@ -3,7 +3,6 @@ import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
 import 'package:balance_app/screens/intro/slider/widgets/about_balance_dialog.dart';
 import 'package:balance_app/screens/intro/slider/widgets/custom_switch.dart';
 import 'package:balance_app/screens/intro/slider/widgets/info_widget.dart';
-import 'package:balance_app/screens/res/b_icons.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:balance_app/manager/preference_manager.dart';
@@ -25,9 +24,8 @@ class PostureScreen extends StatefulWidget {
   final int screenIndex;
   final List<bool> posture;
   final bool problemsInFamily;
-  final ValueChanged<bool> enableNextBtnCallback;
 
-  PostureScreen(this.screenIndex, this.enableNextBtnCallback, {
+  PostureScreen(this.screenIndex, {
     this.posture,
     this.problemsInFamily,
   });
@@ -65,7 +63,7 @@ class _PostureScreenState extends State<PostureScreen> {
                 children: <Widget>[
                   SizedBox(height: 64),
                   Text(
-                    'Condizione fisica',
+                    'posture_title'.tr(),
                     style: Theme
                         .of(context)
                         .textTheme
@@ -94,16 +92,19 @@ class _PostureScreenState extends State<PostureScreen> {
                           ),
                         ),
                       ),
-                      CustomToggleButton(
-                        initial: state.postureCondition,
-                        onChanged: (selected) {
-                          // Enable/Disable the next button if the text field is empty
-                          context
-                              .bloc<OnBoardingDataBloc>()
-                              .add(acceptPosture(postureCondition: selected));
-                        },
-                        leftText: Text('no'.tr()),
-                        rightText: Text('yes'.tr()),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: CustomToggleButton(
+                          initial: state.postureCondition,
+                          onChanged: (selected) {
+                            // Enable/Disable the next button if the text field is empty
+                            context
+                                .bloc<OnBoardingDataBloc>()
+                                .add(acceptPosture(postureCondition: selected));
+                          },
+                          leftText: Text('no'.tr()),
+                          rightText: Text('yes'.tr()),
+                        ),
                       ),
                     ],
                   ),
@@ -143,27 +144,30 @@ class _PostureScreenState extends State<PostureScreen> {
                           ),
                         ),
                       ),
-                      CustomToggleButton(
-                        initial: state.problemsInFamily,
-                        onChanged: (selected) {
-                          // Enable/Disable the next button if the text field is empty
-                          context
-                              .bloc<OnBoardingDataBloc>()
-                              .add(acceptPosture(problemsInFamily: selected));
-                          PreferenceManager.updateUserInfo(problemsInFamily: selected != 0 ? true : false);
-                        },
-                        leftText: Text('no'.tr()),
-                        rightText: Text('yes'.tr()),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: CustomToggleButton(
+                          initial: state.problemsInFamily,
+                          onChanged: (selected) {
+                            // Enable/Disable the next button if the text field is empty
+                            context
+                                .bloc<OnBoardingDataBloc>()
+                                .add(acceptPosture(problemsInFamily: selected));
+                            PreferenceManager.updateUserInfo(problemsInFamily: selected != 0 ? true : false);
+                          },
+                          leftText: Text('no'.tr()),
+                          rightText: Text('yes'.tr()),
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 24),
+                  SizedBox(height: 32),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
                         child: Text(
-                          'Hai subito precedenti traumi?',
+                          'previous_trauma_title'.tr(),
                           style: Theme
                               .of(context)
                               .textTheme
@@ -174,17 +178,20 @@ class _PostureScreenState extends State<PostureScreen> {
                           ),
                         ),
                       ),
-                      CustomToggleButton(
-                        initial: state.previousTrauma,
-                        onChanged: (selected) {
-                          // Enable/Disable the next button if the text field is empty
-                          context
-                              .bloc<OnBoardingDataBloc>()
-                              .add(acceptPosture(previousTrauma: selected));
-                          PreferenceManager.updateUserInfo(problemsInFamily: selected != 0 ? true : false);
-                        },
-                        leftText: Text('no'.tr()),
-                        rightText: Text('yes'.tr()),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: CustomToggleButton(
+                          initial: state.previousTrauma,
+                          onChanged: (selected) {
+                            // Enable/Disable the next button if the text field is empty
+                            context
+                                .bloc<OnBoardingDataBloc>()
+                                .add(acceptPosture(previousTrauma: selected));
+                            PreferenceManager.updateUserInfo(problemsInFamily: selected != 0 ? true : false);
+                          },
+                          leftText: Text('no'.tr()),
+                          rightText: Text('yes'.tr()),
+                        ),
                       ),
                     ],
                   ),
@@ -209,8 +216,8 @@ class _PostureScreenState extends State<PostureScreen> {
                   ),
                   SizedBox(height: 16),
                   InfoElement(
-                    icon: Icon(BIcons.info_outline),
-                    text: 'Informazioni sui dati richiesti',
+                    icon: Icon(Icons.info_outline_rounded, color: Colors.white),
+                    text: 'info_trauma_dialog'.tr(),
                     onTap: () => showDataInfoDialog(context),
                   ),
                   SizedBox(height: 105)

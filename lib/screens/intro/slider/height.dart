@@ -17,9 +17,8 @@ import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
 class HeightScreen extends StatefulWidget {
   /// Index of the screen
   final int screenIndex;
-  final ValueChanged<bool> enableNextBtnCallback;
 
-  HeightScreen(this.screenIndex, this.enableNextBtnCallback);
+  HeightScreen(this.screenIndex);
 
   @override
   _HeightScreenState createState() => _HeightScreenState();
