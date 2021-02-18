@@ -53,7 +53,6 @@ dependencies:
   flutter_range_slider: ^1.5.0
   toggle_switch: ^0.1.8
   equatable:
-  flutter_beep: ^0.2.0
 
 
 dev_dependencies:
@@ -89,7 +88,13 @@ flutter:
   assets:
     # App Logo
     - assets/app_logo_circle.png
+    - assets/app_logo_circle_grey.png
     - assets/app_logo.png
+    # Partners
+    - assets/digitsrl.png
+    - assets/marche_region.png
+    - assets/tuwien.png
+    - assets/univpm.png
     # Images
     - assets/images/empty.png
     - assets/images/error.png

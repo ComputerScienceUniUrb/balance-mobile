@@ -104,14 +104,14 @@ class _IntroScreenState extends State<IntroScreen> {
                     // Bottom bar with progress, skip and next button
                     AnimatedContainer(
                       duration: Duration(milliseconds: 500),
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
                       color: _pageColors[_currentPage],
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           AnimatedContainer(
                             duration: Duration(milliseconds: 270),
-                            height: 48,
+                            height: 42,
                             child: Row(children: <Widget>[
                               BackCustomButton(
                                 onTap: () => [_pageController.previousPage(
@@ -129,7 +129,7 @@ class _IntroScreenState extends State<IntroScreen> {
                           ),
                           AnimatedContainer(
                             duration: Duration(milliseconds: 270),
-                            height: 48,
+                            height: 42,
                             child: Row(children: <Widget>[
                               BlocBuilder<OnBoardingDataBloc, OnBoardingData>(builder: (context, state) {
                                 return NextButton(
@@ -138,8 +138,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                           NeedToValidateEvent(_currentPage)),
                                   isEnable: state.isButtonEnabled(_currentPage),
                                   isDone: _currentPage == 6,
-                                  backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors
-                                      .colorPrimary,
+                                  backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors.colorPrimary,
                                 );
                               })
                             ]),

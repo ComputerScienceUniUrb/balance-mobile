@@ -116,9 +116,12 @@ class UserInfoRecapScreen extends StatelessWidget {
                             'Token',
                             style: headlineTextStyle,
                           ),
-                          Text(
-                            userInfo?.token?.toString() ?? "-",
-                            style: valueTextStyle,
+                          Spacer(),
+                          Flexible(
+                            child: Text(
+                              userInfo?.token?.toString() ?? "-",
+                              style: valueTextStyle,
+                            ),
                           ),
                         ],
                       ),

@@ -37,6 +37,11 @@ class CountdownBloc extends Bloc<CountdownEvents, CountdownState> {
   Stream<CountdownState> mapEventToState(CountdownEvents event) async* {
     switch (event) {
       // Start the pre measuring countdown
+      case CountdownEvents.startTargeting:
+        print("CountdownBloc.mapEventToState: startTargeting");
+        yield CountdownTargetingState();
+        break;
+      // Start the pre measuring countdown
       case CountdownEvents.startPreMeasure:
         print("CountdownBloc.mapEventToState: startPreMeasure");
         _isCountdownCancelled = false;
@@ -62,6 +67,11 @@ class CountdownBloc extends Bloc<CountdownEvents, CountdownState> {
         );
         yield CountdownMeasureState();
         break;
+      // Stop the targeting
+      case CountdownEvents.stopTargeting:
+        print("CountdownBloc.mapEventToState: stopTargeting");
+        yield CountdownIdleState();
+        break;
       // Stop the pre measuring countdown
       case CountdownEvents.stopPreMeasure:
         print("CountdownBloc.mapEventToState: stopPreMeasure");
@@ -75,6 +85,11 @@ class CountdownBloc extends Bloc<CountdownEvents, CountdownState> {
         print("CountdownBloc.mapEventToState: stopMeasure");
         _monitorSub.cancel();
         _monitorSub = null;
+        yield CountdownIdleState();
+        break;
+      // Reset the widget
+      case CountdownEvents.setToIdle:
+        print("CountdownBloc.mapEventToState: setToIdle");
         yield CountdownIdleState();
         break;
       // Save the new test into the database

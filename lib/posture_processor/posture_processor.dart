@@ -71,6 +71,7 @@ class PostureProcessor {
     }
 
     return Statokinesigram(
+      outOfRange: timeFeat["outOfRange"],
       cogv: cogv,
       swayPath: timeFeat["swayPath"],
       meanDisplacement: timeFeat["meanDisplacement"],

@@ -134,15 +134,17 @@ class _SightScreenState extends State<SightScreen> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          "sight_issues_txt".tr(),
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .headline6
-                              .copyWith(
-                            fontSize: 18,
-                            color: Colors.white,
+                        Flexible(
+                          child: Text(
+                            "sight_issues_txt".tr(),
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .headline6
+                                .copyWith(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         CustomToggleButton(

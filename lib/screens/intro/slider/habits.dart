@@ -136,6 +136,9 @@ class _HabitsScreenState extends State<HabitsScreen> {
                             activeColor: Color(0xff512ea8),
                             inactiveColor: Color(0xffac9bcc),
                             onChanged: (newValue) {
+                              setState(() {
+                                _alcoholSliderValue = newValue;
+                              });
                               // Enable/Disable the next button if the text field is empty
                               context
                                   .bloc<OnBoardingDataBloc>()
@@ -143,7 +146,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
                             },
                             onChangeEnd: (newValue) {
                               PreferenceManager.updateUserInfo(
-                                  alcoholIntake: ((newValue * 3 / 100).round())
+                                  alcoholIntake: ((newValue * 4 / 100).round())
                                       .toInt());
                             }
                           ),
@@ -196,6 +199,9 @@ class _HabitsScreenState extends State<HabitsScreen> {
                             activeColor: Color(0xff512ea8),
                             inactiveColor: Color(0xffac9bcc),
                             onChanged: (newValue) {
+                              setState(() {
+                                _sportsSliderValue = newValue;
+                              });
                               // Enable/Disable the next button if the text field is empty
                               context
                                   .bloc<OnBoardingDataBloc>()
@@ -203,7 +209,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
                             },
                             onChangeEnd: (newValue) {
                               PreferenceManager.updateUserInfo(
-                                  sportsActivity: ((newValue * 3 / 100).round())
+                                  sportsActivity: ((newValue * 4 / 100).round())
                                       .toInt());
                             }
                           ),

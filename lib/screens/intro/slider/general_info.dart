@@ -61,7 +61,7 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
         return Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            reverse: false,
+            reverse: true,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,

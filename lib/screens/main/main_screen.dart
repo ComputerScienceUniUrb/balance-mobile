@@ -1,5 +1,6 @@
 
 import 'package:balance_app/bloc/main/home/countdown_bloc.dart';
+import 'package:balance_app/bloc/main/home/events/countdown_events.dart';
 import 'package:flutter/material.dart';
 import 'package:balance_app/screens/res/b_icons.dart';
 import 'package:balance_app/screens/main/widgets/google_bottom_navigation_bar.dart';
@@ -54,9 +55,14 @@ class _MainScreenState extends State<MainScreen> {
           GoogleBottomNavigationItem(icon: Icon(BIcons.settings), text: Text(_titles[2])),
         ],
         onTap: (newIdx){
-          if (context.bloc<CountdownBloc>().state is! CountdownPreMeasureState &&
+          if (context.bloc<CountdownBloc>().state is! CountdownTargetingState &&
+              context.bloc<CountdownBloc>().state is! CountdownPreMeasureState &&
               context.bloc<CountdownBloc>().state is! CountdownMeasureState)
             setState (() => _currentIndex = newIdx);
+
+          if (newIdx == 0 &&
+              context.bloc<CountdownBloc>().state is CountdownCompleteState)
+            context.bloc<CountdownBloc>().add(CountdownEvents.setToIdle);
         }
       ),
     );

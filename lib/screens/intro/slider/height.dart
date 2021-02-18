@@ -45,7 +45,7 @@ class _HeightScreenState extends State<HeightScreen> {
         return Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            reverse: false,
+            reverse: true,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,

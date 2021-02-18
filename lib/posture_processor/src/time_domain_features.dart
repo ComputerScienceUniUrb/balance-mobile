@@ -31,7 +31,7 @@ import 'package:balance_app/posture_processor/src/list_extension.dart';
 /// ```
 ///
 /// Return:
-/// a Map with: swayPath, meanDisplacement, stdDisplacement, minDist, maxDist
+/// a Map with: swayPath, meanDisplacement, stdDisplacement, minDist, maxDist, outOfRange
 Future<Map<String, double>> timeDomainFeatures(List<double> ap, List<double> ml) async{
   assert(ml.isEmpty || ap.isEmpty || ml.length == ap.length, "ml and ap lists must have same size!");
 
@@ -43,6 +43,7 @@ Future<Map<String, double>> timeDomainFeatures(List<double> ap, List<double> ml)
       "stdDisplacement": double.nan,
       "minDist": double.nan,
       "maxDist": double.nan,
+      "outOfRange": double.nan,
     };
 
   // Compute the Sway Path
@@ -73,6 +74,7 @@ Future<Map<String, double>> timeDomainFeatures(List<double> ap, List<double> ml)
     "meanDisplacement": meanDisplacement,
     "stdDisplacement": stdDisplacement,
     "minDist": minDisplacement,
-    "maxDist": maxDisplacement
+    "maxDist": maxDisplacement,
+    "outOfRange": (maxDisplacement - minDisplacement > 100) ? 1.0 : 0.0,
   };
 }

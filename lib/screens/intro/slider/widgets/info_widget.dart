@@ -33,15 +33,17 @@ class InfoElement extends StatelessWidget {
               children: <Widget>[
                 icon != null ? icon: Icon(BIcons.opensource),
                 SizedBox(width: 16),
-                Text(
-                  text,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headline6
-                      .copyWith(
-                    fontSize: 18,
-                    color: Colors.white,
+                Flexible(
+                  child: Text(
+                    text,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline6
+                        .copyWith(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],

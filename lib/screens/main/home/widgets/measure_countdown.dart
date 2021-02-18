@@ -2,6 +2,8 @@
 import 'dart:async';
 
 import 'package:balance_app/manager/vibration_manager.dart';
+import 'package:balance_app/routes.dart';
+import 'package:balance_app/screens/main/home/widgets/targeting_game.dart';
 import 'package:battery/battery.dart';
 import 'package:flutter/material.dart';
 import 'package:balance_app/screens/res/colors.dart';
@@ -12,6 +14,7 @@ import 'package:balance_app/manager/preference_manager.dart';
 import 'package:balance_app/screens/main/home/widgets/calibrate_device_dialog.dart';
 import 'package:balance_app/screens/main/home/widgets/leave_confirmation_dialog.dart';
 import 'package:balance_app/screens/main/home/widgets/measuring_tutorial_dialog.dart';
+import 'package:flutter/scheduler.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:balance_app/bloc/main/home/countdown_bloc.dart';
@@ -73,10 +76,12 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
       },
       onForegroundLost: () {
         print('Foreground Lost. Do you switched to another app?');
+        if (_bloc.state is CountdownTargetingState)
+          _bloc.add(CountdownEvents.stopTargeting);
         if (_bloc.state is CountdownPreMeasureState)
-          _bloc.add(CountdownEvents.stopMeasure);
-        if (_bloc.state is CountdownMeasureState)
           _bloc.add(CountdownEvents.stopPreMeasure);
+        if (_bloc.state is CountdownMeasureState)
+          _bloc.add(CountdownEvents.stopMeasure);
       },
       child: Center(
         child: BlocConsumer<CountdownBloc, CountdownState>(
@@ -84,28 +89,28 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
               state is CountdownMeasureState? _measuring = true: _measuring = false;
               // TODO: This stuff here goes on error in iOS Debug
               // Start/Stop the vibration
-              //if (state is CountdownPreMeasureState) {
-              //  Wakelock.enable();
-              //  vibrationManager.playPattern();
-              //}
-              //else if (state is CountdownMeasureState || state is CountdownCompleteState) {
-              //  Wakelock.enable();
-              //  vibrationManager.playSingle();
-              //}
-              //else {
-              //  Wakelock.disable();
-              //  vibrationManager.cancel();
-              //}
+              if (state is CountdownPreMeasureState) {
+                Wakelock.enable();
+                vibrationManager.playPattern();
+              }
+              else if (state is CountdownMeasureState || state is CountdownCompleteState) {
+                Wakelock.enable();
+                vibrationManager.playSingle();
+              }
+              else {
+                Wakelock.disable();
+                vibrationManager.cancel();
+              }
             },
             builder: (context, state) {
               // Open the result page passing the measurement as argument
-              //if (state is CountdownCompleteState)
-              //  SchedulerBinding.instance.addPostFrameCallback((_) {
-              //    Navigator.of(context).pushNamed(
-              //        Routes.result,
-              //        arguments: state.result
-              //    );
-              //  });
+              if (state is CountdownCompleteState)
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  Navigator.of(context).pushNamed(
+                      Routes.result,
+                      arguments: state.result
+                  );
+                });
               // Build the ui based on the new state
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -118,11 +123,11 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                       if (batteryLevel >= 30) {
                         if (state is CountdownIdleState) {
                           /*
-                               * Every time the user presses the start button we need to check
-                               * two conditions:
-                               * - the device is calibrated? if not ask the user to do it
-                               * - we need to show the tutorial?
-                               */
+                           * Every time the user presses the start button we need to check
+                           * two conditions:
+                           * - the device is calibrated? if not ask the user to do it
+                           * - we need to show the tutorial?
+                           */
                           bool isDeviceCalibrated = await PreferenceManager
                               .isDeviceCalibrated;
                           bool showTutorial = await PreferenceManager
@@ -152,6 +157,12 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                           context.bloc<CountdownBloc>().add(
                               CountdownEvents.stopMeasure);
                         }
+                        else if (state is CountdownTargetingState) {
+                          // Stop the measurement
+                          vibrationManager.cancel();
+                          context.bloc<CountdownBloc>().add(
+                              CountdownEvents.stopTargeting);
+                        }
                       };
                     },
                     color: BColors.colorAccent,
@@ -180,6 +191,8 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
 
     if (state is CountdownPreMeasureState || state is CountdownMeasureState)
       return CircularCounter(state: state);
+    else if (state is CountdownTargetingState)
+      return TargetingGame();
     else
       // Circular logo of the app
       return Container(

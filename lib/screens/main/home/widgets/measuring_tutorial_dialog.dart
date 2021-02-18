@@ -56,7 +56,7 @@ class _TutorialDialogState extends State<TutorialDialog> {
             padding: const EdgeInsets.all(24.0),
             child: Text(
               'tutorial_msg'.tr(),
-              textScaleFactor: 1.0,
+              textScaleFactor: 0.9,
             ),
           ),
           Padding(
@@ -78,7 +78,7 @@ class _TutorialDialogState extends State<TutorialDialog> {
                   SizedBox(width: 8),
                   Text(
                     'never_show_again'.tr(),
-                    textScaleFactor: 1.0,
+                    textScaleFactor: 0.9,
                   ),
                 ],
               ),
