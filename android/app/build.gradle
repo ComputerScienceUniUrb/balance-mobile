@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "it.uniurb.balance_app"
+        applicationId "srl.digit.balance"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()

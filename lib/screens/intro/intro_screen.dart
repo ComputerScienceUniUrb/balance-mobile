@@ -1,5 +1,7 @@
 
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
 import 'package:balance_app/manager/preference_manager.dart';
@@ -14,6 +16,7 @@ import 'package:balance_app/screens/intro/widgets/dots_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
 import 'package:http/http.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import 'slider/welcome.dart';
 import 'slider/consent.dart';
@@ -33,6 +36,10 @@ class _IntroScreenState extends State<IntroScreen> {
   final PageController _pageController = PageController(initialPage: 0, keepPage: false);
   int _currentPage = 0;
 
+  // manage state of modal progress HUD widget
+  bool _isInAsyncCall = false;
+  bool _isLoggedIn = false;
+
   List<Color> _pageColors = [
     BColors.colorPrimary,
     Color(0xFF398AA7),
@@ -43,144 +50,175 @@ class _IntroScreenState extends State<IntroScreen> {
     Color(0xFF897AA7),
   ];
 
+  Future<bool> _makePostRequest(var data, bool endpoint) async{
+    // Make the call last at least 1 second
+    await Future.delayed(Duration(seconds: 2), () {});
+
+    // set up POST request arguments
+    String url = "";
+    if (endpoint) {
+      url = 'https://www.balancemobile.it/api/v1/user/signup';
+      //url = 'http://192.168.1.206:8000/api/v1/user/signup';
+      print("_SendingData.signup: "+data);
+    } else {
+      url = 'https://www.balancemobile.it/api/v1/db/system';
+      //url = 'http://192.168.1.206:8000/api/v1/db/system';
+      print("_SendingData.system: "+data);
+    }
+    Map<String, String> headers = {"Content-type": "application/json"};
+
+    try {
+      Response response = await post(url, headers: headers, body: data).timeout(Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        if (endpoint) {
+          await PreferenceManager.updateUserInfo(token: jsonDecode(response.body)["response"].toString());
+          await PreferenceManager.updateSystemInfo(token: jsonDecode(response.body)["response"].toString());
+          _makePostRequest(jsonEncode(await PreferenceManager.systemInfo), false);
+        }
+        return true;
+      } else {
+        return false;
+      }
+    } on TimeoutException catch (_) {
+      print("_SendingData.signup: The connection dropped, maybe the server is congested");
+      return false;
+    } on SocketException catch (_) {
+      print("_SendingData.signup: Communication failed. The server was not reachable");
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: BlocProvider<OnBoardingBloc>(
-        create: (context) => OnBoardingBloc.create(),
-        child: Builder(
-          builder: (context) =>
-              AnnotatedRegion<SystemUiOverlayStyle>(
-                value: SystemUiOverlayStyle.light,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    // Main page view
-                    AnimatedContainer(
-                      duration: Duration(milliseconds: 500),
-                      color: _pageColors[_currentPage],
-                      child: BlocListener<OnBoardingBloc, OnBoardingState>(
-                        condition: (_, current) => current is ValidationSuccessState,
-                        listener: (context, _) async {
-                          FocusScope.of(context).unfocus();
-                          // If we are in the last page go to home
-                          if (_currentPage == 6) {
-                            PreferenceManager.firstLaunchDone();
-                            _makePostRequest(jsonEncode(await PreferenceManager.userInfo));
-                            Navigator.pushReplacementNamed(context, Routes.main);
-                          } else {
-                            /*
+      body: ModalProgressHUD(
+        child: BlocProvider<OnBoardingBloc>(
+          create: (context) => OnBoardingBloc.create(),
+          child: Builder(
+            builder: (context) =>
+                AnnotatedRegion<SystemUiOverlayStyle>(
+                  value: SystemUiOverlayStyle.light,
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: <Widget>[
+                      // Main page view
+                      AnimatedContainer(
+                        duration: Duration(milliseconds: 500),
+                        color: _pageColors[_currentPage],
+                        child: BlocListener<OnBoardingBloc, OnBoardingState>(
+                          condition: (_, current) => current is ValidationSuccessState,
+                          listener: (context, _) async {
+                            FocusScope.of(context).unfocus();
+                            // If we are in the last page go to home
+                            if (_currentPage == 6) {
+                              // start the modal progress HUD
+                              setState(() {
+                                _isInAsyncCall = true;
+                              });
+
+                              bool result = await _makePostRequest(jsonEncode(await PreferenceManager.userInfo), true);
+
+                              setState(() {
+                                if (result) {
+                                  _isLoggedIn = true;
+                                } else {
+                                  _isLoggedIn = false;
+                                }
+                                _isInAsyncCall = false;
+                              });
+
+                              if (result) {
+                                PreferenceManager.firstLaunchDone();
+                                Navigator.pushReplacementNamed(context, Routes.main);
+                              }
+                            } else {
+                              /*
                             * All the required data are stored... mark the
                             * first launch as done so we don't ask this data anymore
                             */
-                            print(await PreferenceManager.userInfo);
-                            // Move to next page
-                            _pageController.nextPage(
-                                duration: Duration(milliseconds: 800),
-                                curve: Curves.ease
-                            );
-                          }
-                        },
-                        child: PageView(
-                          physics: NeverScrollableScrollPhysics(),
-                          controller: _pageController,
-                          onPageChanged: (newPage) =>
-                              setState(() {
-                                _currentPage = newPage;
-                              }),
-                          children: [
-                            WelcomeScreen(0),
-                            ConsentScreen(1),
-                            HeightScreen(2),
-                            GeneralInfoScreen(3),
-                            PostureScreen(4),
-                            HabitsScreen(5),
-                            SightScreen(6),
+                              print(await PreferenceManager.userInfo);
+                              // Move to next page
+                              _pageController.nextPage(
+                                  duration: Duration(milliseconds: 800),
+                                  curve: Curves.ease
+                              );
+                            }
+                          },
+                          child: PageView(
+                            physics: NeverScrollableScrollPhysics(),
+                            controller: _pageController,
+                            onPageChanged: (newPage) =>
+                                setState(() {
+                                  _currentPage = newPage;
+                                }),
+                            children: [
+                              WelcomeScreen(0),
+                              ConsentScreen(1),
+                              HeightScreen(2),
+                              GeneralInfoScreen(3),
+                              PostureScreen(4),
+                              HabitsScreen(5),
+                              SightScreen(6),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Bottom bar with progress, skip and next button
+                      AnimatedContainer(
+                        duration: Duration(milliseconds: 500),
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
+                        color: _pageColors[_currentPage],
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            AnimatedContainer(
+                              duration: Duration(milliseconds: 270),
+                              height: 42,
+                              child: Row(children: <Widget>[
+                                BackCustomButton(
+                                  onTap: () => [_pageController.previousPage(
+                                      duration: Duration(milliseconds: 800),
+                                      curve: Curves.ease
+                                  )],
+                                  isEnable: (_currentPage == 0) ? false : true,
+                                  backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors.colorPrimary,
+                                ),
+                              ]),
+                            ),
+                            DotsIndicator(
+                              size: 7,
+                              selected: _currentPage,
+                            ),
+                            AnimatedContainer(
+                              duration: Duration(milliseconds: 270),
+                              height: 42,
+                              child: Row(children: <Widget>[
+                                BlocBuilder<OnBoardingDataBloc, OnBoardingData>(builder: (context, state) {
+                                  return NextButton(
+                                    onTap: () =>
+                                        BlocProvider.of<OnBoardingBloc>(context).add(
+                                            NeedToValidateEvent(_currentPage)),
+                                    isEnable: state.isButtonEnabled(_currentPage),
+                                    isDone: _currentPage == 6,
+                                    backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors.colorPrimary,
+                                  );
+                                })
+                              ]),
+                            ),
                           ],
                         ),
                       ),
-                    ),
-                    // Bottom bar with progress, skip and next button
-                    AnimatedContainer(
-                      duration: Duration(milliseconds: 500),
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
-                      color: _pageColors[_currentPage],
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          AnimatedContainer(
-                            duration: Duration(milliseconds: 270),
-                            height: 42,
-                            child: Row(children: <Widget>[
-                              BackCustomButton(
-                                onTap: () => [_pageController.previousPage(
-                                    duration: Duration(milliseconds: 800),
-                                    curve: Curves.ease
-                                )],
-                                isEnable: (_currentPage == 0) ? false : true,
-                                backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors.colorPrimary,
-                              ),
-                            ]),
-                          ),
-                          DotsIndicator(
-                            size: 7,
-                            selected: _currentPage,
-                          ),
-                          AnimatedContainer(
-                            duration: Duration(milliseconds: 270),
-                            height: 42,
-                            child: Row(children: <Widget>[
-                              BlocBuilder<OnBoardingDataBloc, OnBoardingData>(builder: (context, state) {
-                                return NextButton(
-                                  onTap: () =>
-                                      BlocProvider.of<OnBoardingBloc>(context).add(
-                                          NeedToValidateEvent(_currentPage)),
-                                  isEnable: state.isButtonEnabled(_currentPage),
-                                  isDone: _currentPage == 6,
-                                  backgroundColor: (_currentPage == 0) ? BColors.colorAccent : BColors.colorPrimary,
-                                );
-                              })
-                            ]),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+          ),
         ),
+        inAsyncCall: _isInAsyncCall,
+        opacity: 0.5,
+        progressIndicator: CircularProgressIndicator(),
       ),
     );
   }
-}
-
-_makePostRequest(var data) async {
-  // TODO: This stuff here is hardcode. Need changes
-  // set up POST request arguments
-  String url = 'https://balancemobile.it/api/v1/user/signup';
-  //String url = 'http://192.168.1.206:8000/api/v1/user/signup';
-  Map<String, String> headers = {"Content-type": "application/json"};
-  String json = data;
-  print("_SendingData.signup: "+data);
-  // make POST request
-  Response response = await post(url, headers: headers, body: json);
-
-  // response
-  //int statusCode = response.statusCode;
-  String body = response.body;
-  PreferenceManager.updateUserInfo(token: jsonDecode(body)["response"].toString());
-
-  // Send System Info
-  //String url = 'https://balancemobile.it/api/v1/user/signup';
-  //url = 'http://192.168.1.206:8000/api/v1/user/signup';
-  //headers = {"Content-type": "application/json"};
-  //json = (await PreferenceManager.systemInfo).toJson() as String;
-  //print("_SendingData.signup: "+data);
-  //// make POST request
-  ////Response response = await post(url, headers: headers, body: json);
-
-  //// response
-  ////int statusCode = response.statusCode;
-  //String body = response.body;
 }

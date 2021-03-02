@@ -1,8 +1,10 @@
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:balance_app/manager/vibration_manager.dart';
 import 'package:balance_app/routes.dart';
+import 'package:balance_app/screens/main/home/widgets/device_not_ready_dialog.dart';
 import 'package:balance_app/screens/main/home/widgets/targeting_game.dart';
 import 'package:battery/battery.dart';
 import 'package:flutter/material.dart';
@@ -87,8 +89,8 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
         child: BlocConsumer<CountdownBloc, CountdownState>(
             listener: (_, state) {
               state is CountdownMeasureState? _measuring = true: _measuring = false;
-              // TODO: This stuff here goes on error in iOS Debug
-              // Start/Stop the vibration
+              // Disable during iOS Debug
+              // Start/Stop the vibration and sounds
               if (state is CountdownPreMeasureState) {
                 Wakelock.enable();
                 vibrationManager.playPattern();
@@ -132,6 +134,7 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                               .isDeviceCalibrated;
                           bool showTutorial = await PreferenceManager
                               .showMeasuringTutorial;
+
                           if (!isDeviceCalibrated)
                             showCalibrateDeviceDialog(context);
                           else if (showTutorial)
@@ -163,6 +166,9 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                           context.bloc<CountdownBloc>().add(
                               CountdownEvents.stopTargeting);
                         }
+                      }
+                      else {
+                        showDeviceNotReady(context);
                       };
                     },
                     color: BColors.colorAccent,

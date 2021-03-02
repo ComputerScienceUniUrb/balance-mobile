@@ -13,7 +13,7 @@ class Measurement {
   @ColumnInfo(name: "creation_date", nullable: false)
   final int creationDate;
   // Flag the measurement if invalid
-  @ColumnInfo(name: "invalid", nullable: false)
+  @ColumnInfo(name: "invalid")
   final bool invalid;
   // General info about the measurement
   @ColumnInfo(name: "eyes_open", nullable: false)
@@ -79,7 +79,7 @@ class Measurement {
   Measurement({
     this.id,
     this.token,
-    this.invalid,
+    this.invalid = false,
     this.creationDate,
     this.eyesOpen,
     this.hasFeatures = false,

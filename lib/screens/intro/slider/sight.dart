@@ -93,6 +93,13 @@ class _SightScreenState extends State<SightScreen> {
                                 .add(acceptSight(hearingLoss: selected));
                             PreferenceManager.updateUserInfo(
                                 hearingLoss: selected == 1 ? true : false);
+
+                            if (selected == 0) {
+                              context
+                                  .bloc<OnBoardingDataBloc>()
+                                  .add(acceptSight(hearingProblems: List.filled(2, false)));
+                              PreferenceManager.updateUserInfo(hearingProblems: List.filled(2, false));
+                            }
                           },
                           leftText: Text('no'.tr()),
                           rightText: Text('yes'.tr()),
@@ -156,6 +163,13 @@ class _SightScreenState extends State<SightScreen> {
                                 .add(acceptSight(visionLoss: selected));
                             PreferenceManager.updateUserInfo(
                                 visionLoss: selected == 1 ? true : false);
+
+                            if (selected == 0) {
+                              context
+                                  .bloc<OnBoardingDataBloc>()
+                                  .add(acceptSight(visionProblems: List.filled(4, false)));
+                              PreferenceManager.updateUserInfo(visionProblems: List.filled(4, false));
+                            }
                           },
                           leftText: Text('no'.tr()),
                           rightText: Text('yes'.tr()),

@@ -1,4 +1,4 @@
-package it.uniurb.balance_app.sensor
+package srl.digit.balance.sensor
 
 import android.content.Context
 import android.hardware.Sensor
@@ -6,7 +6,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import io.flutter.Log
-import it.uniurb.balance_app.model.SensorData
+import srl.digit.balance.model.SensorData
 
 /**
  * Listen Accelerometer and Gyroscope events from the device and

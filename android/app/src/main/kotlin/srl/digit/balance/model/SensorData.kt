@@ -1,4 +1,4 @@
-package it.uniurb.balance_app.model
+package srl.digit.balance.model
 
 /**
  * Class representing the data collected by the sensors
@@ -12,9 +12,9 @@ package it.uniurb.balance_app.model
  * @param y values along x axes
  * @param z values along x axes
  *
- * @see it.uniurb.balance_app.sensor.SensorMonitor
- * @see it.uniurb.balance_app.sensor.SensorSharedValues
- * @see it.uniurb.balance_app.sensor.SensorListener
+ * @see srl.digit.balance.sensor.SensorMonitor
+ * @see srl.digit.balance.sensor.SensorSharedValues
+ * @see srl.digit.balance.sensor.SensorListener
  * @author Lorenzo Calisti on 09/03/2020
  */
 data class SensorData(

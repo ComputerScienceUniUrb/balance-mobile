@@ -53,7 +53,7 @@ class ResultRepository {
   _makePostRequest(var data) async {
     // TODO: This stuff here is hardcode. Need changes
     // set up POST request arguments
-    String url = 'https://balancemobile.it/api/v1/db/measurement';
+    String url = 'https://www.balancemobile.it/api/v1/db/measurement';
     //String url = 'http://192.168.1.206:8000/api/v1/db/measurement';
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = jsonEncode(data.toJson());
@@ -72,7 +72,7 @@ class ResultRepository {
   /// This method will export all the data related to
   /// the given measurement in a json file.
   /// If the device is android the file will be stored in:
-  ///   /Android/data/it.uniurb.balance_app/files/Documents/
+  ///   /Android/data/srl.digit.balance/files/Documents/
   /// If the device is IOS the file will be stored in app documents
   /// Otherwise it will throw an exception.
   Future<void> exportMeasurement(int measurementId) async {

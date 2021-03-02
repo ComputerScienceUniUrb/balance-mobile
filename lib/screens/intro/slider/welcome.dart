@@ -1,6 +1,5 @@
 
 import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
-import 'package:balance_app/screens/res/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 

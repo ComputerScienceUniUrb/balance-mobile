@@ -36,13 +36,6 @@ class GeneralInfoScreen extends StatefulWidget {
 class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
   final _formKey = GlobalKey<FormState>();
   final _genders = ['unknown_txt'.tr(), 'male_txt'.tr(), 'female_txt'.tr()];
-  int _genderIndex;
-
-  @override
-  void initState() {
-    super.initState();
-    _genderIndex = widget.gender;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,9 +123,8 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
                         SizedBox(height: 8),
                         CustomDropdownFormField(
                           hint: 'gender_txt'.tr(),
-                          value: state.gender ?? 0,
+                          value: state.gender,
                           onChanged: (value) {
-                            setState(() => _genderIndex = value);
                             // Enable/Disable the next button if the text field is empty
                             context
                                 .bloc<OnBoardingDataBloc>()

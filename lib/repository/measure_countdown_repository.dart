@@ -48,7 +48,7 @@ class MeasureCountdownRepository {
   _makePostRequest(var data) async {
     // TODO: This stuff here is hardcode. Need changes
     // set up POST request arguments
-    String url = 'https://balancemobile.it/api/v1/db/sway';
+    String url = 'https://www.balancemobile.it/api/v1/db/sway';
     //String url = 'http://192.168.1.206:8000/api/v1/db/sway';
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = jsonEncode(data);

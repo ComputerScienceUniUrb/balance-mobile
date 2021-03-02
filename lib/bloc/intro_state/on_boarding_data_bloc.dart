@@ -203,7 +203,7 @@ class OnBoardingData extends Equatable {
       case 4:
         return (problemsInFamily != null && postureCondition != null && previousTrauma != null) ? true : false;
       case 5:
-        return (useOfDrugs != null && alcoholSliderValue != null && sportsSliderValue != null) ? true : false;
+        return (useOfDrugs != null && (alcoholSliderValue != null && alcoholSliderValue > 0) && (sportsSliderValue != null && sportsSliderValue > 0)) ? true : false;
       case 6:
         return (hearingLoss != null && visionLoss != null) ? true : false;
 

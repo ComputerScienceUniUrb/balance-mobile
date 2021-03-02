@@ -1,7 +1,6 @@
 
 import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
 import 'package:balance_app/screens/intro/slider/widgets/custom_switch.dart';
-import 'package:balance_app/screens/res/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:balance_app/manager/preference_manager.dart';
@@ -29,11 +28,8 @@ class HabitsScreen extends StatefulWidget {
 
 class _HabitsScreenState extends State<HabitsScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _alcoholIntake = ['unknown_txt'.tr(), 'abstemious_txt'.tr(), 'occasional_txt'.tr(), 'at_meals_txt'.tr(), 'outside_meals_txt'.tr()];
-  final _sportsActivity = ['unknown_txt'.tr(), 'nope_txt'.tr(), 'occasional_txt'.tr(), 'weekly_txt'.tr(), 'daily_txt'.tr()];
-
-  double _alcoholSliderValue = 0.0;
-  double _sportsSliderValue = 0.0;
+  final _alcoholIntake = ['move_cursor_txt'.tr(), 'abstemious_txt'.tr(), 'occasional_txt'.tr(), 'at_meals_txt'.tr(), 'outside_meals_txt'.tr()];
+  final _sportsActivity = ['move_cursor_txt'.tr(), 'no'.tr(), 'occasional_txt'.tr(), 'weekly_txt'.tr(), 'daily_txt'.tr()];
 
   @override
   Widget build(BuildContext context) {
@@ -136,9 +132,6 @@ class _HabitsScreenState extends State<HabitsScreen> {
                             activeColor: Color(0xff512ea8),
                             inactiveColor: Color(0xffac9bcc),
                             onChanged: (newValue) {
-                              setState(() {
-                                _alcoholSliderValue = newValue;
-                              });
                               // Enable/Disable the next button if the text field is empty
                               context
                                   .bloc<OnBoardingDataBloc>()
@@ -152,7 +145,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
                           ),
                         ),
                       ),
-                      Text(_alcoholIntake.elementAt(((_alcoholSliderValue * 4 / 100).round())).toString(),
+                      Text(_alcoholIntake.elementAt((state.alcoholSliderValue == null) ? 0 : (state.alcoholSliderValue * 4 / 100).round()),
                         style: Theme
                             .of(context)
                             .textTheme
@@ -199,9 +192,6 @@ class _HabitsScreenState extends State<HabitsScreen> {
                             activeColor: Color(0xff512ea8),
                             inactiveColor: Color(0xffac9bcc),
                             onChanged: (newValue) {
-                              setState(() {
-                                _sportsSliderValue = newValue;
-                              });
                               // Enable/Disable the next button if the text field is empty
                               context
                                   .bloc<OnBoardingDataBloc>()
@@ -215,7 +205,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
                           ),
                         ),
                       ),
-                      Text(_sportsActivity.elementAt(((_sportsSliderValue * 4 / 100).round())).toString(),
+                      Text(_sportsActivity.elementAt((state.sportsSliderValue == null) ? 0 : (state.sportsSliderValue * 4 / 100).round()),
                         style: Theme
                             .of(context)
                             .textTheme

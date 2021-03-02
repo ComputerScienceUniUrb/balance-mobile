@@ -101,6 +101,13 @@ class _PostureScreenState extends State<PostureScreen> {
                             context
                                 .bloc<OnBoardingDataBloc>()
                                 .add(acceptPosture(postureCondition: selected));
+
+                            if (selected == 0) {
+                              context
+                                  .bloc<OnBoardingDataBloc>()
+                                  .add(acceptPosture(posturalProblems: List.filled(3, false)));
+                              PreferenceManager.updateUserInfo(posturalProblems: List.filled(3, false));
+                            }
                           },
                           leftText: Text('no'.tr()),
                           rightText: Text('yes'.tr()),
@@ -187,7 +194,13 @@ class _PostureScreenState extends State<PostureScreen> {
                             context
                                 .bloc<OnBoardingDataBloc>()
                                 .add(acceptPosture(previousTrauma: selected));
-                            PreferenceManager.updateUserInfo(problemsInFamily: selected != 0 ? true : false);
+
+                            if (selected == 0) {
+                              context
+                                  .bloc<OnBoardingDataBloc>()
+                                  .add(acceptPosture(traumas: List.filled(5, false)));
+                              PreferenceManager.updateUserInfo(physicalTrauma: List.filled(5, false));
+                            }
                           },
                           leftText: Text('no'.tr()),
                           rightText: Text('yes'.tr()),

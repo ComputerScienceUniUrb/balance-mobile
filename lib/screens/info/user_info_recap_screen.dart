@@ -69,7 +69,7 @@ class UserInfoRecapScreen extends StatelessWidget {
   }
   /// Get the String of hearing problems
   static String _getAlcoholString(int element) {
-    final problems = ['abstemious_txt'.tr(), 'occasional_txt'.tr(), 'at_meals_txt'.tr(), 'outside_meals_txt'.tr()];
+    final problems = ['nope_txt'.tr(), 'abstemious_txt'.tr(), 'occasional_txt'.tr(), 'at_meals_txt'.tr(), 'outside_meals_txt'.tr()];
     return "${problems[element]}";
   }
 

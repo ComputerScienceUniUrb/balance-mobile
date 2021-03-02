@@ -14,7 +14,7 @@ import 'package:floor/floor.dart';
 ///
 /// See also:
 ///  * [Measurement]
-@DatabaseView("SELECT id, creation_date, eyes_open FROM measurements", viewName: "tests")
+@DatabaseView("SELECT id, creation_date, eyes_open, invalid FROM measurements", viewName: "tests")
 class Test {
   @ColumnInfo(name: "id")
   final int id;
@@ -22,14 +22,17 @@ class Test {
   final int creationDate;
   @ColumnInfo(name: "eyes_open")
   final bool eyesOpen;
+  @ColumnInfo(name: "invalid")
+  final bool invalid;
 
-  Test({this.id, this.creationDate, this.eyesOpen});
+  Test({this.id, this.creationDate, this.eyesOpen, this.invalid});
 
   @override
   bool operator ==(other) => other is Test &&
     other.id == id &&
     other.creationDate == creationDate &&
-    other.eyesOpen == eyesOpen;
+    other.eyesOpen == eyesOpen &&
+    other.invalid == invalid;
 
   @override
   int get hashCode {
@@ -38,9 +41,10 @@ class Test {
     result = prime * result + id.hashCode;
     result = prime * result + creationDate.hashCode;
     result = prime * result + eyesOpen.hashCode;
+    result = prime * result + invalid.hashCode;
     return result;
   }
 
   @override
-  String toString() => "Test(id=$id, creationDate=$creationDate, eyesOpen=$eyesOpen)";
+  String toString() => "Test(id=$id, creationDate=$creationDate, eyesOpen=$eyesOpen, invalid=$invalid)";
 }

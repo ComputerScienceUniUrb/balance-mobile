@@ -15,7 +15,7 @@ void showCalibrateDeviceDialog(BuildContext context) {
         FlatButton(
           onPressed: () {
             Navigator.pop(context);
-            Navigator.pushNamed(context, Routes.calibration);
+            Navigator.pushNamed(context, Routes.quick_calibration);
           },
           child: Text('got_it_btn'.tr()),
         )

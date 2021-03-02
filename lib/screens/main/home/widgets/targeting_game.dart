@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:balance_app/bloc/main/home/countdown_bloc.dart';
 import 'package:balance_app/bloc/main/home/events/countdown_events.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_beep/flutter_beep.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-//import 'package:flutter_beep/flutter_beep.dart';
 import 'package:sensors/sensors.dart';
 
 
@@ -29,6 +29,8 @@ class _TargetingGameState extends State<TargetingGame> {
 
   // hold a refernce to these, so that they can be disposed
   Timer timer;
+  Timer timer2;
+  Timer timer3;
   StreamSubscription accel;
 
   // positions and count
@@ -99,6 +101,19 @@ class _TargetingGameState extends State<TargetingGame> {
 
     // Accelerometer events come faster than we need them so a timer is used to only proccess them every 200 milliseconds
     if (timer == null || !timer.isActive) {
+
+      timer2 = Timer.periodic(Duration(milliseconds: 1000), (_) {
+        if (count == 0) {
+          FlutterBeep.beep();
+        }
+      });
+
+      timer3 = Timer.periodic(Duration(milliseconds: 500), (_) {
+        if (count < 30 && count > 1) {
+          FlutterBeep.beep();
+        }
+      });
+
       timer = Timer.periodic(Duration(milliseconds: 100), (_) {
         // if count has increased greater than 3 call pause timer to handle success
         if (count > 30) {
@@ -116,6 +131,8 @@ class _TargetingGameState extends State<TargetingGame> {
   pauseTimer() {
     // stop the timer and pause the accelerometer stream
     timer.cancel();
+    timer2.cancel();
+    timer3.cancel();
     accel.pause();
     //FlutterBeep.beep();
 
@@ -135,6 +152,8 @@ class _TargetingGameState extends State<TargetingGame> {
   @override
   void dispose() {
     timer?.cancel();
+    timer2?.cancel();
+    timer3?.cancel();
     accel?.cancel();
     super.dispose();
   }
