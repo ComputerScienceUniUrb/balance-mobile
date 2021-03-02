@@ -2,6 +2,8 @@
 import 'package:balance_app/bloc/main/measurements/measurements_bloc.dart';
 import 'package:balance_app/floor/measurement_database.dart';
 import 'package:balance_app/floor/test_database_view.dart';
+import 'package:balance_app/screens/main/measurements/widgets/backend_status_dialog.dart';
+import 'package:balance_app/screens/main/measurements/widgets/wrong_measurement_dialog.dart';
 import 'package:balance_app/screens/res/b_icons.dart';
 import 'package:balance_app/utils/boolean_quaternary_operator.dart';
 import 'package:flutter/material.dart';
@@ -112,33 +114,73 @@ class MeasurementsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Text(
-                "${'test_txt'.tr()} ${test?.id ?? ""}",
-                style: Theme.of(context).textTheme.headline4.copyWith(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w500
-                )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                                "${'test_txt'.tr()} ${test?.id ?? ""}",
+                                style: Theme.of(context).textTheme.headline4.copyWith(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w500
+                                )
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 12),
+                        Row(children: <Widget>[
+                          Icon(BIcons.calendar),
+                          SizedBox(width: 16),
+                          Text(
+                            DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.fromMillisecondsSinceEpoch(test.creationDate)),
+                            style: Theme.of(context).textTheme.bodyText1,
+                          )
+                        ]),
+                        SizedBox(height: 8),
+                        Row(children: <Widget>[
+                          Icon(
+                            bqtop(test?.eyesOpen, BIcons.eye_open, BIcons.eye_close),
+                          ),
+                          SizedBox(width: 16),
+                          Text(
+                            bqtop(test?.eyesOpen, 'eyes_open'.tr(), 'eyes_closed'.tr(), "-"),
+                            style: Theme.of(context).textTheme.bodyText1,
+                          )
+                        ]),
+                      ]
+                  ),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        FlatButton(
+                          minWidth: 30.0,
+                          height: 30.0,
+                          color: (test?.invalid ?? false) ? Colors.red : Colors.green,
+                          splashColor: Colors.grey,
+                          onPressed: () {
+                            showMeasurementDialog(context, test?.invalid ?? false);
+                          },
+                          child: (test?.invalid ?? false) ? Icon(Icons.priority_high) : Icon(Icons.check),
+                        ),
+                        FlatButton(
+                          minWidth: 30.0,
+                          height: 30.0,
+                          color: (test?.invalid ?? false) ? Colors.red : Colors.green,
+                          splashColor: Colors.grey,
+                          onPressed: () {
+                            showBackendStatusDialog(context, test?.invalid ?? false);
+                          },
+                          child: (test?.invalid ?? false) ? Icon(Icons.signal_wifi_off) : Icon(Icons.wifi),
+                        ),
+                      ]
+                  ),
+                ]
               ),
-              SizedBox(height: 12),
-              Row(children: <Widget>[
-                Icon(BIcons.calendar),
-                SizedBox(width: 16),
-                Text(
-                  DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.fromMillisecondsSinceEpoch(test.creationDate)),
-                  style: Theme.of(context).textTheme.bodyText1,
-                )
-              ]),
-              SizedBox(height: 8),
-              Row(children: <Widget>[
-                Icon(
-                  bqtop(test?.eyesOpen, BIcons.eye_open, BIcons.eye_close),
-                ),
-                SizedBox(width: 16),
-                Text(
-                  bqtop(test?.eyesOpen, 'eyes_open'.tr(), 'eyes_closed'.tr(), "-"),
-                  style: Theme.of(context).textTheme.bodyText1,
-                )
-              ]),
             ]
           ),
         ),

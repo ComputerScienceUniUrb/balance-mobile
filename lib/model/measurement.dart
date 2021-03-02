@@ -10,12 +10,14 @@ class Measurement {
 
   @ColumnInfo()
   final String token;
-  // General info about the measurement
   @ColumnInfo(name: "creation_date", nullable: false)
   final int creationDate;
+  // Flag the measurement if invalid
+  @ColumnInfo(name: "invalid")
+  final bool invalid;
+  // General info about the measurement
   @ColumnInfo(name: "eyes_open", nullable: false)
   final bool eyesOpen;
-
   @ColumnInfo(name: "has_features", nullable: false)
   final bool hasFeatures;
   // Computed features
@@ -77,6 +79,7 @@ class Measurement {
   Measurement({
     this.id,
     this.token,
+    this.invalid = false,
     this.creationDate,
     this.eyesOpen,
     this.hasFeatures = false,
@@ -108,6 +111,7 @@ class Measurement {
     Measurement(
       id: m.id,
       token: token,
+      invalid: s.outOfRange == 1.0 ? true : false,
       creationDate: m.creationDate,
       eyesOpen: m.eyesOpen,
       hasFeatures: true,
@@ -149,6 +153,7 @@ class Measurement {
   Map<String, dynamic> toJson() => {
       'id': this.id,
       'token': this.token,
+      'invalid': this.invalid,
       'creationDate': this.creationDate,
       'eyesOpen': this.eyesOpen,
       'hasFeatures': this.hasFeatures,
@@ -185,6 +190,7 @@ class Measurement {
       other is Measurement &&
         runtimeType == other.runtimeType &&
         id == other.id &&
+        invalid == other.invalid &&
         creationDate == other.creationDate &&
         eyesOpen == other.eyesOpen &&
         hasFeatures == other.hasFeatures &&
@@ -225,6 +231,7 @@ class Measurement {
   @override
   int get hashCode =>
     id.hashCode ^
+    invalid.hashCode ^
     creationDate.hashCode ^
     eyesOpen.hashCode ^
     hasFeatures.hashCode ^
@@ -265,7 +272,7 @@ class Measurement {
   @override
   String toString() {
     return 'Measurement('
-      'id: $id, creationDate: $creationDate, eyesOpen: $eyesOpen, hasFeatures: $hasFeatures, '
+      'id: $id, invalid: $invalid, creationDate: $creationDate, eyesOpen: $eyesOpen, hasFeatures: $hasFeatures, '
       'swayPath: $swayPath, meanDisplacement: $meanDisplacement, '
       'stdDisplacement: $stdDisplacement, minDist: $minDist, maxDist: $maxDist, '
       'meanFrequencyAP: $meanFrequencyAP, meanFrequencyML: $meanFrequencyML, '
@@ -277,11 +284,11 @@ class Measurement {
   }
 
   String toCSV() {
-    return 'id;creationDate;eyesOpen;hasFeatures;swayPath;meanDisplacement;stdDisplacement;'
+    return 'id;invalid;creationDate;eyesOpen;hasFeatures;swayPath;meanDisplacement;stdDisplacement;'
            'minDist;maxDist;meanFrequencyAP;meanFrequencyML;frequencyPeakAP;frequencyPeakML;'
            'f80AP;f80ML;np;meanTime;stdTime;meanDistance;stdDistance;meanPeaks;stdPeaks;'
            'grX;grY;grZ;gmX;gmY;gmZ;gvX;gvY;gvZ;gkX;gkY;gkZ;gsX;gsY;gsZ\n'
-           '$id;$creationDate;$eyesOpen;$hasFeatures;$swayPath;$meanDisplacement;'
+           '$id;$invalid;$creationDate;$eyesOpen;$hasFeatures;$swayPath;$meanDisplacement;'
            '$stdDisplacement;$minDist;$maxDist;$meanFrequencyAP;$meanFrequencyML;'
            '$frequencyPeakAP;$frequencyPeakML;$f80AP;$f80ML;$numMax;$meanTime;'
            '$stdTime;$meanDistance;$stdDistance;$meanPeaks;$stdPeaks;$grX;$grY;'

@@ -18,16 +18,18 @@ class OnBoardingDataBloc extends Bloc<OnBoardingDataEvent, OnBoardingData> {
     }
     if (event is acceptPosture) {
       yield state.copyWith(
-          postureCondition: event.postureCondition,
-          posturalProblems: event.posturalProblems,
-          problemsInFamily: event.problemsInFamily,
-          previousTrauma: event.previousTrauma,
-          traumas: event.traumas
+        postureCondition: event.postureCondition,
+        posturalProblems: event.posturalProblems,
+        problemsInFamily: event.problemsInFamily,
+        previousTrauma: event.previousTrauma,
+        traumas: event.traumas
       );
     }
     if (event is acceptHabits) {
       yield state.copyWith(
-          useOfDrugs: event.useOfDrugs,
+        useOfDrugs: event.useOfDrugs,
+        alcoholSliderValue: event.alcoholSliderValue,
+        sportsSliderValue: event.sportsSliderValue,
       );
     }
     if (event is acceptSight) {
@@ -89,8 +91,10 @@ class acceptPosture extends OnBoardingDataEvent {
 
 class acceptHabits extends OnBoardingDataEvent {
   final int useOfDrugs;
+  final double alcoholSliderValue;
+  final double sportsSliderValue;
 
-  acceptHabits({this.useOfDrugs});
+  acceptHabits({this.useOfDrugs,this.alcoholSliderValue,this.sportsSliderValue});
 
   @override
   List<Object> get props => [];
@@ -122,6 +126,8 @@ class OnBoardingData extends Equatable {
   final int previousTrauma;
   final List<bool> traumas;
   final int useOfDrugs;
+  final double alcoholSliderValue;
+  final double sportsSliderValue;
   final int hearingLoss;
   final List<bool> hearingProblems;
   final int visionLoss;
@@ -141,6 +147,8 @@ class OnBoardingData extends Equatable {
     this.previousTrauma,
     this.traumas,
     this.useOfDrugs,
+    this.alcoholSliderValue,
+    this.sportsSliderValue,
     this.hearingLoss,
     this.hearingProblems,
     this.visionLoss,
@@ -156,7 +164,7 @@ class OnBoardingData extends Equatable {
     String height,
     String age,int gender,String weight,
     int postureCondition,List<bool> posturalProblems,int problemsInFamily,int previousTrauma,List<bool> traumas,
-    int useOfDrugs,
+    int useOfDrugs,double alcoholSliderValue,double sportsSliderValue,
     int hearingLoss,List<bool> hearingProblems,int visionLoss,List<bool> visionProblems,
   }) {
     return new OnBoardingData(
@@ -172,6 +180,8 @@ class OnBoardingData extends Equatable {
       problemsInFamily: problemsInFamily ?? this.problemsInFamily,
       previousTrauma: previousTrauma ?? this.previousTrauma,
       traumas: traumas ?? this.traumas,
+      alcoholSliderValue: alcoholSliderValue ?? this.alcoholSliderValue,
+      sportsSliderValue: sportsSliderValue ?? this.sportsSliderValue,
       useOfDrugs: useOfDrugs ?? this.useOfDrugs,
       hearingLoss: hearingLoss ?? this.hearingLoss,
       hearingProblems: hearingProblems ?? this.hearingProblems,
@@ -193,7 +203,7 @@ class OnBoardingData extends Equatable {
       case 4:
         return (problemsInFamily != null && postureCondition != null && previousTrauma != null) ? true : false;
       case 5:
-        return (useOfDrugs != null) ? true : false;
+        return (useOfDrugs != null && (alcoholSliderValue != null && alcoholSliderValue > 0) && (sportsSliderValue != null && sportsSliderValue > 0)) ? true : false;
       case 6:
         return (hearingLoss != null && visionLoss != null) ? true : false;
 
@@ -208,7 +218,7 @@ class OnBoardingData extends Equatable {
     height,
     age,gender,weight,
     postureCondition,posturalProblems,problemsInFamily,previousTrauma,traumas,
-    useOfDrugs,
+    useOfDrugs,alcoholSliderValue,sportsSliderValue,
     hearingLoss,hearingProblems,visionLoss,visionProblems,
   ];
 }

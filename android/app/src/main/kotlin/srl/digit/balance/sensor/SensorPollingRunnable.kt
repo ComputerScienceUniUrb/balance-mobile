@@ -1,4 +1,4 @@
-package it.uniurb.balance_app.sensor
+package srl.digit.balance.sensor
 
 import android.os.Handler
 
@@ -6,7 +6,7 @@ import android.os.Handler
  * Listen to the sensor data at a fix rate
  *
  * This class is a thread that listen the current value of
- * accelerometer and gyroscope from [it.uniurb.balance_app.sensor.SensorSharedValues],
+ * accelerometer and gyroscope from [srl.digit.balance.sensor.SensorSharedValues],
  * sends it to the [io.flutter.plugin.common.EventChannel.EventSink] and then sleeps.
  * The desired sample rate is 100Hz so this thread needs to sleeps for 10ms.
  *

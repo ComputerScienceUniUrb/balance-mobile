@@ -93,12 +93,20 @@ class PreferenceManager {
   /// Update the system info
   ///
   /// Given a system update [SystemInfo] into the [SharedPreferences].
-  static Future<void> updateSystemInfo(String producer, String model, String appVersion, String osVersion) async {
+  static Future<void> updateSystemInfo({String token, String producer, String model, String appVersion, String osVersion}) async {
     var pref = await SharedPreferences.getInstance();
-    pref.setString(_producer, producer);
-    pref.setString(_model, model);
-    pref.setString(_appVersion, appVersion);
-    pref.setString(_osVersion, osVersion);
+
+    // Update the value of all the non-null given elements
+    if (token != null)
+      pref.setString(_token, token);
+    if (producer != null)
+      pref.setString(_producer, producer);
+    if (model != null)
+      pref.setString(_model, model);
+    if (appVersion != null)
+      pref.setString(_appVersion, appVersion);
+    if (osVersion != null)
+      pref.setString(_osVersion, osVersion);
   }
 
   /// Return a [Future] with accelerometer [SensorBias]
@@ -134,11 +142,13 @@ class PreferenceManager {
   /// if the values are null [0.0] will be passed instead.
   static Future<SystemInfo> get systemInfo async {
     var pref = await SharedPreferences.getInstance();
+    String token = pref.getString(_token);
     String producer = pref.getString(_producer);
     String model = pref.getString(_model);
     String appVersion = pref.getString(_appVersion);
     String osVersion = pref.getString(_osVersion);
-    return SystemInfo(producer: producer,
+    return SystemInfo(token: token,
+                      producer: producer,
                       model: model,
                       app_version: appVersion,
                       os_version: osVersion);

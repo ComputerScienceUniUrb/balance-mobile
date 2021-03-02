@@ -77,7 +77,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
             }: null,
             fontWeight: _getFontWeight(_selected == 0),
             backgroundColor: _getBackgroundColor(_selected == 0, toggleButtonTheme),
-            textColor: Colors.white,//_getTextColor(_selected == 0, toggleButtonTheme),
+            textColor: _getTextColor(_selected == 0, toggleButtonTheme),
             shapeBorder: RoundedRectangleBorder(
               borderRadius: _getBorderRadius(0, toggleButtonTheme),
               side: BorderSide(
@@ -98,7 +98,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
             }: null,
             fontWeight: _getFontWeight(_selected == 1),
             backgroundColor: _getBackgroundColor(_selected == 1, toggleButtonTheme),
-            textColor: Colors.white,//_getTextColor(_selected == 1, toggleButtonTheme),
+            textColor: _getTextColor(_selected == 1, toggleButtonTheme),
             shapeBorder: RoundedRectangleBorder(
               borderRadius: _getBorderRadius(1, toggleButtonTheme),
               side: BorderSide(
@@ -116,35 +116,26 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
   /// Return the [FontWeight]
   FontWeight _getFontWeight(bool isSelected) =>
     _isEnable && isSelected
-      ? FontWeight.w500
-      : FontWeight.w400;
+      ? FontWeight.w700
+      : FontWeight.w200;
 
   /// Return the background [Color]
   Color _getBackgroundColor(bool isSelected, ToggleButtonsThemeData toggleButtonTheme) =>
-    (_isEnable && isSelected)
-      ? toggleButtonTheme.fillColor ?? Colors.red.shade200
+    _isEnable && isSelected
+      ? Colors.white38
       : Colors.blueGrey;
 
   /// Return the text [Color]
-  Color _getTextColor(bool isSelected, ToggleButtonsThemeData toggleButtonTheme) {
-    if (_isEnable)
-      if (isSelected)
-        return toggleButtonTheme.selectedColor ?? Colors.red;
-      else
-        return toggleButtonTheme.color ?? Colors.grey;
-    return toggleButtonTheme.disabledColor ?? Colors.grey;
-  }
+  Color _getTextColor(bool isSelected, ToggleButtonsThemeData toggleButtonTheme) =>
+    _isEnable && isSelected
+      ? Colors.white
+      : Colors.white;
 
   /// Return the border [Color]
-  Color _getBorderColor(bool isSelected, ToggleButtonsThemeData toggleButtonTheme) {
-    if (_isEnable)
-      if (isSelected)
-        return toggleButtonTheme.selectedBorderColor ?? Colors.red;
-      else
-        return toggleButtonTheme.borderColor ?? Colors.grey;
-    else
-      return toggleButtonTheme.disabledBorderColor ?? Colors.grey;
-  }
+  Color _getBorderColor(bool isSelected, ToggleButtonsThemeData toggleButtonTheme) =>
+    _isEnable && isSelected
+      ? Colors.white
+      : Colors.grey;
 
   /// Return the [BorderRadius]
   BorderRadius _getBorderRadius(int index, ToggleButtonsThemeData toggleButtonTheme) {

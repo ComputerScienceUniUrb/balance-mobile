@@ -2,6 +2,7 @@
 import 'package:balance_app/manager/preference_manager.dart';
 import 'package:balance_app/model/sensor_bias.dart';
 import 'package:balance_app/model/sensor_data.dart';
+import 'package:balance_app/routes.dart';
 import 'package:balance_app/sensors/sensor_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -11,11 +12,14 @@ import 'package:easy_localization/easy_localization.dart';
 /// His purpose is to display all the calibration related
 /// UI and let the user calibrate his phone before any
 /// test. The calibration is achieved through [CalibrationHelper].
-class CalibrateDeviceScreen extends StatelessWidget {
+class QuickCalibrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('calibrate_txt'.tr())),
+      appBar: AppBar(
+          title: Text('calibrate_txt'.tr()),
+          leading: new Container(),
+      ),
       body: Container(
           padding: EdgeInsets.all(16.0),
           child: SensorWidget(
@@ -42,12 +46,18 @@ class CalibrateDeviceScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.center,
                           child: RaisedButton(
-                            onPressed: state == SensorController.listening
-                              ? null
-                              : () => controller.listen(),
+                            onPressed: () {
+                              if (state == SensorController.listening)
+                                null;
+                              else if (state == SensorController.complete) {
+                                Navigator.pop(context);
+                              }
+                              else
+                                controller.listen();
+                            },
                             child: Text(
                               state == SensorController.complete
-                                ? 'calibrate_again_btn'.tr()
+                                ? 'Torna alla Schermata principale'
                                 : 'start_calibration_btn'.tr()
                             ),
                           ),

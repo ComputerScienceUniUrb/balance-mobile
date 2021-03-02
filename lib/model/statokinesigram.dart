@@ -9,6 +9,8 @@ import 'package:balance_app/model/measurement.dart';
 /// domain features, frequency domain features,
 /// structural features and gyroscopic features.p
 class Statokinesigram {
+  final double outOfRange;
+
   final List<CogvData> cogv;
 
   final double swayPath;
@@ -49,7 +51,7 @@ class Statokinesigram {
   final double gsZ;
 
   const Statokinesigram({
-    this.cogv, this.swayPath, this.meanDisplacement,
+    this.outOfRange, this.cogv, this.swayPath, this.meanDisplacement,
     this.stdDisplacement, this.minDist, this.maxDist, this.meanFrequencyAP, this.meanFrequencyML,
     this.frequencyPeakAP, this.frequencyPeakML, this.f80AP, this.f80ML, this.numMax, this.meanTime,
     this.stdTime, this.meanDistance, this.stdDistance, this.meanPeaks, this.stdPeaks, this.grX,
@@ -99,7 +101,7 @@ class Statokinesigram {
     );
 
   @override
-  String toString() => 'Statokinesigram(cogv: $cogv, '
+  String toString() => 'Statokinesigram(outOfRange: $outOfRange, cogv: $cogv, '
       'swayPath: $swayPath, meanDisplacement: $meanDisplacement, '
       'stdDisplacement: $stdDisplacement, minDist: $minDist, maxDist: $maxDist, '
       'meanFrequencyAP: $meanFrequencyAP, meanFrequencyML: $meanFrequencyML, '
@@ -116,6 +118,7 @@ class Statokinesigram {
     identical(this, other) ||
       other is Statokinesigram &&
         runtimeType == other.runtimeType &&
+        outOfRange == other.outOfRange &&
         cogv == other.cogv &&
         swayPath == other.swayPath &&
         meanDisplacement == other.meanDisplacement &&
@@ -153,6 +156,7 @@ class Statokinesigram {
 
   @override
   int get hashCode =>
+    outOfRange.hashCode ^
     cogv.hashCode ^
     swayPath.hashCode ^
     meanDisplacement.hashCode ^

@@ -15,9 +15,8 @@ import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
 class ConsentScreen extends StatefulWidget {
   /// Index of the screen
   final int screenIndex;
-  final ValueChanged<bool> enableNextBtnCallback;
 
-  ConsentScreen(this.screenIndex, this.enableNextBtnCallback);
+  ConsentScreen(this.screenIndex);
 
   @override
   _ConsentScreenState createState() => _ConsentScreenState();
@@ -317,7 +316,7 @@ class _ConsentScreenState extends State<ConsentScreen> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 24),
                       title: Text('privacy_declaration_first_txt'.tr(),
                         style: Theme.of(context).textTheme.subtitle2.copyWith(
-                          fontSize: 10,
+                          fontSize: 12,
                           color: Colors.white,
                         ),),
                       value: state.consent_1 ?? false,
@@ -334,7 +333,7 @@ class _ConsentScreenState extends State<ConsentScreen> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 24),
                       title: Text('privacy_declaration_second_txt'.tr(),
                         style: Theme.of(context).textTheme.subtitle2.copyWith(
-                          fontSize: 10,
+                          fontSize: 12,
                           color: Colors.white,
                         ),),
                       value: state.consent_2 ?? false,
@@ -351,7 +350,7 @@ class _ConsentScreenState extends State<ConsentScreen> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 24),
                       title: Text('privacy_declaration_third_txt'.tr(),
                         style: Theme.of(context).textTheme.subtitle2.copyWith(
-                          fontSize: 10,
+                          fontSize: 12,
                           color: Colors.white,
                         ),),
                       value: state.consent_3 ?? false,

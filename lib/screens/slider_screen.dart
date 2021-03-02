@@ -104,41 +104,13 @@ class _SliderScreenState extends State<Slider> {
                             _currentPage = newPage;
                           }),
                         children: [
-                          WelcomeScreen(
-                            0,
-                          ),
-                          ConsentScreen(
-                            1,
-                            (isEnable) => setState(() => _isNextBtnEnable = isEnable),
-                          ),
-                          HeightScreen(
-                            2,
-                              (isEnable) => setState(() => _isNextBtnEnable = isEnable),
-                          ),
-                          GeneralInfoScreen(
-                            3,
-                            (isEnable) => setState(() => _isNextBtnEnable = isEnable),
-                            gender: userInfo?.gender,
-                          ),
-                          PostureScreen(
-                            4,
-                            (isEnable) => setState(() => _isNextBtnEnable = isEnable),
-                            posture: userInfo?.posturalProblems,
-                            problemsInFamily: userInfo?.problemsInFamily,
-                          ),
-                          HabitsScreen(
-                            5,
-                            (isEnable) => setState(() => _isNextBtnEnable = isEnable),
-                            useOfDrugs: userInfo?.useOfDrugs,
-                          ),
-                          SightScreen(
-                            6,
-                            (isEnable) => setState(() => _isNextBtnEnable = isEnable),
-                            visionLoss: userInfo?.visionLoss,
-                            visionProblems: userInfo?.visionProblems,
-                            hearingLoss: userInfo?.hearingLoss,
-                            hearingProblems: userInfo?.hearingProblems,
-                          ),
+                          WelcomeScreen(0),
+                          ConsentScreen(1),
+                          HeightScreen(2),
+                          GeneralInfoScreen(3),
+                          PostureScreen(4),
+                          HabitsScreen(5),
+                          SightScreen(6),
                         ],
                       ),
                     ),

@@ -19,11 +19,14 @@ import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
 class GeneralInfoScreen extends StatefulWidget {
   /// Index of the screen
   final int screenIndex;
-  final ValueChanged<bool> enableNextBtnCallback;
+  final int age;
   final int gender;
+  final int weight;
 
-  GeneralInfoScreen(this.screenIndex, this.enableNextBtnCallback, {
+  GeneralInfoScreen(this.screenIndex, {
+    this.age,
     this.gender,
+    this.weight,
   });
 
   @override
@@ -33,13 +36,6 @@ class GeneralInfoScreen extends StatefulWidget {
 class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
   final _formKey = GlobalKey<FormState>();
   final _genders = ['unknown_txt'.tr(), 'male_txt'.tr(), 'female_txt'.tr()];
-  int _genderIndex;
-
-  @override
-  void initState() {
-    super.initState();
-    _genderIndex = widget.gender;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +54,7 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
         return Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            reverse: false,
+            reverse: true,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -92,7 +88,7 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
                         CustomNumberFormField(
                           labelText: 'age_txt'.tr(),
                           initialValue: state.age ?? '',
-                          suffix: "anni",
+                          suffix: 'years_txt'.tr(),
                           onChanged: (value) {
                             // Enable/Disable the next button if the text field is empty
                             context
@@ -127,9 +123,8 @@ class _GeneralInfoScreenState extends State<GeneralInfoScreen> {
                         SizedBox(height: 8),
                         CustomDropdownFormField(
                           hint: 'gender_txt'.tr(),
-                          value: state.gender ?? 0,
+                          value: state.gender,
                           onChanged: (value) {
-                            setState(() => _genderIndex = value);
                             // Enable/Disable the next button if the text field is empty
                             context
                                 .bloc<OnBoardingDataBloc>()

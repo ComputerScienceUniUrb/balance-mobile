@@ -1,8 +1,6 @@
 
 import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
 import 'package:balance_app/screens/intro/slider/widgets/custom_switch.dart';
-import 'package:balance_app/screens/intro/slider/widgets/lite_rolling_switch.dart';
-import 'package:balance_app/screens/res/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:balance_app/manager/preference_manager.dart';
@@ -21,18 +19,8 @@ import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
 class HabitsScreen extends StatefulWidget {
   /// Index of the screen
   final int screenIndex;
-  final bool useOfDrugs;
-  final int alcoholIntake;
-  final int alcoholIndex;
-  final int sportsActivity;
-  final ValueChanged<bool> enableNextBtnCallback;
 
-  HabitsScreen(this.screenIndex, this.enableNextBtnCallback, {
-    this.useOfDrugs,
-    this.alcoholIntake,
-    this.alcoholIndex,
-    this.sportsActivity,
-  });
+  HabitsScreen(this.screenIndex);
 
   @override
   _HabitsScreenState createState() => _HabitsScreenState();
@@ -40,20 +28,8 @@ class HabitsScreen extends StatefulWidget {
 
 class _HabitsScreenState extends State<HabitsScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _alcoholIntake = ['abstemious_txt'.tr(), 'occasional_txt'.tr(), 'at_meals_txt'.tr(), 'outside_meals_txt'.tr()];
-  String _alcoholSelected;
-  final _sportsActivity = ['Affatto', 'Occasionale', 'Settimanale', 'Quotidiano'];
-  double _sportsSliderValue = 0;
-  String _sportsActivitySelected;
-  int _alcoholIndex;
-  double _currentSliderValue = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _alcoholIndex = widget.alcoholIndex ?? 0;
-    _alcoholSelected = _alcoholIntake.elementAt(0);
-  }
+  final _alcoholIntake = ['move_cursor_txt'.tr(), 'abstemious_txt'.tr(), 'occasional_txt'.tr(), 'at_meals_txt'.tr(), 'outside_meals_txt'.tr()];
+  final _sportsActivity = ['move_cursor_txt'.tr(), 'no'.tr(), 'occasional_txt'.tr(), 'weekly_txt'.tr(), 'daily_txt'.tr()];
 
   @override
   Widget build(BuildContext context) {
@@ -136,84 +112,51 @@ class _HabitsScreenState extends State<HabitsScreen> {
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 24),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      'Astemio',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline4
-                          .copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                SizedBox(height: 18),
+                Material(
+                  color: Colors.white30,
+                  borderRadius: BorderRadius.circular(24.0),
+                  shadowColor: Color(0x802196F3),
+                  child: Container(
+                    width: 350.0,
+                    height: 100.0,
+                    child: Column(children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          child: Slider(
+                            min: 0.0,
+                            max: 100.0,
+                            divisions: 4,
+                            value: state.alcoholSliderValue ?? 0,
+                            activeColor: Color(0xff512ea8),
+                            inactiveColor: Color(0xffac9bcc),
+                            onChanged: (newValue) {
+                              // Enable/Disable the next button if the text field is empty
+                              context
+                                  .bloc<OnBoardingDataBloc>()
+                                  .add(acceptHabits(alcoholSliderValue: newValue));
+                            },
+                            onChangeEnd: (newValue) {
+                              PreferenceManager.updateUserInfo(
+                                  alcoholIntake: ((newValue * 4 / 100).round())
+                                      .toInt());
+                            }
+                          ),
+                        ),
                       ),
-                    ),
-                    Spacer(),
-                    Text(
-                      'Occasionale',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline4
-                          .copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                      Text(_alcoholIntake.elementAt((state.alcoholSliderValue == null) ? 0 : (state.alcoholSliderValue * 4 / 100).round()),
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline4
+                            .copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    Spacer(),
-                    Text(
-                      'Ai Pasti',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline4
-                          .copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                      'Fuori Pasto',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline4
-                          .copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                SliderTheme(
-                  data: SliderThemeData(
-                    thumbColor: BColors.colorPrimary,
-                    showValueIndicator: ShowValueIndicator.never,
-                  ),
-                  child: Slider(
-                      value: _currentSliderValue,
-                      min: 0,
-                      max: 100,
-                      divisions: 3,
-                      onChanged: (double value) {
-                        setState(() {
-                          _currentSliderValue = value;
-                          _alcoholSelected = _alcoholIntake.elementAt(
-                              ((value * 3 / 100).round()));
-                        });
-                      },
-                      onChangeEnd: (newValue) {
-                        PreferenceManager.updateUserInfo(
-                            alcoholIntake: ((newValue * 3 / 100).round())
-                                .toInt());
-                      }
+                    ],),
                   ),
                 ),
                 SizedBox(height: 36),
@@ -229,84 +172,51 @@ class _HabitsScreenState extends State<HabitsScreen> {
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 24),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      'Affatto',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline4
-                          .copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                SizedBox(height: 18),
+                Material(
+                  color: Colors.white24,
+                  borderRadius: BorderRadius.circular(24.0),
+                  shadowColor: Color(0x802196F3),
+                  child: Container(
+                    width: 350.0,
+                    height: 100.0,
+                    child: Column(children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          child: Slider(
+                            min: 0.0,
+                            max: 100.0,
+                            divisions: 4,
+                            value: state.sportsSliderValue ?? 0,
+                            activeColor: Color(0xff512ea8),
+                            inactiveColor: Color(0xffac9bcc),
+                            onChanged: (newValue) {
+                              // Enable/Disable the next button if the text field is empty
+                              context
+                                  .bloc<OnBoardingDataBloc>()
+                                  .add(acceptHabits(sportsSliderValue: newValue));
+                            },
+                            onChangeEnd: (newValue) {
+                              PreferenceManager.updateUserInfo(
+                                  sportsActivity: ((newValue * 4 / 100).round())
+                                      .toInt());
+                            }
+                          ),
+                        ),
                       ),
-                    ),
-                    Spacer(),
-                    Text(
-                      'Occasionale',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline4
-                          .copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                      Text(_sportsActivity.elementAt((state.sportsSliderValue == null) ? 0 : (state.sportsSliderValue * 4 / 100).round()),
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline4
+                            .copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    Spacer(),
-                    Text(
-                      'Settimanale',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline4
-                          .copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                      'Quotidiana',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline4
-                          .copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                SliderTheme(
-                  data: SliderThemeData(
-                    thumbColor: BColors.colorPrimary,
-                    showValueIndicator: ShowValueIndicator.never,
-                  ),
-                  child: Slider(
-                      value: _sportsSliderValue,
-                      min: 0,
-                      max: 100,
-                      divisions: 3,
-                      onChanged: (double value) {
-                        setState(() {
-                          _sportsSliderValue = value;
-                          _sportsActivitySelected = _sportsActivity.elementAt(
-                              ((value * 3 / 100).round()));
-                        });
-                      },
-                      onChangeEnd: (newValue) {
-                        PreferenceManager.updateUserInfo(
-                            sportsActivity: ((newValue * 3 / 100).round())
-                                .toInt());
-                      }
+                    ],),
                   ),
                 ),
                 SizedBox(height: 105)

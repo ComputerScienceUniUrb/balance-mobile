@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
 import 'package:balance_app/bloc/main/home/countdown_bloc_impl.dart';
+import 'package:balance_app/screens/calibration/quick_calibration_screen.dart';
 import 'package:balance_app/screens/res/colors.dart';
 import 'package:balance_app/screens/res/theme.dart';
 import 'package:device_info/device_info.dart';
@@ -40,7 +41,7 @@ Future<void> main() async {
 		var sdkInt = androidInfo.version.sdkInt;
 		var manufacturer = androidInfo.manufacturer;
 		var model = androidInfo.model;
-		PreferenceManager.updateSystemInfo(manufacturer, model, "alpha.5", "Android "+release+" SDK "+sdkInt.toString());
+		PreferenceManager.updateSystemInfo(producer: manufacturer, model: model, appVersion: "alpha.5", osVersion: "Android "+release+" SDK "+sdkInt.toString());
 	}
 
 	if (Platform.isIOS) {
@@ -49,7 +50,7 @@ Future<void> main() async {
 		var version = iosInfo.systemVersion;
 		var name = iosInfo.name;
 		//var model = iosInfo.model;
-		PreferenceManager.updateSystemInfo("Apple", name, "alpha.5", systemName+" "+version);
+		PreferenceManager.updateSystemInfo(producer: "Apple", model: name, appVersion: "alpha.5", osVersion: systemName+" "+version);
 	}
 
 	runApp(
@@ -89,10 +90,11 @@ class BalanceApp extends StatelessWidget {
 					routes: {
 						Routes.intro: (_) => BlocProvider(child: IntroScreen(), create: (context) => OnBoardingDataBloc()),
 						Routes.main: (_) => BlocProvider(child: MainScreen(), create: (context) => CountdownBloc.create(Provider.of<MeasurementDatabase>(context, listen: false))),
+						Routes.quick_calibration: (_) => QuickCalibrationScreen(),
 						Routes.calibration: (_) => CalibrateDeviceScreen(),
 						Routes.info: (_) => UserInfoRecapScreen(),
 						Routes.slider: (_) => SliderScreen(),
-						Routes.credits: (_) => OpenSourceScreen(),//CreditsScreen(),
+						Routes.credits: (_) => CreditsScreen(),
 						Routes.result: (_) => ResultScreen(),
 						Routes.open_source: (_) => OpenSourceScreen(),
 					},

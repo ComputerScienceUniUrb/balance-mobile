@@ -1,6 +1,6 @@
-package it.uniurb.balance_app.sensor
+package srl.digit.balance.sensor
 
-import it.uniurb.balance_app.model.SensorData
+import srl.digit.balance.model.SensorData
 
 /**
  * Singleton class used to share sensor data between threads
