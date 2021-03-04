@@ -8,7 +8,7 @@
 <br />
 
 <div align="center">
-Follow the [Website](https://www.balancemobile.it)
+Follow the Website: https://www.balancemobile.it
 </div>
 
 # Table of contents
