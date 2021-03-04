@@ -7,6 +7,10 @@
 
 <br />
 
+<div align="center">
+Follow the [Website](https://www.balancemobile.it)
+</div>
+
 # Table of contents
 
 - [Introduction](#introduction)
@@ -31,9 +35,9 @@ This project is build in Flutter and published in the Apple App Store and Google
 
 # Authors
 
-- Emanuele Lattanzi, Associate Professor @ University of Urbino.
-- Valerio Freschi, Researcher @ University of Urbino.
 - Gioele Bigini, PhD Student @ University of Urbino.
+- Valerio Freschi, Researcher @ University of Urbino.
+- Emanuele Lattanzi, Associate Professor @ University of Urbino.
 
 For the full list of Collaborators, Partners and Sponsors, please visit the official website at:
 [Balance Mobile](https://www.balancemobile.it)
