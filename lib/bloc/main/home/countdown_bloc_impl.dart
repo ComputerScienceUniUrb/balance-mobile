@@ -46,7 +46,7 @@ class CountdownBloc extends Bloc<CountdownEvents, CountdownState> {
         print("CountdownBloc.mapEventToState: startPreMeasure");
         _isCountdownCancelled = false;
         _countdownTimer = CountdownTimer(
-          Duration(milliseconds: 6000),
+          Duration(milliseconds: 2000),
           Duration(milliseconds: 1000)
         )..listen((event) { /*No-Op*/ },
             onDone: () {

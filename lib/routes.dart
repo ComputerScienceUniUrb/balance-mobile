@@ -12,4 +12,5 @@ class Routes {
   static const String result = "/result_route";
   static const String open_source = "/open_source";
   static const String credits = "/credits";
+  static const String issues = "/issues";
 }

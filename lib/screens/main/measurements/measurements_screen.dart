@@ -13,7 +13,14 @@ import 'package:provider/provider.dart';
 import 'package:balance_app/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class MeasurementsScreen extends StatelessWidget {
+class MeasurementsScreen extends StatefulWidget {
+  MeasurementsScreen();
+
+  @override
+  _MeasurementsScreenState createState() => _MeasurementsScreenState();
+}
+
+class _MeasurementsScreenState extends State<MeasurementsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -29,7 +36,7 @@ class MeasurementsScreen extends StatelessWidget {
             return ListView.builder(
               padding: EdgeInsets.symmetric(vertical: 8),
               itemBuilder: (context, index) =>
-                _measurementItemTemplate(context, state.tests[index]),
+                _measurementItemTemplate(context,state.tests[index]),
               itemCount: state.tests.length,
             );
           }
@@ -160,22 +167,25 @@ class MeasurementsScreen extends StatelessWidget {
                         FlatButton(
                           minWidth: 30.0,
                           height: 30.0,
-                          color: (test?.invalid ?? false) ? Colors.red : Colors.green,
+                          color: test.invalid ? Colors.red : Colors.green,
                           splashColor: Colors.grey,
                           onPressed: () {
-                            showMeasurementDialog(context, test?.invalid ?? false);
+                            showMeasurementDialog(context, test.invalid ?? false);
                           },
-                          child: (test?.invalid ?? false) ? Icon(Icons.priority_high) : Icon(Icons.check),
+                          child: test.invalid ? Icon(Icons.priority_high) : Icon(Icons.check),
                         ),
                         FlatButton(
                           minWidth: 30.0,
                           height: 30.0,
-                          color: (test?.invalid ?? false) ? Colors.red : Colors.green,
+                          color: test.sent ? Colors.green : Colors.red ,
                           splashColor: Colors.grey,
-                          onPressed: () {
-                            showBackendStatusDialog(context, test?.invalid ?? false);
+                          onPressed: () async {
+                            bool result = await showBackendStatusDialog(context, test.sent, test.id);
+                            if (result)
+                              BlocProvider.of<MeasurementsBloc>(context).add(
+                                  MeasurementsEvents.fetch);
                           },
-                          child: (test?.invalid ?? false) ? Icon(Icons.signal_wifi_off) : Icon(Icons.wifi),
+                          child: test.sent ? Icon(Icons.wifi) : Icon(Icons.signal_wifi_off),
                         ),
                       ]
                   ),

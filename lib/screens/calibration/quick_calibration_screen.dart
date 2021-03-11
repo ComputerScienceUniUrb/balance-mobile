@@ -46,18 +46,10 @@ class QuickCalibrationScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.center,
                           child: RaisedButton(
-                            onPressed: () {
-                              if (state == SensorController.listening)
-                                null;
-                              else if (state == SensorController.complete) {
-                                Navigator.pop(context);
-                              }
-                              else
-                                controller.listen();
-                            },
+                            onPressed: state == SensorController.listening ? null : (state == SensorController.complete ? () => Navigator.pop(context) : () => controller.listen()),
                             child: Text(
                               state == SensorController.complete
-                                ? 'Torna alla Schermata principale'
+                                ? 'back_home_btn'.tr()
                                 : 'start_calibration_btn'.tr()
                             ),
                           ),

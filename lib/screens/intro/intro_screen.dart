@@ -26,6 +26,8 @@ import 'slider/posture.dart';
 import 'slider/habits.dart';
 import 'slider/sight.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+
 /// This class show an introduction when the app is first open.
 class IntroScreen extends StatefulWidget {
   @override
@@ -121,10 +123,12 @@ class _IntroScreenState extends State<IntroScreen> {
                               bool result = await _makePostRequest(jsonEncode(await PreferenceManager.userInfo), true);
 
                               setState(() {
-                                if (result) {
-                                  _isLoggedIn = true;
-                                } else {
-                                  _isLoggedIn = false;
+                                if (!result) {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                      duration: const Duration(seconds: 10),
+                                      behavior: SnackBarBehavior.floating,
+                                      content: Text('intro_backend_snack_txt'.tr())
+                                  ));
                                 }
                                 _isInAsyncCall = false;
                               });
@@ -135,9 +139,9 @@ class _IntroScreenState extends State<IntroScreen> {
                               }
                             } else {
                               /*
-                            * All the required data are stored... mark the
-                            * first launch as done so we don't ask this data anymore
-                            */
+                               * All the required data are stored... mark the
+                               * first launch as done so we don't ask this data anymore
+                               */
                               print(await PreferenceManager.userInfo);
                               // Move to next page
                               _pageController.nextPage(

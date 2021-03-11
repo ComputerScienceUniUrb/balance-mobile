@@ -15,6 +15,12 @@ class Measurement {
   // Flag the measurement if invalid
   @ColumnInfo(name: "invalid")
   final bool invalid;
+  // Flag the measurement if invalid
+  @ColumnInfo(name: "initCondition")
+  final int initCondition;
+  // Flag the measurement if invalid
+  @ColumnInfo(name: "sent")
+  final bool sent;
   // General info about the measurement
   @ColumnInfo(name: "eyes_open", nullable: false)
   final bool eyesOpen;
@@ -80,6 +86,8 @@ class Measurement {
     this.id,
     this.token,
     this.invalid = false,
+    this.initCondition = 0,
+    this.sent = true,
     this.creationDate,
     this.eyesOpen,
     this.hasFeatures = false,
@@ -107,11 +115,13 @@ class Measurement {
   /// This method will create a new [Measurement] form an existing one and
   /// a [Statokinesigram].
   /// The new [Measurement] will retain the id of the given one.
-  factory Measurement.from(Measurement m, String token, Statokinesigram s) =>
+  factory Measurement.from(Measurement m, String token, int initCondition, Statokinesigram s, bool delivered) =>
     Measurement(
       id: m.id,
       token: token,
+      initCondition: initCondition,
       invalid: s.outOfRange == 1.0 ? true : false,
+      sent: delivered ?? true,
       creationDate: m.creationDate,
       eyesOpen: m.eyesOpen,
       hasFeatures: true,
@@ -150,10 +160,59 @@ class Measurement {
       grZ: s.grZ,
     );
 
+  /// Factory method to update the sending state of a [Measurement]
+  /// This method will create a new [Measurement] form an existing one.
+  /// The new [Measurement] will have the right bool for sent.
+  factory Measurement.sent(Measurement m, bool sent) =>
+      Measurement(
+        id: m.id,
+        token: m.token,
+        initCondition: m.initCondition,
+        invalid: m.invalid,
+        sent: sent,
+        creationDate: m.creationDate,
+        eyesOpen: m.eyesOpen,
+        hasFeatures: true,
+        swayPath: m.swayPath,
+        meanDisplacement: m.meanDisplacement,
+        stdDisplacement: m.stdDisplacement,
+        minDist: m.minDist,
+        maxDist: m.maxDist,
+        frequencyPeakAP: m.frequencyPeakAP,
+        frequencyPeakML: m.frequencyPeakML,
+        meanFrequencyML: m.meanFrequencyML,
+        meanFrequencyAP: m.meanFrequencyAP,
+        f80ML: m.f80ML,
+        f80AP: m.f80AP,
+        numMax: m.numMax,
+        meanTime: m.meanTime,
+        stdTime: m.stdTime,
+        meanDistance: m.meanDistance,
+        stdDistance: m.stdDistance,
+        meanPeaks: m.meanPeaks,
+        stdPeaks: m.stdPeaks,
+        gsX: m.gsX,
+        gsY: m.gsY,
+        gsZ: m.gsZ,
+        gkX: m.gkX,
+        gkY: m.gkY,
+        gkZ: m.gkZ,
+        gmX: m.gmX,
+        gmY: m.gmY,
+        gmZ: m.gmZ,
+        gvX: m.gvX,
+        gvY: m.gvY,
+        gvZ: m.gvZ,
+        grX: m.grX,
+        grY: m.grY,
+        grZ: m.grZ,
+      );
+
   Map<String, dynamic> toJson() => {
       'id': this.id,
       'token': this.token,
       'invalid': this.invalid,
+      'initCondition': this.initCondition,
       'creationDate': this.creationDate,
       'eyesOpen': this.eyesOpen,
       'hasFeatures': this.hasFeatures,
@@ -191,6 +250,8 @@ class Measurement {
         runtimeType == other.runtimeType &&
         id == other.id &&
         invalid == other.invalid &&
+        initCondition == other.initCondition &&
+        sent == other.sent &&
         creationDate == other.creationDate &&
         eyesOpen == other.eyesOpen &&
         hasFeatures == other.hasFeatures &&
@@ -232,6 +293,8 @@ class Measurement {
   int get hashCode =>
     id.hashCode ^
     invalid.hashCode ^
+    initCondition.hashCode ^
+    sent.hashCode ^
     creationDate.hashCode ^
     eyesOpen.hashCode ^
     hasFeatures.hashCode ^
@@ -272,7 +335,7 @@ class Measurement {
   @override
   String toString() {
     return 'Measurement('
-      'id: $id, invalid: $invalid, creationDate: $creationDate, eyesOpen: $eyesOpen, hasFeatures: $hasFeatures, '
+      'id: $id, invalid: $invalid, condition: $initCondition, creationDate: $creationDate, eyesOpen: $eyesOpen, hasFeatures: $hasFeatures, '
       'swayPath: $swayPath, meanDisplacement: $meanDisplacement, '
       'stdDisplacement: $stdDisplacement, minDist: $minDist, maxDist: $maxDist, '
       'meanFrequencyAP: $meanFrequencyAP, meanFrequencyML: $meanFrequencyML, '
@@ -284,11 +347,11 @@ class Measurement {
   }
 
   String toCSV() {
-    return 'id;invalid;creationDate;eyesOpen;hasFeatures;swayPath;meanDisplacement;stdDisplacement;'
+    return 'id;invalid;condition;creationDate;eyesOpen;hasFeatures;swayPath;meanDisplacement;stdDisplacement;'
            'minDist;maxDist;meanFrequencyAP;meanFrequencyML;frequencyPeakAP;frequencyPeakML;'
            'f80AP;f80ML;np;meanTime;stdTime;meanDistance;stdDistance;meanPeaks;stdPeaks;'
            'grX;grY;grZ;gmX;gmY;gmZ;gvX;gvY;gvZ;gkX;gkY;gkZ;gsX;gsY;gsZ\n'
-           '$id;$invalid;$creationDate;$eyesOpen;$hasFeatures;$swayPath;$meanDisplacement;'
+           '$id;$invalid;$initCondition;$creationDate;$eyesOpen;$hasFeatures;$swayPath;$meanDisplacement;'
            '$stdDisplacement;$minDist;$maxDist;$meanFrequencyAP;$meanFrequencyML;'
            '$frequencyPeakAP;$frequencyPeakML;$f80AP;$f80ML;$numMax;$meanTime;'
            '$stdTime;$meanDistance;$stdDistance;$meanPeaks;$stdPeaks;$grX;$grY;'

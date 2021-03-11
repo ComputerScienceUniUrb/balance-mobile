@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
 import 'package:balance_app/bloc/main/home/countdown_bloc_impl.dart';
 import 'package:balance_app/screens/calibration/quick_calibration_screen.dart';
+import 'package:balance_app/screens/issues/issues_screen.dart';
 import 'package:balance_app/screens/res/colors.dart';
 import 'package:balance_app/screens/res/theme.dart';
 import 'package:device_info/device_info.dart';
@@ -41,7 +42,7 @@ Future<void> main() async {
 		var sdkInt = androidInfo.version.sdkInt;
 		var manufacturer = androidInfo.manufacturer;
 		var model = androidInfo.model;
-		PreferenceManager.updateSystemInfo(producer: manufacturer, model: model, appVersion: "alpha.5", osVersion: "Android "+release+" SDK "+sdkInt.toString());
+		PreferenceManager.updateSystemInfo(producer: manufacturer, model: model, appVersion: "beta.5", osVersion: "Android "+release+" SDK "+sdkInt.toString());
 	}
 
 	if (Platform.isIOS) {
@@ -50,7 +51,7 @@ Future<void> main() async {
 		var version = iosInfo.systemVersion;
 		var name = iosInfo.name;
 		//var model = iosInfo.model;
-		PreferenceManager.updateSystemInfo(producer: "Apple", model: name, appVersion: "alpha.5", osVersion: systemName+" "+version);
+		PreferenceManager.updateSystemInfo(producer: "Apple", model: name, appVersion: "beta.5", osVersion: systemName+" "+version);
 	}
 
 	runApp(
@@ -95,6 +96,7 @@ class BalanceApp extends StatelessWidget {
 						Routes.info: (_) => UserInfoRecapScreen(),
 						Routes.slider: (_) => SliderScreen(),
 						Routes.credits: (_) => CreditsScreen(),
+						Routes.issues: (_) => IssuesScreen(),
 						Routes.result: (_) => ResultScreen(),
 						Routes.open_source: (_) => OpenSourceScreen(),
 					},

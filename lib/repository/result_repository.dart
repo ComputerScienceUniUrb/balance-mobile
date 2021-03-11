@@ -1,4 +1,5 @@
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -29,6 +30,7 @@ class ResultRepository {
     final measurement = await database.measurementDao.findMeasurementById(measurementId);
     final cogv = await database.cogvDataDao.findAllCogvDataForId(measurementId);
     final token = (await PreferenceManager.userInfo).token;
+    final condition = await PreferenceManager.initialCondition;
     // 2. Check if the features and the cogv data are present and compute them if not
     if (!measurement.hasFeatures && cogv.isEmpty) {
       print("ResultRepository.getResult: Computing Features...");
@@ -39,8 +41,15 @@ class ResultRepository {
       final computed = await PostureProcessor.computeFromData(measurementId, rawMeasurementData);
 
       // Update the measurement with the computed features
-      database.measurementDao.updateMeasurement(Measurement.from(measurement, token, computed));
-      _makePostRequest(Measurement.from(measurement, token, computed));
+      var created_measurement = Measurement.from(measurement, token, condition, computed, true);
+      print(jsonEncode(created_measurement));
+      bool result = await _makePostRequest(created_measurement);
+      if (result)
+        database.measurementDao.updateMeasurement(created_measurement);
+      else {
+        database.measurementDao.updateMeasurement(Measurement.from(measurement, token, condition, computed, false));
+        print("_SendingData.Measurement: BAD DELIVERY STATUS for test $measurementId");
+      }
 
       // Store the computed CogvData
       database.cogvDataDao.insertCogvData(computed.cogv);
@@ -50,21 +59,28 @@ class ResultRepository {
     return Statokinesigram.from(measurement, cogv);
   }
 
-  _makePostRequest(var data) async {
-    // TODO: This stuff here is hardcode. Need changes
-    // set up POST request arguments
+  Future<bool> _makePostRequest(var data) async {
+    // set up POST request argumentsq
     String url = 'https://www.balancemobile.it/api/v1/db/measurement';
     //String url = 'http://192.168.1.206:8000/api/v1/db/measurement';
     Map<String, String> headers = {"Content-type": "application/json"};
-    String json = jsonEncode(data.toJson());
 
-    // make POST request
-    Response response = await post(url, headers: headers, body: json);
+    try {
+      Response response = await post(url, headers: headers, body: jsonEncode(data)).timeout(Duration(seconds: 5));
 
-    // response
-    //int statusCode = response.statusCode;
-    //String body = response.body;
-    print("Response from backend: "+response.toString());
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        print("_SendingData.Measurement: The server answered with: "+response.statusCode.toString());
+        return false;
+      }
+    } on TimeoutException catch (_) {
+      print("_SendingData.Measurement: The connection dropped, maybe the server is congested");
+      return false;
+    } on SocketException catch (_) {
+      print("_SendingData.Measurement: Communication failed. The server was not reachable");
+      return false;
+    }
   }
 
   /// Save all the measurement in a .json file

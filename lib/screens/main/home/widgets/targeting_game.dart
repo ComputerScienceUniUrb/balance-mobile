@@ -104,7 +104,7 @@ class _TargetingGameState extends State<TargetingGame> {
 
       timer2 = Timer.periodic(Duration(milliseconds: 1000), (_) {
         if (count == 0) {
-          FlutterBeep.beep();
+          FlutterBeep.beep(false);
         }
       });
 
