@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:balance_app/manager/vibration_manager.dart';
 import 'package:balance_app/routes.dart';
 import 'package:balance_app/screens/main/home/widgets/device_not_ready_dialog.dart';
+import 'package:balance_app/screens/main/home/widgets/measuring_condition_dialog.dart';
 import 'package:balance_app/screens/main/home/widgets/targeting_game.dart';
 import 'package:battery/battery.dart';
 import 'package:flutter/material.dart';
@@ -93,11 +94,15 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
               // Start/Stop the vibration and sounds
               if (state is CountdownPreMeasureState) {
                 Wakelock.enable();
-                vibrationManager.playPattern();
-              }
-              else if (state is CountdownMeasureState || state is CountdownCompleteState) {
-                Wakelock.enable();
                 vibrationManager.playSingle();
+              }
+              else if (state is CountdownMeasureState) {
+                Wakelock.enable();
+                vibrationManager.measuring();
+              }
+              else if (state is CountdownCompleteState) {
+                Wakelock.enable();
+                vibrationManager.finish();
               }
               else {
                 Wakelock.disable();
@@ -121,55 +126,61 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                   SizedBox(height: 0),
                   RaisedButton(
                     onPressed: () async{
-                      int batteryLevel = await _battery.batteryLevel;
-                      if (batteryLevel >= 30) {
-                        if (state is CountdownIdleState) {
-                          /*
-                           * Every time the user presses the start button we need to check
-                           * two conditions:
-                           * - the device is calibrated? if not ask the user to do it
-                           * - we need to show the tutorial?
-                           */
-                          bool isDeviceCalibrated = await PreferenceManager
-                              .isDeviceCalibrated;
-                          bool showTutorial = await PreferenceManager
-                              .showMeasuringTutorial;
+                      try {
+                        if (await _battery.batteryLevel < 30)
+                          return showDeviceNotReady(context);
+                      } on Exception {
+                        print("Cannot take battery level from smartphone");
+                      }
 
-                          if (!isDeviceCalibrated)
-                            showCalibrateDeviceDialog(context);
-                          else if (showTutorial)
-                            showTutorialDialog(
-                                context,
-                                    () =>
-                                    context.bloc<CountdownBloc>().add(
-                                        CountdownEvents.startTargeting)
-                            );
-                          else
-                            context.bloc<CountdownBloc>().add(
-                                CountdownEvents.startTargeting);
+                      if (state is CountdownIdleState) {
+                        /*
+                         * Every time the user presses the start button we need to check
+                         * two conditions:
+                         * - the device is calibrated? if not ask the user to do it
+                         * - we need to show the tutorial?
+                         */
+                        bool isDeviceCalibrated = await PreferenceManager
+                            .isDeviceCalibrated;
+                        bool showTutorial = await PreferenceManager
+                            .showMeasuringTutorial;
+
+                        if (!isDeviceCalibrated)
+                          showCalibrateDeviceDialog(context);
+                        else if (showTutorial) {
+                          showMeasuringConditionDialog(
+                            context,
+                            () => context.bloc<CountdownBloc>().add(CountdownEvents.startTargeting)
+                          );
+                          showTutorialDialog(
+                            context,
+                                () => null
+                          );
                         }
-                        else if (state is CountdownPreMeasureState) {
-                          // Stop the pre measure countdown
-                          vibrationManager.cancel();
-                          context.bloc<CountdownBloc>().add(
-                              CountdownEvents.stopPreMeasure);
-                        }
-                        else if (state is CountdownMeasureState) {
-                          // Stop the measurement
-                          vibrationManager.cancel();
-                          context.bloc<CountdownBloc>().add(
-                              CountdownEvents.stopMeasure);
-                        }
-                        else if (state is CountdownTargetingState) {
-                          // Stop the measurement
-                          vibrationManager.cancel();
-                          context.bloc<CountdownBloc>().add(
-                              CountdownEvents.stopTargeting);
+                        else {
+                          showMeasuringConditionDialog(context,
+                            () => context.bloc<CountdownBloc>().add(CountdownEvents.startTargeting)
+                          );
                         }
                       }
-                      else {
-                        showDeviceNotReady(context);
-                      };
+                      else if (state is CountdownPreMeasureState) {
+                        // Stop the pre measure countdown
+                        vibrationManager.cancel();
+                        context.bloc<CountdownBloc>().add(
+                            CountdownEvents.stopPreMeasure);
+                      }
+                      else if (state is CountdownMeasureState) {
+                        // Stop the measurement
+                        vibrationManager.cancel();
+                        context.bloc<CountdownBloc>().add(
+                            CountdownEvents.stopMeasure);
+                      }
+                      else if (state is CountdownTargetingState) {
+                        // Stop the measurement
+                        vibrationManager.cancel();
+                        context.bloc<CountdownBloc>().add(
+                            CountdownEvents.stopTargeting);
+                      }
                     },
                     color: BColors.colorAccent,
                     child: Text(

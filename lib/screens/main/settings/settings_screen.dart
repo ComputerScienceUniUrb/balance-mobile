@@ -66,24 +66,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ]
         ),
         SettingsGroup(
-          title: 'version_txt'.tr(),
-          children: [
-            SettingsElement(
-                icon: Icon(BIcons.version),
-                text: "${'version_txt'.tr()} ${packageInfo?.version} (${'build_txt'.tr()}${packageInfo?.buildNumber})",
-                onLongPress: () {
-                  Scaffold.of(context)
-                      .showSnackBar(
-                      SnackBar(
-                        behavior: SnackBarBehavior.floating,
-                        content: Text('easter_egg_txt'.tr()),
-                        duration: Duration(seconds: 2),
-                      )
-                  );
-                }
-            ),
-          ]
+            title: 'report_title'.tr(),
+            children: [
+              SettingsElement(
+                  icon: Icon(BIcons.version),
+                  text: "report_issue_title".tr(),
+                  //text: "${'version_txt'.tr()} ${packageInfo?.version} (${'build_txt'.tr()}${packageInfo?.buildNumber})",
+                  onTap: () => Navigator.of(context).pushNamed(Routes.issues),
+              ),
+            ]
         ),
+        //SettingsGroup(
+        //  title: 'version_txt'.tr(),
+        //  children: [
+        //    SettingsElement(
+        //        icon: Icon(BIcons.version),
+        //        text: "${'version_txt'.tr()} ${packageInfo?.version} (${'build_txt'.tr()}${packageInfo?.buildNumber})",
+        //        onLongPress: () {
+        //          Scaffold.of(context)
+        //              .showSnackBar(
+        //              SnackBar(
+        //                behavior: SnackBarBehavior.floating,
+        //                content: Text('easter_egg_txt'.tr()),
+        //                duration: Duration(seconds: 2),
+        //              )
+        //          );
+        //        }
+        //    ),
+        //  ]
+        //),
       ]
     );
   }

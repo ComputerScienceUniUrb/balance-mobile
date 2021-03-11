@@ -11,8 +11,8 @@ Future<bool> showMeasurementDialog(BuildContext context, bool valid) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Misurazione eseguita correttamente'),
-        content: Text('Congratulazioni! Quando esegui una misurazione verifichiamo i tuoi parametri. Alcuni di questi forniscono un\'indicazione riguardante la corretta esecuzione e sembra sia andato tutto bene!'),
+        title: Text('test_measurement_ok_title'.tr()),
+        content: Text('test_measurement_ok_txt'.tr()),
         actions: [
           // Stop the test and close the app
           FlatButton(
@@ -29,8 +29,8 @@ Future<bool> showMeasurementDialog(BuildContext context, bool valid) {
     return showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Misurazione Sospetta'),
-          content: Text('Questa misurazione presenta dei risultati irregolari. Se non hai eseguito il test correttamente, effettualo nuovamente. Se il problema persiste, contatta i ricercatori.'),
+          title: Text('test_measurement_wrong_title'.tr()),
+          content: Text('test_measurement_wrong_txt'.tr()),
           actions: [
             // Stop the test and close the app
             FlatButton(

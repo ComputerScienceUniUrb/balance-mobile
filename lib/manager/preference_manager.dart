@@ -11,6 +11,8 @@ class PreferenceManager {
   static const _showTutorial = "ShowTutorial";
   // Calibration
   static const _isDeviceCalibrated = "IsDeviceCalibrated";
+  // Initial Condition
+  static const _initialCondition = "initialCondition";
   // Accelerometer
   static const _accelerometerBiasX = "AccelerometerBiasX";
   static const _accelerometerBiasY = "AccelerometerBiasY";
@@ -79,6 +81,16 @@ class PreferenceManager {
   /// Given an accelerometer [SensorBias] and a gyroscope
   /// [SensorBias] update their values into the [SharedPreferences]
   /// and set [_isDeviceCalibrated] to true.
+  static Future<void> updateInitialCondition(int condition) async {
+    var pref = await SharedPreferences.getInstance();
+    pref.setInt(_initialCondition, condition);
+  }
+
+  /// Update the all sensors biases with fresh values
+  ///
+  /// Given an accelerometer [SensorBias] and a gyroscope
+  /// [SensorBias] update their values into the [SharedPreferences]
+  /// and set [_isDeviceCalibrated] to true.
   static Future<void> updateSensorBiases(SensorBias accBias, SensorBias gyroBias) async {
     var pref = await SharedPreferences.getInstance();
     pref.setBool(_isDeviceCalibrated, true);
@@ -107,6 +119,16 @@ class PreferenceManager {
       pref.setString(_appVersion, appVersion);
     if (osVersion != null)
       pref.setString(_osVersion, osVersion);
+  }
+
+  /// Return a [Future] with accelerometer [SensorBias]
+  ///
+  /// This method will return the accelerometer
+  /// [SensorBias] stored in [SharedPreferences];
+  /// if the values are null [0.0] will be passed instead.
+  static Future<int> get initialCondition async {
+    var pref = await SharedPreferences.getInstance();
+    return pref.getInt(_initialCondition) ?? 0;
   }
 
   /// Return a [Future] with accelerometer [SensorBias]

@@ -1,7 +1,7 @@
 # Flutter app
 name: balance_app
 description: Flutter application to measure you posture!
-version: 1.0.0+5
+version: 1.0.0+1
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -89,6 +89,7 @@ flutter:
   assets:
     # App Logo
     - assets/app_logo_circle.png
+    - assets/app_logo_circle_broken.png
     - assets/app_logo_circle_grey.png
     - assets/app_logo.png
     # Partners
@@ -105,8 +106,16 @@ flutter:
     - assets/images/tutorial.png
     - assets/images/appstore_logo.png
     - assets/images/open_source.png
+    - assets/images/reading.png
+    - assets/images/walking.png
+    - assets/images/working.png
+    - assets/images/drinking.png
+    - assets/images/eating.png
+    - assets/images/sleeping.png
+    - assets/images/sport.png
     # Sounds
-    - assets/sounds/light_pop.mp3
+    - assets/sounds/light_pop_bigdsc.mp3
+    - assets/sounds/finish_bigdsc.mp3
     # Translations
     - assets/translations/en.json
     - assets/translations/it.json

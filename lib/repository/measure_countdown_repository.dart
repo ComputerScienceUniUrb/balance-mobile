@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 
 import 'package:balance_app/floor/measurement_database.dart';
@@ -29,13 +31,12 @@ class MeasureCountdownRepository {
         ),
       );
 
+      // Generate data as RawMeasurementData
+      var rawData = _generateRawData(rawSensorData, newMeasId).toList();
       // Store the SensorData in database as RawMeasurementData
-      await rawMeasDataDao.insertRawMeasurements(
-        await _generateRawData(rawSensorData, newMeasId).toList()
-      );
-
-      // send data to server
-      _makePostRequest(await _generateRawData(rawSensorData, newMeasId).toList());
+      await rawMeasDataDao.insertRawMeasurements(await rawData);
+      // Send data to server
+      _makePostRequest(await rawData);
 
       // return the newly added Test
       return await measurementDao.findTestById(newMeasId);
@@ -45,21 +46,28 @@ class MeasureCountdownRepository {
     }
   }
 
-  _makePostRequest(var data) async {
-    // TODO: This stuff here is hardcode. Need changes
+  Future<bool> _makePostRequest(var data) async {
     // set up POST request arguments
     String url = 'https://www.balancemobile.it/api/v1/db/sway';
     //String url = 'http://192.168.1.206:8000/api/v1/db/sway';
     Map<String, String> headers = {"Content-type": "application/json"};
-    String json = jsonEncode(data);
 
-    // make POST request
-    Response response = await post(url, headers: headers, body: json);
+    try {
+      Response response = await post(url, headers: headers, body: jsonEncode(data)).timeout(Duration(seconds: 30));
 
-    // response
-    //int statusCode = response.statusCode;
-    //String body = response.body;
-    print("Response from backend: "+response.toString());
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        print("_SendingData.RawMeasurement: The server answered with: "+response.statusCode.toString());
+        return false;
+      }
+    } on TimeoutException catch (_) {
+      print("_SendingData.RawMeasurement: The connection dropped, maybe the server is congested");
+      return false;
+    } on SocketException catch (_) {
+      print("_SendingData.RawMeasurement: Communication failed. The server was not reachable");
+      return false;
+    }
   }
 
   /// Asynchronously generate the [RawMeasurementData] from the [SensorData]
