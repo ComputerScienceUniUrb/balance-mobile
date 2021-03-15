@@ -1,16 +1,16 @@
 
-import 'package:balance_app/bloc/main/measurements/measurements_bloc.dart';
-import 'package:balance_app/floor/measurement_database.dart';
-import 'package:balance_app/floor/test_database_view.dart';
-import 'package:balance_app/screens/main/measurements/widgets/backend_status_dialog.dart';
-import 'package:balance_app/screens/main/measurements/widgets/wrong_measurement_dialog.dart';
-import 'package:balance_app/screens/res/b_icons.dart';
-import 'package:balance_app/utils/boolean_quaternary_operator.dart';
+import 'package:balance/bloc/main/measurements/measurements_bloc.dart';
+import 'package:balance/floor/measurement_database.dart';
+import 'package:balance/floor/test_database_view.dart';
+import 'package:balance/screens/main/measurements/widgets/backend_status_dialog.dart';
+import 'package:balance/screens/main/measurements/widgets/wrong_measurement_dialog.dart';
+import 'package:balance/screens/res/b_icons.dart';
+import 'package:balance/utils/boolean_quaternary_operator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:balance_app/routes.dart';
+import 'package:balance/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class MeasurementsScreen extends StatefulWidget {

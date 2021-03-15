@@ -2,7 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:balance_app/posture_processor/src/list_extension.dart';
+import 'package:balance/posture_processor/src/list_extension.dart';
 
 void main() {
   test("average computed correctly", () {

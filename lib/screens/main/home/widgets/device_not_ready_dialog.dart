@@ -1,6 +1,6 @@
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 /// Show a dialog to ask the user if he wants to close the app during the test.
 ///
@@ -10,8 +10,8 @@ Future<bool> showDeviceNotReady(BuildContext context) {
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text('Dispositivo non pronto'),
-      content: Text('Per eseguire al meglio la misurazione é necessario che la batteria sia superiore al 30%. Ricarica il telefono e ritenta quando sei pronto.'),
+      title: Text('not_ready_txt'.tr()),
+      content: Text('battery_low_txt'.tr()),
       actions: [
         // Stop the test and close the app
         FlatButton(
@@ -19,7 +19,7 @@ Future<bool> showDeviceNotReady(BuildContext context) {
             // Close the dialog and the app
             Navigator.pop(context, false);
           },
-          child: Text('Chiudi'),
+          child: Text('close'.tr()),
         ),
       ],
     )

@@ -1,6 +1,6 @@
 
-import 'package:balance_app/posture_processor/src/math/matrix.dart';
-import 'package:balance_app/posture_processor/src/time_domain_features.dart';
+import 'package:balance/posture_processor/src/math/matrix.dart';
+import 'package:balance/posture_processor/src/time_domain_features.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/resource_loader.dart';

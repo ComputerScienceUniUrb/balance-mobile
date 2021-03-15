@@ -1,6 +1,6 @@
 
 import 'dart:async';
-import 'package:balance_app/model/sensor_data.dart';
+import 'package:balance/model/sensor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quiver/async.dart';

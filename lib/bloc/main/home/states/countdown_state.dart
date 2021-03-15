@@ -1,5 +1,5 @@
 
-import 'package:balance_app/floor/test_database_view.dart';
+import 'package:balance/floor/test_database_view.dart';
 
 /// Abstract class representing the state of the countdown
 abstract class CountdownState {

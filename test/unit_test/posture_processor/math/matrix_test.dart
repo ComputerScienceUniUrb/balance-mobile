@@ -1,6 +1,6 @@
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:balance_app/posture_processor/src/math/matrix.dart';
+import 'package:balance/posture_processor/src/math/matrix.dart';
 
 void main() {
   final List<double> list2x3 = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0];

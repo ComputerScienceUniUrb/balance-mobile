@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 
 
-import 'package:balance_app/floor/measurement_database.dart';
-import 'package:balance_app/floor/test_database_view.dart';
-import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/model/measurement.dart';
-import 'package:balance_app/model/raw_measurement_data.dart';
-import 'package:balance_app/model/sensor_data.dart';
+import 'package:balance/floor/measurement_database.dart';
+import 'package:balance/floor/test_database_view.dart';
+import 'package:balance/manager/preference_manager.dart';
+import 'package:balance/model/measurement.dart';
+import 'package:balance/model/raw_measurement_data.dart';
+import 'package:balance/model/sensor_data.dart';
 import 'package:http/http.dart';
 
 

@@ -1,5 +1,5 @@
 
-import 'package:balance_app/screens/main/widgets/google_bottom_navigation_bar.dart';
+import 'package:balance/screens/main/widgets/google_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,7 +1,7 @@
 
-import 'package:balance_app/bloc/main/measurements/states/measurements_state.dart';
-import 'package:balance_app/floor/measurement_database.dart';
-import 'package:balance_app/repository/measurements_repository.dart';
+import 'package:balance/bloc/main/measurements/states/measurements_state.dart';
+import 'package:balance/floor/measurement_database.dart';
+import 'package:balance/repository/measurements_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'events/measurements_events.dart';

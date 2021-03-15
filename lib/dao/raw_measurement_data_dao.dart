@@ -1,6 +1,6 @@
 
 import 'package:floor/floor.dart';
-import 'package:balance_app/model/raw_measurement_data.dart';
+import 'package:balance/model/raw_measurement_data.dart';
 
 @dao
 abstract class RawMeasurementDataDao {

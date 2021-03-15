@@ -1,11 +1,11 @@
 
-import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
-import 'package:balance_app/screens/intro/slider/widgets/custom_number_form_field.dart';
+import 'package:balance/bloc/intro/onboarding_bloc.dart';
+import 'package:balance/screens/intro/slider/widgets/custom_number_form_field.dart';
 import 'package:custom_dropdown/custom_dropdown.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:balance_app/screens/intro/slider/general_info.dart';
+import 'package:balance/screens/intro/slider/general_info.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {

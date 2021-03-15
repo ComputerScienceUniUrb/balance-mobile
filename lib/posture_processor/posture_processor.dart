@@ -1,16 +1,16 @@
 
-import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/model/cogv_data.dart';
+import 'package:balance/manager/preference_manager.dart';
+import 'package:balance/model/cogv_data.dart';
 
-import 'package:balance_app/model/raw_measurement_data.dart';
-import 'package:balance_app/model/statokinesigram.dart';
+import 'package:balance/model/raw_measurement_data.dart';
+import 'package:balance/model/statokinesigram.dart';
 
-import 'package:balance_app/posture_processor/src/math/matrix.dart';
-import 'package:balance_app/posture_processor/src/cogv_processor.dart';
-import 'package:balance_app/posture_processor/src/frequency_domain_features.dart';
-import 'package:balance_app/posture_processor/src/gyroscopic_features.dart';
-import 'package:balance_app/posture_processor/src/sway_density_analysis.dart';
-import 'package:balance_app/posture_processor/src/time_domain_features.dart';
+import 'package:balance/posture_processor/src/math/matrix.dart';
+import 'package:balance/posture_processor/src/cogv_processor.dart';
+import 'package:balance/posture_processor/src/frequency_domain_features.dart';
+import 'package:balance/posture_processor/src/gyroscopic_features.dart';
+import 'package:balance/posture_processor/src/sway_density_analysis.dart';
+import 'package:balance/posture_processor/src/time_domain_features.dart';
 import 'package:flutter/foundation.dart';
 
 class PostureProcessor {

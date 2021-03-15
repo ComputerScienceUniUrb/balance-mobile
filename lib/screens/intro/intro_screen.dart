@@ -3,18 +3,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
-import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/routes.dart';
-import 'package:balance_app/screens/intro/widgets/next_button.dart';
-import 'package:balance_app/screens/intro/widgets/back_button.dart';
+import 'package:balance/bloc/intro_state/on_boarding_data_bloc.dart';
+import 'package:balance/manager/preference_manager.dart';
+import 'package:balance/routes.dart';
+import 'package:balance/screens/intro/widgets/next_button.dart';
+import 'package:balance/screens/intro/widgets/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:balance_app/screens/res/colors.dart';
-import 'package:balance_app/screens/intro/widgets/dots_indicator.dart';
+import 'package:balance/screens/res/colors.dart';
+import 'package:balance/screens/intro/widgets/dots_indicator.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
+import 'package:balance/bloc/intro/onboarding_bloc.dart';
 import 'package:http/http.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -40,7 +40,6 @@ class _IntroScreenState extends State<IntroScreen> {
 
   // manage state of modal progress HUD widget
   bool _isInAsyncCall = false;
-  bool _isLoggedIn = false;
 
   List<Color> _pageColors = [
     BColors.colorPrimary,

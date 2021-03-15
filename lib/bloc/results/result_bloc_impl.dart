@@ -1,9 +1,9 @@
 
-import 'package:balance_app/floor/measurement_database.dart';
+import 'package:balance/floor/measurement_database.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/results/events/result_events.dart';
-import 'package:balance_app/bloc/results/states/result_states.dart';
-import 'package:balance_app/repository/result_repository.dart';
+import 'package:balance/bloc/results/events/result_events.dart';
+import 'package:balance/bloc/results/states/result_states.dart';
+import 'package:balance/repository/result_repository.dart';
 
 /// Class representing the Bloc for Result screen
 ///

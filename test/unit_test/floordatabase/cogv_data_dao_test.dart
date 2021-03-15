@@ -1,11 +1,11 @@
 
-import 'package:balance_app/dao/cogv_data_dao.dart';
-import 'package:balance_app/model/cogv_data.dart';
+import 'package:balance/dao/cogv_data_dao.dart';
+import 'package:balance/model/cogv_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_ffi_test/sqflite_ffi_test.dart';
-import 'package:balance_app/floor/measurement_database.dart';
-import 'package:balance_app/dao/measurement_dao.dart';
-import 'package:balance_app/model/measurement.dart';
+import 'package:balance/floor/measurement_database.dart';
+import 'package:balance/dao/measurement_dao.dart';
+import 'package:balance/model/measurement.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

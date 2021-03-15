@@ -1,26 +1,25 @@
 
 import 'dart:async';
-import 'dart:io';
 
-import 'package:balance_app/manager/vibration_manager.dart';
-import 'package:balance_app/routes.dart';
-import 'package:balance_app/screens/main/home/widgets/device_not_ready_dialog.dart';
-import 'package:balance_app/screens/main/home/widgets/measuring_condition_dialog.dart';
-import 'package:balance_app/screens/main/home/widgets/targeting_game.dart';
+import 'package:balance/manager/vibration_manager.dart';
+import 'package:balance/routes.dart';
+import 'package:balance/screens/main/home/widgets/device_not_ready_dialog.dart';
+import 'package:balance/screens/main/home/widgets/measuring_condition_dialog.dart';
+import 'package:balance/screens/main/home/widgets/targeting_game.dart';
 import 'package:battery/battery.dart';
 import 'package:flutter/material.dart';
-import 'package:balance_app/screens/res/colors.dart';
-import 'package:balance_app/screens/main/home/widgets/circular_countdown.dart';
-import 'package:balance_app/screens/main/home/widgets/custom_toggle_button.dart';
-import 'package:balance_app/manager/preference_manager.dart';
+import 'package:balance/screens/res/colors.dart';
+import 'package:balance/screens/main/home/widgets/circular_countdown.dart';
+import 'package:balance/screens/main/home/widgets/custom_toggle_button.dart';
+import 'package:balance/manager/preference_manager.dart';
 
-import 'package:balance_app/screens/main/home/widgets/calibrate_device_dialog.dart';
-import 'package:balance_app/screens/main/home/widgets/leave_confirmation_dialog.dart';
-import 'package:balance_app/screens/main/home/widgets/measuring_tutorial_dialog.dart';
+import 'package:balance/screens/main/home/widgets/calibrate_device_dialog.dart';
+import 'package:balance/screens/main/home/widgets/leave_confirmation_dialog.dart';
+import 'package:balance/screens/main/home/widgets/measuring_tutorial_dialog.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/main/home/countdown_bloc.dart';
+import 'package:balance/bloc/main/home/countdown_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:focus_detector/focus_detector.dart';
@@ -90,15 +89,10 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
         child: BlocConsumer<CountdownBloc, CountdownState>(
             listener: (_, state) {
               state is CountdownMeasureState? _measuring = true: _measuring = false;
-              // Disable during iOS Debug
               // Start/Stop the vibration and sounds
               if (state is CountdownPreMeasureState) {
                 Wakelock.enable();
                 vibrationManager.playSingle();
-              }
-              else if (state is CountdownMeasureState) {
-                Wakelock.enable();
-                vibrationManager.measuring();
               }
               else if (state is CountdownCompleteState) {
                 Wakelock.enable();
@@ -133,7 +127,7 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                         print("Cannot take battery level from smartphone");
                       }
 
-                      if (state is CountdownIdleState) {
+                      if (state is CountdownIdleState || state is CountdownCompleteState) {
                         /*
                          * Every time the user presses the start button we need to check
                          * two conditions:
@@ -176,8 +170,6 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                             CountdownEvents.stopMeasure);
                       }
                       else if (state is CountdownTargetingState) {
-                        // Stop the measurement
-                        vibrationManager.cancel();
                         context.bloc<CountdownBloc>().add(
                             CountdownEvents.stopTargeting);
                       }

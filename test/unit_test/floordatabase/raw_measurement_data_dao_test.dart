@@ -1,11 +1,11 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_ffi_test/sqflite_ffi_test.dart';
-import 'package:balance_app/floor/measurement_database.dart';
-import 'package:balance_app/dao/measurement_dao.dart';
-import 'package:balance_app/dao/raw_measurement_data_dao.dart';
-import 'package:balance_app/model/measurement.dart';
-import 'package:balance_app/model/raw_measurement_data.dart';
+import 'package:balance/floor/measurement_database.dart';
+import 'package:balance/dao/measurement_dao.dart';
+import 'package:balance/dao/raw_measurement_data_dao.dart';
+import 'package:balance/model/measurement.dart';
+import 'package:balance/model/raw_measurement_data.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:balance_app/screens/res/colors.dart';
+import 'package:balance/screens/res/colors.dart';
 
 /// Light Theme for the app
 final ThemeData lightTheme = ThemeData.light().copyWith(

@@ -1,10 +1,10 @@
 
-import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
+import 'package:balance/bloc/intro/onboarding_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:balance_app/screens/intro/slider/height.dart';
-import 'package:balance_app/screens/intro/slider/widgets/custom_number_form_field.dart';
+import 'package:balance/screens/intro/slider/height.dart';
+import 'package:balance/screens/intro/slider/widgets/custom_number_form_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
@@ -17,7 +17,7 @@ void main() {
               create: (context) => OnBoardingBloc.create(),
               child: HeightScreen(
                 0,
-                  (_) {},
+                  //(_) {},
               ),
             ),
           ),
@@ -43,7 +43,7 @@ void main() {
               create: (context) => OnBoardingBloc.create(),
               child: HeightScreen(
                 0,
-                  (_) {},
+                 // (_) {},
                 //height: "123.4",
               ),
             ),
@@ -70,7 +70,7 @@ void main() {
               create: (context) => OnBoardingBloc.create(),
               child: HeightScreen(
                 0,
-                  (_) => {},
+                 // (_) => {},
               ),
             ),
           ),

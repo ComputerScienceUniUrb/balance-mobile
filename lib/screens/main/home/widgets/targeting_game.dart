@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:balance_app/bloc/main/home/countdown_bloc.dart';
-import 'package:balance_app/bloc/main/home/events/countdown_events.dart';
+import 'package:balance/bloc/main/home/countdown_bloc.dart';
+import 'package:balance/bloc/main/home/events/countdown_events.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_beep/flutter_beep.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -89,7 +89,7 @@ class _TargetingGameState extends State<TargetingGame> {
   startTimer() {
     // if the accelerometer subscription hasn't been created, go ahead and create it
     if (accel == null) {
-      accel = accelerometerEvents().listen((AccelerometerEvent eve) {
+      accel = accelerometerEvents(delay: 10000).listen((AccelerometerEvent eve) {
         setState(() {
           event = eve;
         });
@@ -133,8 +133,8 @@ class _TargetingGameState extends State<TargetingGame> {
     timer.cancel();
     timer2.cancel();
     timer3.cancel();
-    accel.pause();
-    //FlutterBeep.beep();
+    accel.cancel();
+    clearAccelerometerEventsStream();
 
     // set the success color and reset the count
     setState(() {
@@ -155,6 +155,7 @@ class _TargetingGameState extends State<TargetingGame> {
     timer2?.cancel();
     timer3?.cancel();
     accel?.cancel();
+    clearAccelerometerEventsStream();
     super.dispose();
   }
 

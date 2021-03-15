@@ -1,8 +1,8 @@
 
 import 'dart:math';
 
-import 'package:balance_app/posture_processor/src/frequency_domain_features.dart';
-import 'package:balance_app/posture_processor/src/math/matrix.dart';
+import 'package:balance/posture_processor/src/frequency_domain_features.dart';
+import 'package:balance/posture_processor/src/math/matrix.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:powerdart/powerdart.dart';
 

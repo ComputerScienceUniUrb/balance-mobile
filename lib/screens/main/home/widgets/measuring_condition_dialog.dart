@@ -1,7 +1,7 @@
 
-import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/screens/res/colors.dart';
+import 'package:balance/manager/preference_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:balance/screens/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -36,7 +36,7 @@ class _MeasuringConditionDialogState extends State<MeasuringConditionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Le tue condizioni'),
+      title: Text('recent_activity_title'.tr()),
       contentPadding: const EdgeInsets.all(0.0),
       content: Container(
         child: SingleChildScrollView(
@@ -47,16 +47,20 @@ class _MeasuringConditionDialogState extends State<MeasuringConditionDialog> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(24.0),
-                child: Text('Conoscere la tua condizione degli ultimi 15 minuti é estremamente importante. Seleziona le icone che meglio descrivono quello che stavi facendo!'),
+                child: Text("recent_activity_txt".tr()),
               ),
-              SizedBox(width: 4),
               Padding(
                 padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () => setState(() => _value = 1),
+                      onTap: () {
+                        setState(() => _value = 1);
+                        PreferenceManager.updateInitialCondition(_value);
+                        widget.callback();
+                        Navigator.pop(context);
+                      },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Container(
@@ -71,7 +75,12 @@ class _MeasuringConditionDialogState extends State<MeasuringConditionDialog> {
                     ),
                     SizedBox(width: 4),
                     GestureDetector(
-                      onTap: () => setState(() => _value = 2),
+                      onTap: () {
+                        setState(() => _value = 2);
+                        PreferenceManager.updateInitialCondition(_value);
+                        widget.callback();
+                        Navigator.pop(context);
+                      },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Container(
@@ -86,7 +95,12 @@ class _MeasuringConditionDialogState extends State<MeasuringConditionDialog> {
                     ),
                     SizedBox(width: 4),
                     GestureDetector(
-                      onTap: () => setState(() => _value = 3),
+                      onTap: () {
+                        setState(() => _value = 3);
+                        PreferenceManager.updateInitialCondition(_value);
+                        widget.callback();
+                        Navigator.pop(context);
+                      },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Container(
@@ -108,7 +122,12 @@ class _MeasuringConditionDialogState extends State<MeasuringConditionDialog> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () => setState(() => _value = 4),
+                      onTap: () {
+                        setState(() => _value = 4);
+                        PreferenceManager.updateInitialCondition(_value);
+                        widget.callback();
+                        Navigator.pop(context);
+                      },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Container(
@@ -123,7 +142,12 @@ class _MeasuringConditionDialogState extends State<MeasuringConditionDialog> {
                     ),
                     SizedBox(width: 4),
                     GestureDetector(
-                      onTap: () => setState(() => _value = 5),
+                      onTap: () {
+                        setState(() => _value = 5);
+                        PreferenceManager.updateInitialCondition(_value);
+                        widget.callback();
+                        Navigator.pop(context);
+                      },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Container(
@@ -138,7 +162,12 @@ class _MeasuringConditionDialogState extends State<MeasuringConditionDialog> {
                     ),
                     SizedBox(width: 4),
                     GestureDetector(
-                      onTap: () => setState(() => _value = 6),
+                      onTap: () {
+                        setState(() => _value = 6);
+                        PreferenceManager.updateInitialCondition(_value);
+                        widget.callback();
+                        Navigator.pop(context);
+                      },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Container(
@@ -155,12 +184,17 @@ class _MeasuringConditionDialogState extends State<MeasuringConditionDialog> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () => setState(() => _value = 7),
+                      onTap: () {
+                        setState(() => _value = 7);
+                        PreferenceManager.updateInitialCondition(_value);
+                        widget.callback();
+                        Navigator.pop(context);
+                      },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Container(
@@ -180,16 +214,6 @@ class _MeasuringConditionDialogState extends State<MeasuringConditionDialog> {
           ),
         ),
       ),
-      actions: [
-        FlatButton(
-          onPressed: () {
-            widget.callback();
-            PreferenceManager.updateInitialCondition(_value ?? 0);
-            Navigator.pop(context);
-          },
-          child: Text('ok'.tr())
-        ),
-      ],
     );
   }
 }

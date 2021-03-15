@@ -1,6 +1,6 @@
 
-import 'package:balance_app/screens/res/colors.dart';
-import 'package:balance_app/screens/intro/slider/widgets/custom_checkbox.dart';
+import 'package:balance/screens/res/colors.dart';
+import 'package:balance/screens/intro/slider/widgets/custom_checkbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

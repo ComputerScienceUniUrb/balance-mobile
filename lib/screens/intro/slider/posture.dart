@@ -1,15 +1,15 @@
 
-import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
-import 'package:balance_app/screens/intro/slider/widgets/about_balance_dialog.dart';
-import 'package:balance_app/screens/intro/slider/widgets/custom_switch.dart';
-import 'package:balance_app/screens/intro/slider/widgets/info_widget.dart';
+import 'package:balance/bloc/intro_state/on_boarding_data_bloc.dart';
+import 'package:balance/screens/intro/slider/widgets/about_balance_dialog.dart';
+import 'package:balance/screens/intro/slider/widgets/custom_switch.dart';
+import 'package:balance/screens/intro/slider/widgets/info_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/screens/intro/slider/widgets/custom_checkbox.dart';
+import 'package:balance/manager/preference_manager.dart';
+import 'package:balance/screens/intro/slider/widgets/custom_checkbox.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
+import 'package:balance/bloc/intro/onboarding_bloc.dart';
 
 /// Fifth intro screen
 ///

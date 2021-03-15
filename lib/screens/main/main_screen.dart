@@ -1,9 +1,9 @@
 
-import 'package:balance_app/bloc/main/home/countdown_bloc.dart';
-import 'package:balance_app/bloc/main/home/events/countdown_events.dart';
+import 'package:balance/bloc/main/home/countdown_bloc.dart';
+import 'package:balance/bloc/main/home/events/countdown_events.dart';
 import 'package:flutter/material.dart';
-import 'package:balance_app/screens/res/b_icons.dart';
-import 'package:balance_app/screens/main/widgets/google_bottom_navigation_bar.dart';
+import 'package:balance/screens/res/b_icons.dart';
+import 'package:balance/screens/main/widgets/google_bottom_navigation_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:easy_localization/easy_localization.dart';

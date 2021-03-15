@@ -4,15 +4,15 @@ import 'package:floor/floor.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
-import 'package:balance_app/dao/measurement_dao.dart';
-import 'package:balance_app/dao/raw_measurement_data_dao.dart';
-import 'package:balance_app/dao/cogv_data_dao.dart';
+import 'package:balance/dao/measurement_dao.dart';
+import 'package:balance/dao/raw_measurement_data_dao.dart';
+import 'package:balance/dao/cogv_data_dao.dart';
 
-import 'package:balance_app/model/measurement.dart';
-import 'package:balance_app/model/raw_measurement_data.dart';
-import 'package:balance_app/model/cogv_data.dart';
+import 'package:balance/model/measurement.dart';
+import 'package:balance/model/raw_measurement_data.dart';
+import 'package:balance/model/cogv_data.dart';
 
-import 'package:balance_app/floor/test_database_view.dart';
+import 'package:balance/floor/test_database_view.dart';
 
 part 'measurement_database.g.dart';
 

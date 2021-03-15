@@ -1,6 +1,6 @@
 
-import 'package:balance_app/model/cogv_data.dart';
-import 'package:balance_app/model/measurement.dart';
+import 'package:balance/model/cogv_data.dart';
+import 'package:balance/model/measurement.dart';
 
 /// Class representing a statokinesigram
 ///
