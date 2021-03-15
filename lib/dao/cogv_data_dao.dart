@@ -1,5 +1,5 @@
 
-import 'package:balance_app/model/cogv_data.dart';
+import 'package:balance/model/cogv_data.dart';
 import 'package:floor/floor.dart';
 
 @dao

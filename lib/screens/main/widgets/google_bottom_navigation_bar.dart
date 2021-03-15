@@ -1,4 +1,4 @@
-import 'package:balance_app/screens/res/colors.dart';
+import 'package:balance/screens/res/colors.dart';
 import 'package:flutter/material.dart';
 
 /// A custom implementation of a bottom navigation bar

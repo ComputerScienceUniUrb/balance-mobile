@@ -1,5 +1,5 @@
 
-import 'package:balance_app/utils/boolean_quaternary_operator.dart';
+import 'package:balance/utils/boolean_quaternary_operator.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

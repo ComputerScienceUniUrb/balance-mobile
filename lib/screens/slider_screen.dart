@@ -1,13 +1,13 @@
 
-import 'package:balance_app/bloc/intro/onboarding_bloc.dart';
-import 'package:balance_app/model/user_info.dart';
-import 'package:balance_app/screens/intro/intro_screen.dart';
-import 'package:balance_app/screens/info/user_info_recap_screen.dart';
+import 'package:balance/bloc/intro/onboarding_bloc.dart';
+import 'package:balance/model/user_info.dart';
+import 'package:balance/screens/intro/intro_screen.dart';
+import 'package:balance/screens/info/user_info_recap_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:balance_app/screens/res/colors.dart';
-import 'package:balance_app/screens/intro/widgets/dots_indicator.dart';
-import 'package:balance_app/screens/intro/widgets/next_button.dart';
+import 'package:balance/screens/res/colors.dart';
+import 'package:balance/screens/intro/widgets/dots_indicator.dart';
+import 'package:balance/screens/intro/widgets/next_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'intro/slider/consent.dart';
@@ -21,7 +21,7 @@ import 'intro/slider/welcome.dart';
 /// Show a a list of screens that lets edit user information
 ///
 /// This class builds a [PageView] where his children are
-/// screens from [balance_app/screens/intro/slider] to let
+/// screens from [balance/screens/intro/slider] to let
 /// the user edit all his personal information that he gave
 /// during the first launch.
 /// Pushing this screen with a [Navigator] we can pass an instance

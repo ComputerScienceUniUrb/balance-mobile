@@ -3,10 +3,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:balance_app/floor/measurement_database.dart';
-import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/model/measurement.dart';
-import 'package:balance_app/model/raw_measurement_data.dart';
+import 'package:balance/floor/measurement_database.dart';
+import 'package:balance/model/measurement.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';

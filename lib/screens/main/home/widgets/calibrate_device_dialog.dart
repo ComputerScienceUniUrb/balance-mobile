@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:balance_app/routes.dart';
+import 'package:balance/routes.dart';
 
 /// Display a dialog that prompt the user to the calibration screen
 void showCalibrateDeviceDialog(BuildContext context) {

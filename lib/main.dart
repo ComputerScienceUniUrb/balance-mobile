@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:balance_app/bloc/intro_state/on_boarding_data_bloc.dart';
-import 'package:balance_app/bloc/main/home/countdown_bloc_impl.dart';
-import 'package:balance_app/screens/calibration/quick_calibration_screen.dart';
-import 'package:balance_app/screens/issues/issues_screen.dart';
-import 'package:balance_app/screens/res/colors.dart';
-import 'package:balance_app/screens/res/theme.dart';
+import 'package:balance/bloc/intro_state/on_boarding_data_bloc.dart';
+import 'package:balance/bloc/main/home/countdown_bloc_impl.dart';
+import 'package:balance/screens/calibration/quick_calibration_screen.dart';
+import 'package:balance/screens/issues/issues_screen.dart';
+import 'package:balance/screens/res/colors.dart';
+import 'package:balance/screens/res/theme.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,20 +14,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:intl/date_symbol_data_local.dart' as intl;
 import 'package:easy_localization/easy_localization.dart';
-import 'package:balance_app/generated/codegen_loader.g.dart';
+import 'package:balance/generated/codegen_loader.g.dart';
 
-import 'package:balance_app/floor/measurement_database.dart';
-import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/routes.dart';
-import 'package:balance_app/screens/main/main_screen.dart';
+import 'package:balance/floor/measurement_database.dart';
+import 'package:balance/manager/preference_manager.dart';
+import 'package:balance/routes.dart';
+import 'package:balance/screens/main/main_screen.dart';
 
-import 'package:balance_app/screens/intro/intro_screen.dart';
-import 'package:balance_app/screens/results/result_screen.dart';
-import 'package:balance_app/screens/calibration/calibrate_device_screen.dart';
-import 'package:balance_app/screens/info/user_info_recap_screen.dart';
-import 'package:balance_app/screens/opensource/open_source_screen.dart';
-import 'package:balance_app/screens/slider_screen.dart';
-import 'package:balance_app/screens/credits/credits.dart';
+import 'package:balance/screens/intro/intro_screen.dart';
+import 'package:balance/screens/results/result_screen.dart';
+import 'package:balance/screens/calibration/calibrate_device_screen.dart';
+import 'package:balance/screens/info/user_info_recap_screen.dart';
+import 'package:balance/screens/opensource/open_source_screen.dart';
+import 'package:balance/screens/slider_screen.dart';
+import 'package:balance/screens/credits/credits.dart';
 
 Future<void> main() async {
 	WidgetsFlutterBinding.ensureInitialized();

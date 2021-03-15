@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:balance_app/model/sensor_data.dart';
-import 'package:balance_app/sensors/sensor_monitor.dart';
+import 'package:balance/model/sensor_data.dart';
+import 'package:balance/sensors/sensor_monitor.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

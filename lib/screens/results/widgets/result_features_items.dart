@@ -1,7 +1,7 @@
 
-import 'package:balance_app/model/cogv_data.dart';
+import 'package:balance/model/cogv_data.dart';
 import 'package:flutter/material.dart';
-import 'package:balance_app/model/statokinesigram.dart';
+import 'package:balance/model/statokinesigram.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:easy_localization/easy_localization.dart';
 

@@ -4,10 +4,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'package:iirjdart/butterworth.dart';
-import 'package:balance_app/model/raw_measurement_data.dart';
-import 'package:balance_app/posture_processor/src/math/matrix.dart';
-import 'package:balance_app/posture_processor/src/math/vactor3.dart';
-import 'package:balance_app/posture_processor/src/list_extension.dart';
+import 'package:balance/model/raw_measurement_data.dart';
+import 'package:balance/posture_processor/src/math/matrix.dart';
+import 'package:balance/posture_processor/src/math/vactor3.dart';
+import 'package:balance/posture_processor/src/list_extension.dart';
 
 /// Value of the g force
 const double _gForce = 9.807;

@@ -1,4 +1,4 @@
-import 'package:balance_app/screens/res/b_icons.dart';
+import 'package:balance/screens/res/b_icons.dart';
 import 'package:flutter/material.dart';
 
 /// Custom implementation of a [InfoElement]

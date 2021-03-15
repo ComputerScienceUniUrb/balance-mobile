@@ -1,13 +1,13 @@
 
 import 'dart:async';
 import 'package:quiver/async.dart';
-import 'package:balance_app/floor/measurement_database.dart';
+import 'package:balance/floor/measurement_database.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:balance_app/repository/measure_countdown_repository.dart';
-import 'package:balance_app/bloc/main/home/events/countdown_events.dart';
-import 'package:balance_app/bloc/main/home/states/countdown_state.dart';
-import 'package:balance_app/sensors/sensor_monitor.dart';
+import 'package:balance/repository/measure_countdown_repository.dart';
+import 'package:balance/bloc/main/home/events/countdown_events.dart';
+import 'package:balance/bloc/main/home/states/countdown_state.dart';
+import 'package:balance/sensors/sensor_monitor.dart';
 
 /// Class implementing the bloc pattern for the measure countdown
 class CountdownBloc extends Bloc<CountdownEvents, CountdownState> {

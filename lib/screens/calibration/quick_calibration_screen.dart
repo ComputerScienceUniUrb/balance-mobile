@@ -1,9 +1,8 @@
 
-import 'package:balance_app/manager/preference_manager.dart';
-import 'package:balance_app/model/sensor_bias.dart';
-import 'package:balance_app/model/sensor_data.dart';
-import 'package:balance_app/routes.dart';
-import 'package:balance_app/sensors/sensor_widget.dart';
+import 'package:balance/manager/preference_manager.dart';
+import 'package:balance/model/sensor_bias.dart';
+import 'package:balance/model/sensor_data.dart';
+import 'package:balance/sensors/sensor_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 

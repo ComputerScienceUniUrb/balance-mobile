@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:balance_app/sensors/sensor_monitor.dart';
-import 'package:balance_app/sensors/sensor_widget.dart';
+import 'package:balance/sensors/sensor_monitor.dart';
+import 'package:balance/sensors/sensor_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

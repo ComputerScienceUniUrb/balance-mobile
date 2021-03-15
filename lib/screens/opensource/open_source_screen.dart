@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:balance_app/generated/dependencies.g.dart';
+import 'package:balance/generated/dependencies.g.dart';
 
 /// Widget for displaying informations about open source dependencies
 class OpenSourceScreen extends StatelessWidget {

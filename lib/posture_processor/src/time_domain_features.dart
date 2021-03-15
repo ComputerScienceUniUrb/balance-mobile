@@ -1,7 +1,7 @@
 
 import 'dart:math' as math;
 
-import 'package:balance_app/posture_processor/src/list_extension.dart';
+import 'package:balance/posture_processor/src/list_extension.dart';
 
 /// Function to compute the time features of COGvML and COGvAP
 ///

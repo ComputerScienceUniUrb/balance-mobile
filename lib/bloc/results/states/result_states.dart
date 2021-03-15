@@ -1,5 +1,5 @@
 
-import 'package:balance_app/model/statokinesigram.dart';
+import 'package:balance/model/statokinesigram.dart';
 
 /// Base State of the result page
 abstract class ResultState {

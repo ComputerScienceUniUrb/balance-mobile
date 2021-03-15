@@ -1,6 +1,6 @@
 
-import 'package:balance_app/bloc/main/home/states/countdown_state.dart';
-import 'package:balance_app/screens/res/colors.dart';
+import 'package:balance/bloc/main/home/states/countdown_state.dart';
+import 'package:balance/screens/res/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as Math;

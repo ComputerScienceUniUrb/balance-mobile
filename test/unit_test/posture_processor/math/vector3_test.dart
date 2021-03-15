@@ -1,6 +1,6 @@
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:balance_app/posture_processor/src/math/vactor3.dart';
+import 'package:balance/posture_processor/src/math/vactor3.dart';
 
 void main() {
   final firstVector = Vector3([1.0, 2.0, 3.0]);

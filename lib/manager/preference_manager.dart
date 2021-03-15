@@ -1,8 +1,8 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:balance_app/model/sensor_bias.dart';
-import 'package:balance_app/model/user_info.dart';
-import 'package:balance_app/model/system_info.dart';
+import 'package:balance/model/sensor_bias.dart';
+import 'package:balance/model/user_info.dart';
+import 'package:balance/model/system_info.dart';
 
 class PreferenceManager {
   // First launch

@@ -1,7 +1,7 @@
 
-import 'package:balance_app/model/raw_measurement_data.dart';
-import 'package:balance_app/posture_processor/src/cogv_processor.dart';
-import 'package:balance_app/posture_processor/src/math/matrix.dart';
+import 'package:balance/model/raw_measurement_data.dart';
+import 'package:balance/posture_processor/src/cogv_processor.dart';
+import 'package:balance/posture_processor/src/math/matrix.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/resource_loader.dart';

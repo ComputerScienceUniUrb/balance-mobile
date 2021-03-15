@@ -1,9 +1,9 @@
 
 import 'dart:math';
 
-import 'package:balance_app/floor/measurement_database.dart';
-import 'package:balance_app/repository/measure_countdown_repository.dart';
-import 'package:balance_app/model/sensor_data.dart';
+import 'package:balance/floor/measurement_database.dart';
+import 'package:balance/repository/measure_countdown_repository.dart';
+import 'package:balance/model/sensor_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_ffi_test/sqflite_ffi_test.dart';

@@ -2,7 +2,7 @@
 import 'dart:math' as math;
 
 import 'package:iirjdart/butterworth.dart';
-import 'package:balance_app/posture_processor/src/list_extension.dart';
+import 'package:balance/posture_processor/src/list_extension.dart';
 
 /// Sway Density Analysis
 ///

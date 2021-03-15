@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 
-import 'package:balance_app/screens/res/b_icons.dart';
+import 'package:balance/screens/res/b_icons.dart';
 
-import 'package:balance_app/routes.dart';
-import 'package:balance_app/screens/main/settings/widgets/settings_widget.dart';
+import 'package:balance/routes.dart';
+import 'package:balance/screens/main/settings/widgets/settings_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class SettingsScreen extends StatefulWidget {

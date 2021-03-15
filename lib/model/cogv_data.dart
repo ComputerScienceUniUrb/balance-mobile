@@ -1,5 +1,5 @@
 
-import 'package:balance_app/model/measurement.dart';
+import 'package:balance/model/measurement.dart';
 import 'package:floor/floor.dart';
 
 @Entity(

@@ -1,5 +1,5 @@
 
-import 'package:balance_app/model/statokinesigram.dart';
+import 'package:balance/model/statokinesigram.dart';
 import 'package:floor/floor.dart';
 
 /// Represent one single measurement in the database

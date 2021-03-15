@@ -1,6 +1,6 @@
 
-import 'package:balance_app/floor/test_database_view.dart';
-import 'package:balance_app/model/measurement.dart';
+import 'package:balance/floor/test_database_view.dart';
+import 'package:balance/model/measurement.dart';
 import 'package:floor/floor.dart';
 
 /// DAO class declaring the database operations for [Measurement]

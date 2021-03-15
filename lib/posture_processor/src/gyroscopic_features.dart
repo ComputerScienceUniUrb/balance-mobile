@@ -1,8 +1,8 @@
 
 import 'dart:math';
 
-import 'package:balance_app/model/raw_measurement_data.dart';
-import 'package:balance_app/posture_processor/src/list_extension.dart';
+import 'package:balance/model/raw_measurement_data.dart';
+import 'package:balance/posture_processor/src/list_extension.dart';
 
 Future<Map<String, double>> gyroscopicFeatures(List<RawMeasurementData> data) {
   // Extract x,y,z from RawMeasurementData
