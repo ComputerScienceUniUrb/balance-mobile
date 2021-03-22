@@ -44,7 +44,8 @@ For the full list of Collaborators, Partners and Sponsors, please visit the offi
 
 # License
 
-The licence for this repository is a [GNU Affero General Public Licence version 3](https://www.gnu.org/licenses/agpl-3.0.html) (SPDX: AGPL-3.0).
+Balance © 2021 by Emanuele Lattanzi, Lorenzo Calisti, Gioele Bigini is licensed under Creative
+Commons Attribution-NonCommercial 4.0 International (CC BY-NC).
 Please see the [LICENSE](LICENSE) file for full reference.
 
 ## Third-party component licenses
