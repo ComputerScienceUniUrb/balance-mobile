@@ -44,8 +44,7 @@ For the full list of Collaborators, Partners and Sponsors, please visit the offi
 
 # License
 
-Balance © 2021 by Emanuele Lattanzi, Lorenzo Calisti, Gioele Bigini is licensed under Creative
-Commons Attribution-NonCommercial 4.0 International (CC BY-NC).
+Balance © 2021 by Emanuele Lattanzi, Lorenzo Calisti, Gioele Bigini is licensed under MIT License.
 Please see the [LICENSE](LICENSE) file for full reference.
 
 ## Third-party component licenses
