@@ -38,7 +38,7 @@ void main() {
       gyroscopeZ: gyroInputMatrix.get(i, 2),
     ));
 
-    SharedPreferences.setMockInitialValues({"userHeight": 180.0});
+    SharedPreferences.setMockInitialValues({"userHeight": 180});
     final statokinesigram = await PostureProcessor.computeFromData(1, inputData);
 
     expect(statokinesigram, isNotNull);
@@ -91,7 +91,7 @@ void main() {
       gyroscopeZ: null,
     ));
 
-    SharedPreferences.setMockInitialValues({"userHeight": 180.0});
+    SharedPreferences.setMockInitialValues({"userHeight": 180});
     final statokinesigram = await PostureProcessor.computeFromData(1, inputData);
 
     expect(statokinesigram, isNotNull);
@@ -144,7 +144,7 @@ void main() {
       gyroscopeZ: gyroInputMatrix.get(i, 2),
     ));
 
-    SharedPreferences.setMockInitialValues({"userHeight": 180.0});
+    SharedPreferences.setMockInitialValues({"userHeight": 180});
     final statokinesigram = await PostureProcessor.computeFromData(1, inputData);
 
     expect(statokinesigram, isNotNull);
@@ -197,7 +197,7 @@ void main() {
       gyroscopeZ: null,
     ));
 
-    SharedPreferences.setMockInitialValues({"userHeight": 180.0});
+    SharedPreferences.setMockInitialValues({"userHeight": 180});
     final statokinesigram = await PostureProcessor.computeFromData(1, inputData);
 
     expect(statokinesigram, isNotNull);
