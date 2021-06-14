@@ -67,14 +67,13 @@ Future<Map<String, double>> swayDensityAnalysis(List<double> ap, List<double> ml
   double numMax = peaksArr.length / 30.0;
 
   // Compute the indicators for every peak
-  final timeIntervals = List<int>.filled(peaksArr.length, 0);
+  final timeIntervals = List<double>.filled(peaksArr.length, 0.0);
   final valueOfPeaks = List<double>.filled(peaksArr.length, 0.0);
   final distances = List<double>.filled(peaksArr.length, 0.0);
   for (var i = 0; i < peaksArr.length - 1; i++) {
-    timeIntervals[i] = peaksArr[i + 1] - peaksArr[i];
+    timeIntervals[i] = (peaksArr[i + 1] - peaksArr[i]) / 50.0;
     valueOfPeaks[i] = filteredSDC[peaksArr[i]];
-    distances[i] = math.sqrt(math.pow((peaksArr[i + 1] - peaksArr[i]).toDouble(), 2) +
-      math.pow(filteredSDC[peaksArr[i + 1]] - filteredSDC[peaksArr[i]], 2));
+    distances[i] = math.sqrt(math.pow(ml[peaksArr[i+1]] - ml[peaksArr[i]], 2) + math.pow(ap[peaksArr[i+1]] - ap[peaksArr[i]], 2));
   }
 
   // Average the indicators to obtain the SDC Parameters
