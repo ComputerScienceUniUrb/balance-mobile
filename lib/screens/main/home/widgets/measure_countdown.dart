@@ -1,11 +1,9 @@
-
 import 'dart:async';
 
 import 'package:balance/manager/vibration_manager.dart';
 import 'package:balance/routes.dart';
 import 'package:balance/screens/main/home/widgets/device_not_ready_dialog.dart';
 import 'package:balance/screens/main/home/widgets/measuring_condition_dialog.dart';
-import 'package:balance/screens/main/home/widgets/targeting_game.dart';
 import 'package:battery/battery.dart';
 import 'package:flutter/material.dart';
 import 'package:balance/screens/res/colors.dart';
@@ -25,6 +23,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:wakelock/wakelock.dart';
 
+import 'wom_dialog.dart';
+
 /// Widget that manage the entire measuring process
 ///
 /// This widget has the purpose of managing the entirety of the
@@ -37,7 +37,8 @@ class MeasureCountdown extends StatefulWidget {
   State<StatefulWidget> createState() => _MeasureCountdownState();
 }
 
-class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBindingObserver {
+class _MeasureCountdownState extends State<MeasureCountdown>
+    with WidgetsBindingObserver {
   CountdownBloc _bloc;
   bool _measuring = false;
   VibrationManager vibrationManager;
@@ -49,11 +50,12 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
     WidgetsBinding.instance.addObserver(this);
     _bloc = context.bloc<CountdownBloc>();
     _bloc.eyesOpen = true;
+    _bloc.initCondition = 1;
     vibrationManager = VibrationManager();
   }
 
   @override
-  Future<bool> didPopRoute() async{
+  Future<bool> didPopRoute() async {
     bool handlePop = false;
     if (_measuring)
       handlePop = await showLeaveDialog(context);
@@ -63,23 +65,16 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
 
   @override
   void dispose() {
-    super.dispose();
+    Wakelock.disable();
     WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return FocusDetector(
-      onFocusLost: () {
-        print('Focus Lost.');
-      },
-      onVisibilityLost: () {
-        print('Visibility Lost. Did you move to Test or Settings?.');
-      },
       onForegroundLost: () {
         print('Foreground Lost. Do you switched to another app?');
-        if (_bloc.state is CountdownTargetingState)
-          _bloc.add(CountdownEvents.stopTargeting);
         if (_bloc.state is CountdownPreMeasureState)
           _bloc.add(CountdownEvents.stopPreMeasure);
         if (_bloc.state is CountdownMeasureState)
@@ -88,38 +83,44 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
       child: Center(
         child: BlocConsumer<CountdownBloc, CountdownState>(
             listener: (_, state) {
-              state is CountdownMeasureState? _measuring = true: _measuring = false;
+              state is CountdownMeasureState ? _measuring = true : _measuring =
+              false;
               // Start/Stop the vibration and sounds
               if (state is CountdownPreMeasureState) {
                 Wakelock.enable();
                 vibrationManager.playSingle();
               }
               else if (state is CountdownCompleteState) {
-                Wakelock.enable();
+                Wakelock.disable();
                 vibrationManager.finish();
+                Navigator.of(context).pushNamed(
+                    Routes.result,
+                    arguments: state.result
+                );
               }
               else {
-                Wakelock.disable();
-                vibrationManager.cancel();
+                if (state is CountdownIdleState){
+                  Wakelock.disable();
+                }
+                vibrationManager.cancel ();
               }
             },
             builder: (context, state) {
               // Open the result page passing the measurement as argument
-              if (state is CountdownCompleteState)
-                SchedulerBinding.instance.addPostFrameCallback((_) {
-                  Navigator.of(context).pushNamed(
-                      Routes.result,
-                      arguments: state.result
-                  );
-                });
+              // if (state is CountdownCompleteState)
+              //   SchedulerBinding.instance.addPostFrameCallback((_) {
+              //     Navigator.of(context).pushNamed(
+              //         Routes.result,
+              //         arguments: state.result
+              //     );
+              //   });
               // Build the ui based on the new state
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _buildWidgetForState(context, state),
-                  SizedBox(height: 0),
                   RaisedButton(
-                    onPressed: () async{
+                    onPressed: () async {
                       try {
                         if (await _battery.batteryLevel < 30)
                           return showDeviceNotReady(context);
@@ -127,7 +128,8 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                         print("Cannot take battery level from smartphone");
                       }
 
-                      if (state is CountdownIdleState || state is CountdownCompleteState) {
+                      if (state is CountdownIdleState ||
+                          state is CountdownCompleteState) {
                         /*
                          * Every time the user presses the start button we need to check
                          * two conditions:
@@ -142,18 +144,42 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                         if (!isDeviceCalibrated)
                           showCalibrateDeviceDialog(context);
                         else if (showTutorial) {
+                          showWomDialog(
+                              context,
+                                  () async {
+                                context.bloc<CountdownBloc>().add(
+                                    CountdownEvents.startPreMeasure);
+                              }
+                          );
                           showMeasuringConditionDialog(
-                            context,
-                            () => context.bloc<CountdownBloc>().add(CountdownEvents.startTargeting)
+                              context,
+                                  () async {
+                                context
+                                    .bloc<CountdownBloc>()
+                                    .initCondition =
+                                await PreferenceManager.initialCondition;
+                              }
                           );
                           showTutorialDialog(
-                            context,
-                                () => null
+                              context,
+                                  () => null
                           );
                         }
                         else {
-                          showMeasuringConditionDialog(context,
-                            () => context.bloc<CountdownBloc>().add(CountdownEvents.startTargeting)
+                          showMeasuringConditionDialog(
+                              context,
+                                  () async {
+                                context
+                                    .bloc<CountdownBloc>()
+                                    .initCondition =
+                                await PreferenceManager.initialCondition;
+                                context.bloc<CountdownBloc>().add(
+                                    CountdownEvents.startPreMeasure);
+                              }
+                          );
+                          showTutorialDialog(
+                              context,
+                                  () => null
                           );
                         }
                       }
@@ -169,21 +195,25 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
                         context.bloc<CountdownBloc>().add(
                             CountdownEvents.stopMeasure);
                       }
-                      else if (state is CountdownTargetingState) {
-                        context.bloc<CountdownBloc>().add(
-                            CountdownEvents.stopTargeting);
-                      }
                     },
                     color: BColors.colorAccent,
                     child: Text(
-                      state is CountdownIdleState || state is CountdownCompleteState? 'start_test_btn'.tr() : 'stop_test_btn'.tr(),
-                      style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
+                      state is CountdownIdleState ||
+                          state is CountdownCompleteState ? 'start_test_btn'
+                          .tr() : 'stop_test_btn'.tr(),
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .button
+                          .copyWith(color: Colors.white),
                     ),
                   ),
                   SizedBox(height: 30),
                   CustomToggleButton(
-                    onChanged: (selected) => context.bloc<CountdownBloc>()
-                        .eyesOpen = (selected == 0)? true: false,
+                    onChanged: (selected) =>
+                    context
+                        .bloc<CountdownBloc>()
+                        .eyesOpen = (selected == 0) ? true : false,
                     leftText: Text('eyes_open'.tr()),
                     rightText: Text('eyes_closed').tr(),
                   )
@@ -197,11 +227,8 @@ class _MeasureCountdownState extends State<MeasureCountdown> with WidgetsBinding
 
   /// Return the correct widget based on the current state
   Widget _buildWidgetForState(BuildContext context, CountdownState state) {
-
     if (state is CountdownPreMeasureState || state is CountdownMeasureState)
       return CircularCounter(state: state);
-    else if (state is CountdownTargetingState)
-      return TargetingGame();
     else
       // Circular logo of the app
       return Container(

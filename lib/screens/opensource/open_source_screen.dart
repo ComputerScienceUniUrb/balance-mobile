@@ -13,27 +13,41 @@ class OpenSourceScreen extends StatelessWidget {
       ),
       body: ListView(
         children: dependencies.map((e) => Card(
-          margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  e["name"] ?? "",
-                  style: Theme.of(context).textTheme.headline5,
+                    e["name"] ?? "",
+                    style: Theme.of(context).textTheme.headline4.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800
+                    )
                 ),
-                Divider(),
-                SizedBox(height: 4.0),
+                SizedBox(width: 8.0),
                 Text(
-                  e["description"] ?? "",
-                  style: Theme.of(context).textTheme.bodyText2,
+                  e["version"] ?? '',
+                  style: Theme.of(context).textTheme.headline4.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500
+                  )
                 ),
-                SizedBox(height: 16.0),
-                Text(
-                  e["version"] ?? "",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
+                e["description"] != null ?
+                Column(
+                  children: [
+                    Divider(),
+                    SizedBox(height: 4.0),
+                    Text(
+                      e["description"],
+                      style: Theme.of(context).textTheme.headline4.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500
+                      )
+                    )
+                  ],
+                ) : SizedBox(height: 0.0),
               ],
             ),
           ),

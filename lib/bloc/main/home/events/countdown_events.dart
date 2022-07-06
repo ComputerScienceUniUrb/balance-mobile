@@ -1,17 +1,11 @@
 
 /// Enum representing the events on the countdown
 enum CountdownEvents {
-  /// Tells the bloc to start the targeting phase
-  startTargeting,
-
   /// Tells the bloc to start the pre measure countdown
   startPreMeasure,
 
   /// Tells the bloc to start the measure countdown
   startMeasure,
-
-  /// Tells the bloc to stop the targeting
-  stopTargeting,
 
   /// Tells the bloc to stop the pre measure countdown
   stopPreMeasure,

@@ -11,8 +11,25 @@ Future<bool> showMeasurementDialog(BuildContext context, bool valid) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('test_measurement_ok_title'.tr()),
-        content: Text('test_measurement_ok_txt'.tr()),
+        title: Text(
+          'test_measurement_ok_title'.tr(),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        content: Padding(
+            padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+            child: Text(
+              'test_measurement_ok_txt'.tr(),
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              textAlign: TextAlign.justify,
+            )
+        ),
         actions: [
           // Stop the test and close the app
           FlatButton(

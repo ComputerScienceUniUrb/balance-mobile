@@ -42,6 +42,8 @@ class PreferenceManager {
   static const _sightProblems = "sightProblems";
   static const _hearingLoss = "hearingLoss";
   static const _hearingProblems = "hearingProblems";
+  // Archived Wom List
+  static const _archivedWom = "archivedWom";
 
   /// Is this the first time the app has been launched?
   static Future<bool> get isFirstTimeLaunch async {
@@ -284,5 +286,39 @@ class PreferenceManager {
       pref.setBool(_hearingLoss, hearingLoss);
     if (hearingProblems != null)
       pref.setString(_hearingProblems, hearingProblems.join(","));
+  }
+
+  /// Is this the first time the app has been launched?
+  static Future<List<int>> get archivedWom async {
+    var pref = await SharedPreferences.getInstance();
+    var list = pref.getStringList(_archivedWom) ?? List.empty();
+    return [for (var i = 0; i < list.length; i++) int.parse(list[i])];
+  }
+
+  /// Update the archived [ArchivedWom]
+  ///
+  /// This method updates the Wom archived
+  /// by the user.
+  static Future<void> updateArchivedWom({
+    int index
+  }) async {
+    var pref = await SharedPreferences.getInstance();
+
+    // Update the value of all the non-null given elements
+    if (index != null) {
+      var intList = pref.getStringList(_archivedWom) ?? List.empty();
+      var stringList = [for (var i = 0; i < intList.length; i++) intList[i].toString()];
+      stringList.add(index.toString());
+      pref.setStringList(_archivedWom, stringList);
+    }
+  }
+
+  /// Reset the archived [ArchivedWom]
+  ///
+  /// This method updates the Wom archived
+  /// by the user.
+  static Future<void> resetArchivedWom() async {
+    var pref = await SharedPreferences.getInstance();
+    pref.setStringList(_archivedWom, List<String>());
   }
 }

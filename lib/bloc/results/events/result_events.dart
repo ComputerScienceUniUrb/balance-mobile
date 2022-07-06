@@ -15,3 +15,10 @@ class ExportResult extends ResultEvents {
   final int measurementId;
   const ExportResult(this.measurementId);
 }
+
+/// Event for saving a screenshot of a measurement with id [measurementId]
+class SaveScreenshot extends ResultEvents {
+  final int measurementId;
+  final List<int> image;
+  const SaveScreenshot(this.measurementId, this.image);
+}

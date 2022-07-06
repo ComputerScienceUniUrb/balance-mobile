@@ -86,8 +86,7 @@ class _IssuesScreenState extends State<IssuesScreen> {
                       });
                     },
                     validator: (value) {
-                      if (value.isEmpty)
-                        return 'too_short_error_txt'.tr();
+                         return value.isEmpty? 'too_short_error_txt'.tr():value;
                     },
                   ),
                 ),

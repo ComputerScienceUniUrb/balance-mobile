@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
+import 'charts/chart_screen.dart';
 import 'home/home_screen.dart';
 import 'measurements/measurements_screen.dart';
 import 'settings/settings_screen.dart';
@@ -27,8 +28,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     _currentIndex = _initialPage;
-    _pages = [HomeScreen(), MeasurementsScreen(), SettingsScreen()];
-    _titles = ['home_txt'.tr(), 'tests_txt'.tr(), 'settings_txt'.tr()];
+    _pages = [HomeScreen(), MeasurementsScreen(), ChartsScreen(), SettingsScreen()];
+    _titles = ['home_txt'.tr(), 'tests_txt'.tr(), 'chart_txt'.tr(), 'settings_txt'.tr()];
     super.initState();
   }
 
@@ -52,11 +53,11 @@ class _MainScreenState extends State<MainScreen> {
         items: [
           GoogleBottomNavigationItem(icon: Icon(BIcons.home), text: Text(_titles[0])),
           GoogleBottomNavigationItem(icon: Icon(BIcons.list), text: Text(_titles[1])),
-          GoogleBottomNavigationItem(icon: Icon(BIcons.settings), text: Text(_titles[2])),
+          GoogleBottomNavigationItem(icon: Icon(Icons.bar_chart, size: 32.0), text: Text(_titles[2])),
+          GoogleBottomNavigationItem(icon: Icon(BIcons.settings), text: Text(_titles[3])),
         ],
         onTap: (newIdx){
-          if (context.bloc<CountdownBloc>().state is! CountdownTargetingState &&
-              context.bloc<CountdownBloc>().state is! CountdownPreMeasureState &&
+          if (context.bloc<CountdownBloc>().state is! CountdownPreMeasureState &&
               context.bloc<CountdownBloc>().state is! CountdownMeasureState)
             setState (() => _currentIndex = newIdx);
 

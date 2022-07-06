@@ -14,6 +14,16 @@ class ResultInfoItem extends StatelessWidget {
 
   ResultInfoItem(this.test);
 
+  List<String> _translateInitCondition =[
+    "condition_rest_txt".tr(),
+    "condition_work_txt".tr(),
+    "condition_walk_txt".tr(),
+    "condition_read_txt".tr(),
+    "condition_eat_txt".tr(),
+    "condition_party_txt".tr(),
+    "condition_sport_txt".tr()
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -46,7 +56,48 @@ class ResultInfoItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 )
               ],
+            ),
+            SizedBox(height: 8),
+            test.initialCondition != null?
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(
+                        Icons.info_outline,
+                      ),
+                      SizedBox(width: 16),
+                      Text(
+                        test.initialCondition == null? "no_condition".tr():_translateInitCondition[test.initialCondition-1],
+                        style: Theme.of(context).textTheme.bodyText1,
+                      )
+                    ]
+                ),
+              ],
             )
+            :
+            SizedBox(height: 0),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(
+                        bqtop(test?.note != null && test?.note != "", Icons.speaker_notes, Icons.speaker_notes_off),
+                      ),
+                      SizedBox(width: 16),
+                      Text(
+                        bqtop(test?.note != null && test?.note != "", test?.note, 'note_no_generic_txt'.tr(), "-"),
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ]
+                ),
+              ],
+            ),
           ],
         ),
       ),

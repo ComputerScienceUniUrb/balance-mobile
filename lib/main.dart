@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:balance/bloc/intro_state/on_boarding_data_bloc.dart';
 import 'package:balance/bloc/main/home/countdown_bloc_impl.dart';
+import 'package:balance/bloc/main/settings/settings_bloc_impl.dart';
 import 'package:balance/screens/calibration/quick_calibration_screen.dart';
+import 'package:balance/screens/info/wom_recap_screen.dart';
 import 'package:balance/screens/issues/issues_screen.dart';
+import 'package:balance/screens/main/charts/chart_screen.dart';
 import 'package:balance/screens/res/colors.dart';
 import 'package:balance/screens/res/theme.dart';
 import 'package:device_info/device_info.dart';
@@ -31,6 +34,7 @@ import 'package:balance/screens/credits/credits.dart';
 
 Future<void> main() async {
 	WidgetsFlutterBinding.ensureInitialized();
+
 	// Create an app-wide instance of the database
 	final isFirstTimeLaunch = await PreferenceManager.isFirstTimeLaunch;
 	final dbInstance = await MeasurementDatabase.getDatabase();
@@ -87,7 +91,6 @@ class BalanceApp extends StatelessWidget {
 					title: "Balance",
 					initialRoute: isFirstLaunch ? Routes.intro: Routes.main,
 					theme: lightTheme,
-					darkTheme: darkTheme,
 					routes: {
 						Routes.intro: (_) => BlocProvider(child: IntroScreen(), create: (context) => OnBoardingDataBloc()),
 						Routes.main: (_) => BlocProvider(child: MainScreen(), create: (context) => CountdownBloc.create(Provider.of<MeasurementDatabase>(context, listen: false))),
@@ -97,7 +100,9 @@ class BalanceApp extends StatelessWidget {
 						Routes.slider: (_) => SliderScreen(),
 						Routes.credits: (_) => CreditsScreen(),
 						Routes.issues: (_) => IssuesScreen(),
+						Routes.wom: (_) => BlocProvider(child: WOMScreen(), create: (context) => SettingsBloc.create(Provider.of<MeasurementDatabase>(context, listen: false))),
 						Routes.result: (_) => ResultScreen(),
+						Routes.charts: (_) => ChartsScreen(),
 						Routes.open_source: (_) => OpenSourceScreen(),
 					},
 				),

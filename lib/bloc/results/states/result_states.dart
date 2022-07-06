@@ -24,3 +24,6 @@ class ResultError extends ResultState {
 
 /// State for when the export is completed successfully
 class ResultExportSuccess extends ResultState {}
+
+/// State for when the screenshot is completed successfully
+class ResultScreenshotSuccess extends ResultState {}

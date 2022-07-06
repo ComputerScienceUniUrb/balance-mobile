@@ -64,7 +64,7 @@ class _CircularCounterState extends State<CircularCounter> with SingleTickerProv
   Duration get _duration => Duration(
     milliseconds: widget.state is CountdownMeasureState
       ? 30000
-      : 2000
+      : 10000
   );
 
   String get _timeString {
@@ -104,14 +104,17 @@ class _CircularCounterState extends State<CircularCounter> with SingleTickerProv
           animation: _controller,
           builder: (context, child) => Column(
             children: [
-              Text(
-                widget.state is CountdownMeasureState
-                  ? 'measuring_txt'.tr()
-                  : 'get_ready_txt'.tr(),
-                style: TextStyle(
-                  color: BColors.textColor,
-                  fontSize: 14,
-                ),
+              Container(
+                  constraints: BoxConstraints(maxWidth: 175),
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    widget.state is CountdownMeasureState ? 'measuring_txt'.tr()  : 'get_ready_txt'.tr(),
+                    style: TextStyle(
+                      color: BColors.textColor,
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
               ),
               SizedBox(height: 8),
               RichText(

@@ -17,13 +17,6 @@ class CountdownIdleState extends CountdownState {}
 /// This state tells that the countdown is in pre measure,
 /// the pre measure countdown will be drawn and a vibration/
 /// sound will be played on every tick.
-class CountdownTargetingState extends CountdownState {}
-
-/// The countdown is pre measure
-///
-/// This state tells that the countdown is in pre measure,
-/// the pre measure countdown will be drawn and a vibration/
-/// sound will be played on every tick.
 class CountdownPreMeasureState extends CountdownState {}
 
 /// The countdown is measuring

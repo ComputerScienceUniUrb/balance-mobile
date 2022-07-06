@@ -10,7 +10,9 @@ class Routes {
   static const String info = "/info";
   static const String slider = "/slider_route";
   static const String result = "/result_route";
+  static const String wom = "/wom_route";
   static const String open_source = "/open_source";
   static const String credits = "/credits";
   static const String issues = "/issues";
+  static const String charts = "/charts";
 }

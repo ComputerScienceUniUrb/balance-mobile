@@ -18,8 +18,25 @@ Future<bool> showBackendStatusDialog(BuildContext context, bool valid, int id) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('test_backend_ok_title'.tr()),
-        content: Text('test_backend_ok_txt'.tr()),
+        title: Text(
+          'test_backend_ok_title'.tr(),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        content: Padding(
+          padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+          child: Text(
+            'test_backend_ok_txt'.tr(),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            ),
+            textAlign: TextAlign.justify,
+          )
+        ),
         actions: [
           // Stop the test and close the app
           FlatButton(
@@ -59,7 +76,7 @@ Future<bool> showBackendStatusDialog(BuildContext context, bool valid, int id) {
 Future<bool> _makePostRequest(measurementId) async {
   // set up POST request arguments
   String url_measurement = 'https://www.balancemobile.it/api/v1/db/measurement';
-  //String url_measurement = 'http://192.168.1.206:8000/api/v1/db/sway';
+  //String url_measurement = 'http://www.dev.balancemobile.it/api/v1/db/measurement';
   Map<String, String> headers = {"Content-type": "application/json"};
 
   final database = await MeasurementDatabase.getDatabase();

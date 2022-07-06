@@ -18,7 +18,7 @@ class MeasureCountdownRepository {
   MeasureCountdownRepository(this.database);
 
   /// Creates a new [Measurement] with his own [RawMeasurementData]
-  Future<Test> createNewMeasurement(List<SensorData> rawSensorData, bool eyesOpen) async {
+  Future<Test> createNewMeasurement(List<SensorData> rawSensorData, bool eyesOpen, int initCondition) async {
     final measurementDao = database.measurementDao;
     final rawMeasDataDao = database.rawMeasurementDataDao;
 
@@ -28,6 +28,7 @@ class MeasureCountdownRepository {
         Measurement.simple(
           creationDate: DateTime.now().millisecondsSinceEpoch,
           eyesOpen: eyesOpen,
+          initCondition: initCondition
         ),
       );
 
@@ -49,7 +50,7 @@ class MeasureCountdownRepository {
   Future<bool> _makePostRequest(var data) async {
     // set up POST request arguments
     String url = 'https://www.balancemobile.it/api/v1/db/sway';
-    //String url = 'http://192.168.1.206:8000/api/v1/db/sway';
+    //String url = 'https://dev.balancemobile.it/api/v1/db/sway';
     Map<String, String> headers = {"Content-type": "application/json"};
 
     try {

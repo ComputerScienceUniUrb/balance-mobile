@@ -77,10 +77,14 @@ class UserInfoRecapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Text styles used by the widget
-    final titleTextStyle = Theme.of(context).textTheme.subtitle2.copyWith(
-      fontSize: 17,
+    final headlineTextStyle = Theme.of(context).textTheme.headline4.copyWith(
+      fontSize: 18,
+      fontWeight: FontWeight.w800
     );
-    final headlineTextStyle = Theme.of(context).textTheme.bodyText1;
+    final titleTextStyle = Theme.of(context).textTheme.headline4.copyWith(
+      fontSize: 14,
+      fontWeight: FontWeight.w600
+    );
     final valueTextStyle = Theme.of(context).textTheme.caption;
 
     return Scaffold(
@@ -106,17 +110,16 @@ class UserInfoRecapScreen extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         'general_title'.tr(),
-                        style: titleTextStyle,
+                        style: headlineTextStyle
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             'Token',
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
-                          Spacer(),
                           Flexible(
                             child: Text(
                               userInfo?.token?.toString() ?? "-",
@@ -125,13 +128,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             'age_txt'.tr(),
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
                           Text(
                             userInfo?.age?.toString() ?? "-",
@@ -139,13 +142,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             'gender_txt'.tr(),
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
                           Text(
                             _getGenderString(userInfo?.gender),
@@ -153,13 +156,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             'height_txt'.tr(),
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
                           Text(
                             userInfo?.height != null
@@ -169,13 +172,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             'weight_txt'.tr(),
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
                           Text(
                             userInfo?.weight != null
@@ -199,15 +202,15 @@ class UserInfoRecapScreen extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         'health_title'.tr(),
-                        style: titleTextStyle,
+                        style: headlineTextStyle
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             'postural_problems_txt'.tr(),
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
                           Flexible(
                             child: Text(
@@ -218,13 +221,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             'postural_problems_in_family_txt'.tr(),
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
                           Text(
                             userInfo != null && userInfo.problemsInFamily ? 'yes'.tr() : 'no'.tr(),
@@ -232,14 +235,14 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             'other_trauma_txt'.tr(),
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
                           SizedBox(width: 16),
                           Flexible(
@@ -265,15 +268,15 @@ class UserInfoRecapScreen extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         'hearing_defects_title'.tr(),
-                        style: titleTextStyle,
+                        style:headlineTextStyle
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             'wear_glasses_txt'.tr(),
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
                           Flexible(
                             child: Text(
@@ -284,13 +287,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             'sight_defects_txt'.tr(),
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
                           Flexible(
                             child: Text(
@@ -301,13 +304,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             'hearing_defects_txt'.tr(),
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
                           Text(
                             userInfo != null && userInfo.hearingLoss ? 'yes'.tr() : 'no'.tr(),
@@ -315,13 +318,13 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             'which_hear_txt'.tr(),
-                            style: headlineTextStyle,
+                            style: titleTextStyle
                           ),
                           Text(
                             _getHearingString(userInfo?.hearingProblems),
@@ -343,18 +346,18 @@ class UserInfoRecapScreen extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         'habits_txt'.tr(),
-                        style: titleTextStyle,
+                        style: headlineTextStyle
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Flexible(
-                              child: Text(
-                                'drugs_txt'.tr(),
-                                style: headlineTextStyle,
-                              )
+                            child: Text(
+                              'drugs_txt'.tr(),
+                              style: titleTextStyle
+                            )
                           ),
                           Text(
                             userInfo != null && userInfo.useOfDrugs ? 'yes'.tr() : 'no'.tr(),
@@ -362,16 +365,16 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Flexible(
-                              child: Text(
-                                'sport_txt'.tr(),
-                                style: headlineTextStyle,
-                              )
+                            child: Text(
+                              'sport_txt'.tr(),
+                              style: titleTextStyle
+                            )
                           ),
                           Text(
                             _getSportString(userInfo?.sportsActivity),
@@ -379,16 +382,16 @@ class UserInfoRecapScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Flexible(
-                              child: Text(
-                                'alcohol_txt'.tr(),
-                                style: headlineTextStyle,
-                              )
+                            child: Text(
+                              'alcohol_txt'.tr(),
+                              style: titleTextStyle
+                            )
                           ),
                           Text(
                             _getAlcoholString(userInfo?.alcoholIntake),
@@ -399,23 +402,11 @@ class UserInfoRecapScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-              SizedBox(height: 8),
+              )
             ],
           );
         },
       ),
-      //floatingActionButton: FloatingActionButton(
-      //  onPressed: () async {
-      //    // Open the onboarding route with UserInfo from memory
-      //    Navigator.pushNamed(
-      //      context,
-      //      Routes.onboarding,
-      //      arguments: await PreferenceManager.userInfo
-      //    );
-      //  },
-      //  child: Icon(Icons.edit),
-      //),
     );
   }
 }

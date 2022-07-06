@@ -42,6 +42,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               icon: Icon(BIcons.info_outline),
               text: 'what_we_know_about_you_txt'.tr(),
               onTap: () => Navigator.pushNamed(context, Routes.info),
+            ),
+            SettingsElement(
+              icon: Icon(Icons.account_balance_wallet_outlined),
+              text: 'settings_wom_txt'.tr(),
+              onTap: () => Navigator.pushNamed(context, Routes.wom),
             )
           ]
         ),
@@ -76,25 +81,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ]
         ),
-        //SettingsGroup(
-        //  title: 'version_txt'.tr(),
-        //  children: [
-        //    SettingsElement(
-        //        icon: Icon(BIcons.version),
-        //        text: "${'version_txt'.tr()} ${packageInfo?.version} (${'build_txt'.tr()}${packageInfo?.buildNumber})",
-        //        onLongPress: () {
-        //          Scaffold.of(context)
-        //              .showSnackBar(
-        //              SnackBar(
-        //                behavior: SnackBarBehavior.floating,
-        //                content: Text('easter_egg_txt'.tr()),
-        //                duration: Duration(seconds: 2),
-        //              )
-        //          );
-        //        }
-        //    ),
-        //  ]
-        //),
       ]
     );
   }

@@ -1,7 +1,4 @@
-
-import 'package:balance/manager/preference_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:circular_check_box/circular_check_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -31,8 +28,7 @@ class TutorialDialog extends StatefulWidget {
 }
 
 class _TutorialDialogState extends State<TutorialDialog> {
-  bool _neverShowAgainCheck = false;
-  
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -56,50 +52,23 @@ class _TutorialDialogState extends State<TutorialDialog> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 12),
                 child: Text(
                   'tutorial_msg'.tr(),
                   textScaleFactor: 0.9,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() => _neverShowAgainCheck = !_neverShowAgainCheck);
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CircularCheckBox(
-                        value: _neverShowAgainCheck,
-                        onChanged: (value) {
-                          setState(() => _neverShowAgainCheck = value);
-                        },
-                        activeColor: Colors.blue,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        'never_show_again'.tr(),
-                        textScaleFactor: 0.9,
-                      ),
-                    ],
-                  ),
-                ),
-              )
             ],
           ),
         ),
       ),
       actions: [
         FlatButton(
-          onPressed: () {
-            if (_neverShowAgainCheck)
-              PreferenceManager.neverShowMeasuringTutorial();
-            widget.callback();
-            Navigator.pop(context);
-          },
-          child: Text('ok'.tr())
+            onPressed: () {
+              widget.callback();
+              Navigator.pop(context);
+            },
+            child: Text('ok'.tr())
         ),
       ],
     );

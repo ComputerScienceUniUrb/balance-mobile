@@ -50,5 +50,20 @@ class ResultBloc extends Bloc<ResultEvents, ResultState> {
         yield ResultError(e.toString());
       }
     }
+    else if (event is SaveScreenshot) {
+      // Export the measurement
+      try {
+        await _repository.saveScreenshot(event.measurementId,event.image);
+        yield ResultScreenshotSuccess();
+      } on Exception catch(e) {
+        print("ResultBloc.mapEventToState: Unknown Exception: [$e]");
+        yield ResultError(e.toString());
+      } catch(e) {
+        print("ResultBloc.mapEventToState: Undefined Error: [$e]");
+        yield ResultError(e.toString());
+      }
+    }
   }
+
+
 }

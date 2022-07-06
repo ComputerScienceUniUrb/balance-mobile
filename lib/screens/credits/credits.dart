@@ -58,57 +58,80 @@ class _CreditsScreenState extends State<CreditsScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                 child: Text(
                   "credits_description_txt".tr(),
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.headline4.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500
+                  ),
                   textAlign: TextAlign.justify,
                 ),
               ),
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'credits_authors_txt'.tr(),
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700
+                        )
                       ),
                       Divider(),
-                      SizedBox(height: 8.0),
                       RichText(
                         overflow: TextOverflow.clip,
                         text: TextSpan(
                           text: 'Emanuele Lattanzi',
-                          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700
+                          )
                         ),
                       ),
                       Text(
                         'credits_authors_lattanzi_txt'.tr(),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400
+                        )
                       ),
                       SizedBox(height: 8.0),
                       RichText(
                         overflow: TextOverflow.clip,
                         text: TextSpan(
                           text: 'Valerio Freschi',
-                          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700
+                          )
                         ),
                       ),
                       Text(
                         'credits_authors_freschi_txt'.tr(),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400
+                        )
                       ),
                       SizedBox(height: 8.0),
                       RichText(
                         overflow: TextOverflow.clip,
                         text: TextSpan(
                           text: 'Gioele Bigini',
-                          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700
+                          )
                         ),
                       ),
                       Text(
                         'credits_authors_bigini_txt'.tr(),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400
+                        )
                       ),
                     ],
                   ),
@@ -117,50 +140,70 @@ class _CreditsScreenState extends State<CreditsScreen> {
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'credits_developers_txt'.tr(),
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700
+                        )
                       ),
                       Divider(),
-                      SizedBox(height: 8.0),
                       RichText(
                         overflow: TextOverflow.clip,
                         text: TextSpan(
                           text: 'Gioele Bigini',
-                          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700
+                          )
                         ),
                       ),
                       Text(
                         'credits_developers_bigini_txt'.tr(),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400
+                        )
                       ),
                       SizedBox(height: 8.0),
                       RichText(
                         overflow: TextOverflow.clip,
                         text: TextSpan(
                           text: 'Gian Marco di Francesco',
-                          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700
+                          )
                         ),
                       ),
                       Text(
                         'credits_developers_difrancesco_txt'.tr(),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400
+                        )
                       ),
                       SizedBox(height: 8.0),
                       RichText(
                         overflow: TextOverflow.clip,
                         text: TextSpan(
                           text: 'Lorenzo Calisti',
-                          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700
+                          )
                         ),
                       ),
                       Text(
                         'credits_developers_calisti_txt'.tr(),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400
+                        )
                       ),
                     ],
                   ),
@@ -169,50 +212,70 @@ class _CreditsScreenState extends State<CreditsScreen> {
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'credits_collaborators_txt'.tr(),
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700
+                        )
                       ),
                       Divider(),
-                      SizedBox(height: 8.0),
                       RichText(
                         overflow: TextOverflow.clip,
                         text: TextSpan(
                           text: 'Lorenz Cuno Klopfenstein',
-                          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700
+                          )
                         ),
                       ),
                       Text(
                         'credits_collaborators_klopfenstein_txt'.tr(),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400
+                        )
                       ),
                       SizedBox(height: 8.0),
                       RichText(
                         overflow: TextOverflow.clip,
                         text: TextSpan(
                           text: 'Saverio Delpriori',
-                          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700
+                          )
                         ),
                       ),
                       Text(
                         'credits_collaborators_delpriori_txt'.tr(),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400
+                        )
                       ),
                       SizedBox(height: 8.0),
                       RichText(
                         overflow: TextOverflow.clip,
                         text: TextSpan(
                           text: 'Alessandro Bogliolo',
-                          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700
+                          )
                         ),
                       ),
                       Text(
                         'credits_collaborators_bogliolo_txt'.tr(),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400
+                        )
                       ),
                     ],
                   ),
@@ -221,96 +284,97 @@ class _CreditsScreenState extends State<CreditsScreen> {
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'credits_foundation_title'.tr(),
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700
+                        )
                       ),
                       Divider(),
-                      SizedBox(height: 8.0),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: IconButton(
-                                  icon: Icon(Icons.link),
-                                  onPressed: () async {
-                                    const url = 'https://ieeexplore.ieee.org/document/9097903';
-                                    if (await canLaunch(url)) {
-                                      await launch(url);
-                                    } else {
-                                      throw 'Could not launch $url';
-                                    }
-                                  }
+                      InkWell(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              RichText(
+                                overflow: TextOverflow.clip,
+                                text: TextSpan(
+                                  text: 'Standing Balance Assessment by Measurement of Body Center of Gravity Using Smartphones',
+                                  style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 13),
+                                ),
                               ),
-                            ),
+                              Text(
+                                'E. Lattanzi et al., IEEE Access, 2019',
+                                style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 12),
+                              ),
+                            ],
                           ),
-                          Expanded(
-                            flex: 10,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                RichText(
-                                  overflow: TextOverflow.clip,
-                                  text: TextSpan(
-                                    text: 'Standing Balance Assessment by Measurement of Body Center of Gravity Using Smartphones',
-                                    style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 14),
-                                  ),
-                                ),
-                                Text(
-                                  'E. Lattanzi et al., IEEE Access, 2019',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          onTap: () async {
+                            const url = 'https://ieeexplore.ieee.org/document/9097903';
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          }
                       ),
                       SizedBox(height: 8.0),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: IconButton(
-                                  icon: Icon(Icons.link),
-                                  onPressed: () async {
-                                    const url = 'https://www.mdpi.com/1999-5903/12/12/208';
-                                    if (await canLaunch(url)) {
-                                      await launch(url);
-                                    } else {
-                                      throw 'Could not launch $url';
-                                    }
-                                  }
+                      InkWell(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              RichText(
+                                overflow: TextOverflow.clip,
+                                text: TextSpan(
+                                  text: 'A Review on Blockchain for the Internet of Medical Things',
+                                  style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 13),
+                                ),
                               ),
-                            ),
+                              Text(
+                                'G. Bigini et al., Future Internet, 2020',
+                                style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 12),
+                              ),
+                            ],
                           ),
-                          Expanded(
-                            flex: 10,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                RichText(
-                                  overflow: TextOverflow.clip,
-                                  text: TextSpan(
-                                    text: 'A Review on Blockchain for the Internet of Medical Things',
-                                    style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 14),
-                                  ),
+                          onTap: () async {
+                            const url = 'https://www.mdpi.com/1999-5903/12/12/208';
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          }
+                      ),
+                      SizedBox(height: 8.0),
+                      InkWell(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              RichText(
+                                overflow: TextOverflow.clip,
+                                text: TextSpan(
+                                  text: 'Decentralising the IoMT with DLTs and Off-Chain Storages',
+                                  style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 13),
                                 ),
-                                Text(
-                                  'G. Bigini et al., Future Internet, 2020',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ],
-                            ),
+                              ),
+                              Text(
+                                'G. Bigini et al., International Conference on Smart Objects and Technologies for Social Good, 2021',
+                                style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 12),
+                              ),
+                            ],
                           ),
-                        ],
+                          onTap: () async {
+                            const url = 'https://books.google.it/books?hl=it&lr=&id=GNNSEAAAQBAJ&oi=fnd&pg=PA80&dq=Decentralising+the+Internet+of+Medical+Things+with+Distributed+Ledger+Technologies+and+Off-Chain+Storages:+A+Proof+of+Concept&ots=FF0rKuUYMI&sig=WIRf5X7f-tMJiJNu-YfKCDw_vec&redir_esc=y#v=onepage&q=Decentralising%20the%20Internet%20of%20Medical%20Things%20with%20Distributed%20Ledger%20Technologies%20and%20Off-Chain%20Storages%3A%20A%20Proof%20of%20Concept&f=false';
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          }
                       ),
                       SizedBox(height: 8.0),
                     ],
@@ -320,13 +384,16 @@ class _CreditsScreenState extends State<CreditsScreen> {
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'credits_more_info_title'.tr(),
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700
+                        )
                       ),
                       Divider(),
                       Row(
@@ -346,7 +413,7 @@ class _CreditsScreenState extends State<CreditsScreen> {
                             overflow: TextOverflow.clip,
                             text: TextSpan(
                               text: 'credits_website_txt'.tr(),
-                              style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 14),
+                              style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 13),
                             ),
                           ),
                         ],
@@ -369,7 +436,7 @@ class _CreditsScreenState extends State<CreditsScreen> {
                               overflow: TextOverflow.clip,
                               text: TextSpan(
                                 text: 'credits_privacy_txt'.tr(),
-                                style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 14),
+                                style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 13),
                               ),
                             ),
                           ),
@@ -383,16 +450,43 @@ class _CreditsScreenState extends State<CreditsScreen> {
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'credits_sponsors_partners_txt'.tr(),
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700
+                        )
                       ),
                       Divider(),
-                      SizedBox(height: 16.0),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            width: 75,
+                            height: 75,
+                            child: Row(
+                                children: [
+                                  Image.asset("assets/uniurb.png"),
+                                ]
+                            ),
+                          ),
+                          Container(
+                            width: 75,
+                            height: 75,
+                            child: Row(
+                                children: [
+                                  Image.asset("assets/univpm.png"),
+                                ]
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 24),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -416,31 +510,6 @@ class _CreditsScreenState extends State<CreditsScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 32),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            width: 75,
-                            height: 75,
-                            child: Row(
-                                children: [
-                                  Image.asset("assets/tuwien.png"),
-                                ]
-                            ),
-                          ),
-                          Container(
-                            width: 75,
-                            height: 75,
-                            child: Row(
-                                children: [
-                                  Image.asset("assets/univpm.png"),
-                                ]
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16),
                     ],
                   ),
                 ),

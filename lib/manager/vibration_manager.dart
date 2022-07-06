@@ -5,6 +5,7 @@ import 'package:vibration/vibration.dart';
 
 class VibrationManager {
   static const _longVibrationTime = 800;
+
   final AudioCache _audioCache;
   AudioPlayer _playing;
 

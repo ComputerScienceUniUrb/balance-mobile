@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'package:balance/repository/wom_repository.dart';
 import 'package:quiver/async.dart';
 import 'package:balance/floor/measurement_database.dart';
 
@@ -16,14 +17,18 @@ class CountdownBloc extends Bloc<CountdownEvents, CountdownState> {
   SensorMonitor _sensorMonitor;
   StreamSubscription<Duration> _monitorSub;
   MeasureCountdownRepository _repository;
+  WomRepository _repositoryWom;
   bool _eyesOpen;
+  int _initCondition;
 
-  /// Setter for the [_eyesOpen] parameter
+  /// Setter for the [_eyesOpen] and [_initCondition] parameter
   void set eyesOpen(bool value) => _eyesOpen = value;
+  void set initCondition(int value) => _initCondition = value;
 
   /// Private constructor of [CountdownBloc]
   CountdownBloc._(MeasurementDatabase db):
     _repository = MeasureCountdownRepository(db),
+    _repositoryWom = WomRepository(db),
     _isCountdownCancelled = false,
     _sensorMonitor = SensorMonitor(Duration(milliseconds: 30000));
 
@@ -37,16 +42,11 @@ class CountdownBloc extends Bloc<CountdownEvents, CountdownState> {
   Stream<CountdownState> mapEventToState(CountdownEvents event) async* {
     switch (event) {
       // Start the pre measuring countdown
-      case CountdownEvents.startTargeting:
-        print("CountdownBloc.mapEventToState: startTargeting");
-        yield CountdownTargetingState();
-        break;
-      // Start the pre measuring countdown
       case CountdownEvents.startPreMeasure:
         print("CountdownBloc.mapEventToState: startPreMeasure");
         _isCountdownCancelled = false;
         _countdownTimer = CountdownTimer(
-          Duration(milliseconds: 2000),
+          Duration(milliseconds: 10000),
           Duration(milliseconds: 1000)
         )..listen((event) { /*No-Op*/ },
             onDone: () {
@@ -66,11 +66,6 @@ class CountdownBloc extends Bloc<CountdownEvents, CountdownState> {
           }
         );
         yield CountdownMeasureState();
-        break;
-      // Stop the targeting
-      case CountdownEvents.stopTargeting:
-        print("CountdownBloc.mapEventToState: stopTargeting");
-        yield CountdownIdleState();
         break;
       // Stop the pre measuring countdown
       case CountdownEvents.stopPreMeasure:
@@ -95,10 +90,9 @@ class CountdownBloc extends Bloc<CountdownEvents, CountdownState> {
       // Save the new test into the database
       case CountdownEvents.measureComplete:
         try {
-         print(_sensorMonitor.result.length);
-         final newTest = await _repository.createNewMeasurement(_sensorMonitor.result, _eyesOpen);
-         print("CountdownBloc.mapEventToState: Test $newTest created with ${_sensorMonitor.result.length} raw data");
-         yield CountdownCompleteState.success(newTest);
+          final newTest = await _repository.createNewMeasurement(_sensorMonitor.result, _eyesOpen, _initCondition);
+          print("CountdownBloc.mapEventToState: Test $newTest created with ${_sensorMonitor.result.length} raw data");
+          yield CountdownCompleteState.success(newTest);
         } catch(e) {
           print("CountdownBloc.mapEventToState: Error saving the new Measurement: $e");
           yield CountdownCompleteState.error(e);

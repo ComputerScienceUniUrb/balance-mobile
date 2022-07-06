@@ -59,11 +59,11 @@ class _IntroScreenState extends State<IntroScreen> {
     String url = "";
     if (endpoint) {
       url = 'https://www.balancemobile.it/api/v1/user/signup';
-      //url = 'http://192.168.1.206:8000/api/v1/user/signup';
+      //url = 'https://www.dev.balancemobile.it/api/v1/user/signup';
       print("_SendingData.signup: "+data);
     } else {
       url = 'https://www.balancemobile.it/api/v1/db/system';
-      //url = 'http://192.168.1.206:8000/api/v1/db/system';
+      //url = 'https://www.dev.balancemobile.it/api/v1/db/system';
       print("_SendingData.system: "+data);
     }
     Map<String, String> headers = {"Content-type": "application/json"};
